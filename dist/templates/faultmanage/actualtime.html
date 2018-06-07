@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css">
+  <link rel="stylesheet" href="../../static/css/common.css">
+  <style>
+    html,
+    body,
+    .main-wrapper {
+      height: 100%;
+    }
+
+    body {
+      padding: 20px;
+      background-color: #f0f2f5;
+    }
+
+    .main-wrapper {
+      padding-top: 15px;
+      background-color: #fff;
+    }
+
+    .layui-form-label {
+      margin-right: 5px;
+      padding: 9px 0;
+    }
+
+    .modal-header {
+      border-bottom: none;
+    }
+
+    .modal-body .layui-form-item .layui-inline {
+      margin: 0;
+      width: 49%;
+    }
+
+    .modal-body .layui-form-item .layui-form-label {
+      width: auto;
+    }
+
+    .modal-body .layui-from-block {
+      font-size: 0;
+    }
+
+    .modal-body .layui-from-block p,
+    .modal-body .layui-from-block button {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 20px;
+      font-size: 14px;
+    }
+
+    .modal-body .layui-tab-item .layui-form-item {
+      margin-bottom: 0;
+    }
+
+    .modal-body .layui-tab-item .layui-form-item:last-child {
+      padding-top: 10px;
+    }
+
+    .modal-body .layui-tab-item .layui-form-item .layui-inline {
+      width: 32%;
+    }
+
+    .layui-form-line {
+      margin: 25px 0;
+      height: 1px;
+      border-top: 1px solid #ddd;
+      text-align: center;
+    }
+
+    .layui-form-line span {
+      position: relative;
+      top: -10.5px;
+      padding: 0 10px;
+      background: #fff
+    }
+
+    .breakdown .layui-tab-title {
+      width: 100%;
+      height: 100px;
+      background-color: #fff;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .breakdown .layui-tab-title li {
+      width: 33.3%;
+      height: 100px;
+      line-height: 100px;
+      font-size: 16px;
+    }
+
+    .breakdown .layui-tab-title li span,
+    .breakdown .layui-tab-title li em {
+      display: inline-block;
+      vertical-align: middle;
+      font-style: normal;
+    }
+
+    .breakdown .layui-tab-title li em {
+      line-height: 44px;
+      font-size: 24px;
+    }
+
+    .breakdown .layui-tab-title li:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 100%;
+      right: 0;
+      background-color: rgb(233, 233, 233);
+      width: 1px;
+      height: 60px;
+    }
+
+    .breakdown .layui-tab-title .layui-this:after {
+      border: none;
+    }
+
+    .breakdown .layui-tab-title .layui-this span,
+    .breakdown .layui-tab-title .layui-this em {
+      color: rgb(90, 90, 255);
+    }
+
+    .breakdown .layui-tab-content {
+      margin-top: 20px;
+      padding: 0;
+      background-color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="layui-container">
+    <div class="layui-tab breakdown">
+      <ul class="layui-tab-title">
+        <li class="layui-this">
+          <span>故障总数</span>
+          <em>88 个</em>
+        </li>
+        <li>
+          <span>已派发工单</span>
+          <em>32 个</em>
+        </li>
+        <li>
+          <span>已解除警报</span>
+          <em>24 个</em>
+        </li>
+      </ul>
+      <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+          <div class="layui-table-box">
+            <table class="layui-table" lay-skin="line" style="margin: 0;">
+              <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>时间</th>
+                  <th>设备名称</th>
+                  <th>故障类型</th>
+                  <th>所属组织</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>88</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#lampCentralizedControllerModal">路灯集中控制器</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-edit">解除报警</a>
+                    <a class="operate-btn operate-btn-edit">派发工单</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>87</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#lampLanternPostModal">路灯灯杆</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-edit">解除报警</a>
+                    <a class="operate-btn operate-btn-edit">派发工单</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>86</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#landCentralizedControllerModal">景观灯集中控制器</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-edit">解除报警</a>
+                    <a class="operate-btn operate-btn-edit">派发工单</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>85</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#landMasterCobtrollerModal">景观灯主控器</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-edit">解除报警</a>
+                    <a class="operate-btn operate-btn-edit">派发工单</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>84</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#lampCentralizedControllerModal">路灯集中控制器</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-edit">解除报警</a>
+                    <a class="operate-btn operate-btn-edit">派发工单</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>83</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#lampLanternPostModal">路灯灯杆</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-edit">解除报警</a>
+                    <a class="operate-btn operate-btn-edit">派发工单</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>82</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#landCentralizedControllerModal">景观灯集中控制器</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-edit">解除报警</a>
+                    <a class="operate-btn operate-btn-edit">派发工单</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>81</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#landMasterCobtrollerModal">景观灯主控器</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-edit">解除报警</a>
+                    <a class="operate-btn operate-btn-edit">派发工单</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>80</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#lampCentralizedControllerModal">路灯集中控制器</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-edit">解除报警</a>
+                    <a class="operate-btn operate-btn-edit">派发工单</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>79</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#lampLanternPostModal">路灯灯杆</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-edit">解除报警</a>
+                    <a class="operate-btn operate-btn-edit">派发工单</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>78</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#landCentralizedControllerModal">景观灯集中控制器</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-edit">解除报警</a>
+                    <a class="operate-btn operate-btn-edit">派发工单</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="layui-tab-item">
+          <div class="layui-table-box">
+            <table class="layui-table" lay-skin="line" style="margin: 0;">
+              <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>时间</th>
+                  <th>设备名称</th>
+                  <th>故障类型</th>
+                  <th>所属组织</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>32</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#lampCentralizedControllerModal">路灯集中控制器</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-edit">解除报警</a>
+                    <a class="operate-btn operate-btn-remove">已派发</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>31</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#lampLanternPostModal">路灯灯杆</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-edit">解除报警</a>
+                    <a class="operate-btn operate-btn-remove">已派发</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>30</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#landCentralizedControllerModal">景观灯集中控制器</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-edit">解除报警</a>
+                    <a class="operate-btn operate-btn-remove">已派发</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>29</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#landMasterCobtrollerModal">景观灯主控器</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-edit">解除报警</a>
+                    <a class="operate-btn operate-btn-remove">已派发</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="layui-tab-item">
+          <div class="layui-table-box">
+            <table class="layui-table" lay-skin="line" style="margin: 0;">
+              <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>时间</th>
+                  <th>设备名称</th>
+                  <th>故障类型</th>
+                  <th>所属组织</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>24</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#lampCentralizedControllerModal">路灯集中控制器</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-remove">已解除</a>
+                    <a class="operate-btn operate-btn-edit">派发工单</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>23</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#lampLanternPostModal">路灯灯杆</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-remove">已解除</a>
+                    <a class="operate-btn operate-btn-edit">派发工单</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>22</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#landCentralizedControllerModal">景观灯集中控制器</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-remove">已解除</a>
+                    <a class="operate-btn operate-btn-edit">派发工单</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>21</td>
+                  <td>2016-09-21 08:50:08</td>
+                  <td><a href="javascript:;" data-toggle="modal" data-target="#landMasterCobtrollerModal">景观灯主控器</a></td>
+                  <td>XXX</td>
+                  <td>xxx/xxx/xxx/xx...</td>
+                  <td>
+                    <a class="operate-btn operate-btn-edit">定位</a>
+                    <a class="operate-btn operate-btn-remove">已解除</a>
+                    <a class="operate-btn operate-btn-edit">派发工单</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 路灯集中控制器Modal -->
+    <div class="modal fade" id="lampCentralizedControllerModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">详情</h4>
+          </div>
+          <div class="modal-body">
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">名称：</label>
+                <label class="layui-form-label">路灯集中控制器</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">状态：</label>
+                <label class="layui-form-label">正常</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">所属组织：</label>
+              <label class="layui-form-label">xxx/xxx/xxx/xxx</label>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">设备ID：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">经纬度：</label>
+                <label class="layui-form-label">1.111111，3.111111</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">通讯配置：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">通讯方式（上下行）：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">资产编号：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">资产归属：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">回路数量：</label>
+                <label class="layui-form-label">2</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">录入时间：</label>
+                <label class="layui-form-label">2018-06-05</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">修改时间：</label>
+                <label class="layui-form-label">2018-06-05</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">修改人员：</label>
+                <label class="layui-form-label">admin</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">备注：</label>
+                <label class="layui-form-label">无</label>
+              </div>
+            </div>
+            <div class="layui-form-line">
+              <span>回路信息</span>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">回路1：</label>
+                <div class="layui-from-block">
+                  <p class="usual-status usual-off">
+                    <span></span> 关
+                  </p>
+                  <button class="layui-btn layui-btn-normal">手动控制</button>
+                </div>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">回路2：</label>
+                <div class="layui-from-block">
+                  <p class="usual-status usual-fault">
+                    <span></span> 故障
+                  </p>
+                  <button class="layui-btn layui-btn-normal">手动控制</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 路灯灯杆Modal -->
+    <div class="modal fade" id="lampLanternPostModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">详情</h4>
+          </div>
+          <div class="modal-body">
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">名称：</label>
+                <label class="layui-form-label">路灯灯杆</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">状态：</label>
+                <label class="layui-form-label">正常</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">所属组织：</label>
+              <label class="layui-form-label">xxx/xxx/xxx/xxx</label>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">设备ID：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">经纬度：</label>
+                <label class="layui-form-label">1.111111，3.111111</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">资产编号：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">资产归属：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">生产厂商：</label>
+                <label class="layui-form-label">2</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">录入时间：</label>
+                <label class="layui-form-label">2018-06-05</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">修改时间：</label>
+                <label class="layui-form-label">2018-06-05</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">修改人员：</label>
+                <label class="layui-form-label">admin</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">备注：</label>
+                <label class="layui-form-label">无</label>
+              </div>
+            </div>
+            <div class="layui-tab layui-tab-brief">
+              <ul class="layui-tab-title">
+                <li class="layui-this">xxx灯具1</li>
+                <li>xxx灯具2</li>
+                <li>xxx灯具3</li>
+                <li>xxx灯具4</li>
+              </ul>
+              <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                  <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">电压：</label>
+                      <label class="layui-form-label">21.4 V</label>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">电流：</label>
+                      <label class="layui-form-label">21.4 A</label>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">调光值：</label>
+                      <label class="layui-form-label">21.4 V</label>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">功率：</label>
+                      <label class="layui-form-label">21.4 w</label>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">亮灯时长：</label>
+                      <label class="layui-form-label">21.4 h</label>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">总功耗：</label>
+                      <label class="layui-form-label">21.4 w.h</label>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-normal">手动控制</button>
+                  </div>
+                </div>
+                <div class="layui-tab-item">
+                  <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">电压：</label>
+                      <label class="layui-form-label">22.4 V</label>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">电流：</label>
+                      <label class="layui-form-label">22.4 A</label>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">调光值：</label>
+                      <label class="layui-form-label">22.4 V</label>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">功率：</label>
+                      <label class="layui-form-label">22.4 w</label>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">亮灯时长：</label>
+                      <label class="layui-form-label">22.4 h</label>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">总功耗：</label>
+                      <label class="layui-form-label">22.4 w.h</label>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-normal">手动控制</button>
+                  </div>
+                </div>
+                <div class="layui-tab-item">
+                  <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">电压：</label>
+                      <label class="layui-form-label">23.4 V</label>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">电流：</label>
+                      <label class="layui-form-label">23.4 A</label>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">调光值：</label>
+                      <label class="layui-form-label">23.4 V</label>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">功率：</label>
+                      <label class="layui-form-label">23.4 w</label>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">亮灯时长：</label>
+                      <label class="layui-form-label">23.4 h</label>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">总功耗：</label>
+                      <label class="layui-form-label">23.4 w.h</label>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-normal">手动控制</button>
+                  </div>
+                </div>
+                <div class="layui-tab-item">
+                  <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">电压：</label>
+                      <label class="layui-form-label">24.4 V</label>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">电流：</label>
+                      <label class="layui-form-label">24.4 A</label>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">调光值：</label>
+                      <label class="layui-form-label">24.4 V</label>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">功率：</label>
+                      <label class="layui-form-label">24.4 w</label>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">亮灯时长：</label>
+                      <label class="layui-form-label">24.4 h</label>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">总功耗：</label>
+                      <label class="layui-form-label">24.4 w.h</label>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-normal">手动控制</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 景观灯集中控制器Modal -->
+    <div class="modal fade" id="landCentralizedControllerModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">详情</h4>
+          </div>
+          <div class="modal-body">
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">名称：</label>
+                <label class="layui-form-label">景观灯集中控制器</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">状态：</label>
+                <label class="layui-form-label">正常</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">所属组织：</label>
+              <label class="layui-form-label">xxx/xxx/xxx/xxx</label>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">设备ID：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">经纬度：</label>
+                <label class="layui-form-label">1.111111，3.111111</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">通讯配置：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">资产编号：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">资产归属：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">回路数量：</label>
+                <label class="layui-form-label">2</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">录入时间：</label>
+                <label class="layui-form-label">2018-06-05</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">修改时间：</label>
+                <label class="layui-form-label">2018-06-05</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">修改人员：</label>
+                <label class="layui-form-label">admin</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">备注：</label>
+                <label class="layui-form-label">无</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 景观灯主控器Modal -->
+    <div class="modal fade" id="landMasterCobtrollerModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">详情</h4>
+          </div>
+          <div class="modal-body">
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">名称：</label>
+                <label class="layui-form-label">景观灯主控器</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">状态：</label>
+                <label class="layui-form-label">正常</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">所属组织：</label>
+              <label class="layui-form-label">xxx/xxx/xxx/xxx</label>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">设备ID：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">经纬度：</label>
+                <label class="layui-form-label">1.111111，3.111111</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">资产编号：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">资产归属：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">生产厂商：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">通讯方式：</label>
+                <label class="layui-form-label">xxxx</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">修改时间：</label>
+                <label class="layui-form-label">2018-06-05</label>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">修改人员：</label>
+                <label class="layui-form-label">admin</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">录入时间：</label>
+                <label class="layui-form-label">2018-06-05</label>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">备注：</label>
+                <label class="layui-form-label">无</label>
+              </div>
+            </div>
+            <div class="layui-form-line" style="margin: 15px 0;"></div>
+            <div class="layui-tab-item layui-show">
+              <div class="layui-form-item">
+                <div class="layui-inline">
+                  <label class="layui-form-label">节目：</label>
+                  <label class="layui-form-label">
+                    <a href="javascript:;" data-toggle="modal" data-target="#programModal" title="点击显示节目详情">节目xxxx</a>
+                  </label>
+                </div>
+                <div class="layui-inline">
+                  <label class="layui-form-label">电压：</label>
+                  <label class="layui-form-label">24.4 V</label>
+                </div>
+                <div class="layui-inline">
+                  <label class="layui-form-label">电流：</label>
+                  <label class="layui-form-label">24.4 A</label>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <div class="layui-inline">
+                  <label class="layui-form-label">功率：</label>
+                  <label class="layui-form-label">24.4 w</label>
+                </div>
+                <div class="layui-inline">
+                  <label class="layui-form-label">亮灯时长：</label>
+                  <label class="layui-form-label">24.4 h</label>
+                </div>
+                <div class="layui-inline">
+                  <label class="layui-form-label">总功耗：</label>
+                  <label class="layui-form-label">24.4 w.h</label>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <button class="layui-btn layui-btn-normal">手动控制</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 节目详情Modal -->
+    <div class="modal fade" id="programModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">详情</h4>
+          </div>
+          <div class="modal-body">
+            <h5 style="font-size: 16px;">节目名称（节目指令）</h5>
+            <div class="description" style="margin: 30px 0;">
+              <p>
+                节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述 节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述 节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../static/js/jquery.min.js"></script>
+  <script src="../../layuiadmin/layui/layui.js" charset="utf-8"></script>
+  <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+
+  <script>
+    layui.use(['element'], function() {
+      var element = layui.element;
+    });
+  </script>
+</body>
+
+</html>

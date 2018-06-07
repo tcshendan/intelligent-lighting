@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css">
+  <link rel="stylesheet" href="../../static/css/common.css">
+  <style>
+    html,
+    body,
+    .main-wrapper {
+      height: 100%;
+    }
+
+    body {
+      padding: 20px;
+      background-color: #f0f2f5;
+    }
+
+    @media screen and (min-width: 1200px) {
+      .layui-container {
+        width: 1150px;
+      }
+    }
+
+    .main-wrapper {
+      background-color: #fff;
+    }
+
+    .layui-tab-content {
+      padding: 28px 14px;
+    }
+
+    .modal-body {
+      padding: 70px 140px;
+    }
+
+    #programModal .modal-body {
+      padding: 30px 40px
+    }
+
+    .modal-body .layui-form-label {
+      padding: 9px 0;
+      width: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main-wrapper">
+    <div class="layui-tab layui-tab-brief">
+      <ul class="layui-tab-title">
+        <li class="layui-this">生产厂商设置</li>
+        <li>节目预览设置</li>
+        <li>资产公司设置</li>
+      </ul>
+      <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+          <div class="layui-container">
+            <div class="layui-row">
+              <div class="layui-col-md4">
+                <button class="layui-btn layui-btn-normal" data-toggle="modal" data-target="#manufacturerModal" onclick="javascript:factory.add();">+  新建</button>
+                <button onclick="javascript:manufacturer.batchDelete();" class="layui-btn layui-btn-primary">批量删除</button>
+              </div>
+              <div class="layui-col-md3 layui-col-md-offset5">
+                <div class="layui-inline">
+                  <input type="text" name="keywords" class="layui-input" placeholder="请输入关键词">
+                </div>
+                <button class="layui-btn layui-btn-normal">搜索</button>
+              </div>
+            </div>
+            <div class="ant-alert ant-alert-info">
+              <i class="anticon anticon-info-circle ant-alert-icon"></i>
+              <span class="ant-alert-message">已选择 <em class="usual-checked-count">0</em> 项</span>
+              <span class="ant-alert-description"></span>
+            </div>
+            <div class="layui-table-box usual-controll-tabel manufacturer-table">
+              <table class="layui-table" lay-skin="line">
+                <thead>
+                  <tr>
+                    <th style="width: 44px">
+                      <input type="checkbox" class="usual-checked-all">
+                    </th>
+                    <th>序号</th>
+                    <th>厂商名称</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="checkbox" name="manufacturerIds" value="1"></td>
+                    <td>1</td>
+                    <td>厂商名称1</td>
+                    <td>
+                      <a class="operate-btn operate-btn-edit" data-toggle="modal" data-target="#manufacturerModal" onclick="javascript:manufacturer.edit('1');">修改</a>
+                      <a class="operate-btn operate-btn-del" onclick="javascript:manufacturer.delete('1');">删除</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="manufacturerIds" value="2"></td>
+                    <td>2</td>
+                    <td>厂商名称2</td>
+                    <td>
+                      <a class="operate-btn operate-btn-edit" data-toggle="modal" data-target="#manufacturerModal" onclick="javascript:manufacturer.edit('2');">修改</a>
+                      <a class="operate-btn operate-btn-del" onclick="javascript:manufacturer.delete('2');">删除</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="manufacturerIds" value="3"></td>
+                    <td>3</td>
+                    <td>厂商名称3</td>
+                    <td>
+                      <a class="operate-btn operate-btn-edit" data-toggle="modal" data-target="#manufacturerModal" onclick="javascript:manufacturer.edit('3');">修改</a>
+                      <a class="operate-btn operate-btn-del" onclick="javascript:manufacturer.delete('3');">删除</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="manufacturerIds" value="4"></td>
+                    <td>4</td>
+                    <td>厂商名称4</td>
+                    <td>
+                      <a class="operate-btn operate-btn-edit" data-toggle="modal" data-target="#manufacturerModal" onclick="javascript:manufacturer.edit('4');">修改</a>
+                      <a class="operate-btn operate-btn-del" onclick="javascript:manufacturer.delete('4');">删除</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="manufacturerIds" value="5"></td>
+                    <td>5</td>
+                    <td>厂商名称5</td>
+                    <td>
+                      <a class="operate-btn operate-btn-edit" data-toggle="modal" data-target="#manufacturerModal" onclick="javascript:manufacturer.edit('5');">修改</a>
+                      <a class="operate-btn operate-btn-del" onclick="javascript:manufacturer.delete('5');">删除</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 生产厂商Modal -->
+          <div class="modal fade" id="manufacturerModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="modal_title">新建厂商</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="layui-form manufacturer-form">
+                    <input type="hidden" name="manufacturerId" value="" />
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">厂商名称：</label>
+                      <div class="layui-input-block">
+                        <input type="text" name="manufacturerName" class="layui-input" placeholder="请输入">
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="layui-btn layui-btn-primary" data-dismiss="modal">取消</button>
+                  <button type="button" class="layui-btn layui-btn-normal" onclick="manufacturer.save()">确定</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layui-tab-item">
+          <div class="layui-container layui-form">
+            <div class="layui-row">
+              <div class="layui-col-md4">
+                <button class="layui-btn layui-btn-normal" data-toggle="modal" data-target="#programModal" onclick="javascript:program.add();">+  新建</button>
+              </div>
+              <div class="layui-col-md3 layui-col-md-offset5">
+                <label class="layui-form-label" style="padding: 9px 5px;width: 110px;">选择景观灯：</label>
+                <div class="layui-input-block">
+                  <select name="lamp">
+                    <option value=""></option>
+                    <option value="0" selected="">xxx景观灯主控器</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="program-content">
+              <div class="layui-row">
+                <div class="layui-col-md3 program-item">
+                  <div class="panel">
+                    <h6 class="title">节目名称(节目指令)</h6>
+                    <div class="decription">
+                      <p>节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目</p>
+                    </div>
+                  </div>
+                  <div class="action">
+                    <div class="edit">
+                      <a data-toggle="modal" data-target="#programModal" onclick="javascript:program.edit('1', 'text');">编辑</a>
+                    </div>
+                    <div class="del">
+                      <a onclick="javascript:program.delete('1')">删除</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="layui-col-md3 program-item">
+                  <div class="panel">
+                    <h6 class="title">节目名称(节目指令)</h6>
+                    <div class="box"></div>
+                  </div>
+                  <div class="action">
+                    <div class="edit">
+                      <a data-toggle="modal" data-target="#programModal" onclick="javascript:program.edit('2', 'video');">编辑</a>
+                    </div>
+                    <div class="del">
+                      <a onclick="javascript:program.delete('2')">删除</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="layui-col-md3 program-item">
+                  <div class="panel">
+                    <h6 class="title">节目名称(节目指令)</h6>
+                    <div class="box"></div>
+                  </div>
+                  <div class="action">
+                    <div class="edit">
+                      <a data-toggle="modal" data-target="#programModal" onclick="javascript:program.edit('3', 'picture');">编辑</a>
+                    </div>
+                    <div class="del">
+                      <a onclick="javascript:program.delete('3')">删除</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="layui-col-md3 program-item">
+                  <div class="panel">
+                    <h6 class="title">节目名称(节目指令)</h6>
+                    <div class="decription">
+                      <p>节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目</p>
+                    </div>
+                  </div>
+                  <div class="action">
+                    <div class="edit">
+                      <a data-toggle="modal" data-target="#programModal" onclick="javascript:program.edit('4', 'text');">编辑</a>
+                    </div>
+                    <div class="del">
+                      <a onclick="javascript:program.delete('4')">删除</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="layui-row">
+                <div class="layui-col-md3 program-item">
+                  <div class="panel">
+                    <h6 class="title">节目名称(节目指令)</h6>
+                    <div class="decription">
+                      <p>节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目描述节目</p>
+                    </div>
+                  </div>
+                  <div class="action">
+                    <div class="edit">
+                      <a data-toggle="modal" data-target="#programModal" onclick="javascript:program.edit('5', 'text');">编辑</a>
+                    </div>
+                    <div class="del">
+                      <a onclick="javascript:program.delete('5')">删除</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="layui-col-md3 program-item">
+                  <div class="panel">
+                    <h6 class="title">节目名称(节目指令)</h6>
+                    <div class="box"></div>
+                  </div>
+                  <div class="action">
+                    <div class="edit">
+                      <a data-toggle="modal" data-target="#programModal" onclick="javascript:program.edit('6', 'video');">编辑</a>
+                    </div>
+                    <div class="del">
+                      <a onclick="javascript:program.delete('6')">删除</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="layui-col-md3 program-item">
+                  <div class="panel">
+                    <h6 class="title">节目名称(节目指令)</h6>
+                    <div class="box"></div>
+                  </div>
+                  <div class="action">
+                    <div class="edit">
+                      <a data-toggle="modal" data-target="#programModal" onclick="javascript:program.edit('7', 'picture');">编辑</a>
+                    </div>
+                    <div class="del">
+                      <a onclick="javascript:program.delete('7')">删除</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 节目预览Modal -->
+          <div class="modal fade" id="programModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="program_modal_title">新建节目预览</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="layui-form" action="" lay-filter="preview">
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">预览格式：</label>
+                      <div class="layui-input-block">
+                        <select name="type" lay-filter="type" id="selectedType">
+                          <option value=""></option>
+                          <option value="0" selected="">文字</option>
+                          <option value="1">图片</option>
+                          <option value="2">视频</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">节目名称：</label>
+                      <div class="layui-input-block">
+                        <input type="text" name="programName" class="layui-input" placeholder="请输入">
+                      </div>
+                    </div>
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">节目指令：</label>
+                      <div class="layui-input-block">
+                        <input type="text" name="programDirective" class="layui-input" placeholder="请输入">
+                      </div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                      <label class="layui-form-label">文字描述：</label>
+                      <div class="layui-input-block">
+                        <textarea placeholder="请输入文字描述" name="desc" class="layui-textarea"></textarea>
+                      </div>
+                    </div>
+                    <div class="layui-form-item layui-form-picture" style="display: none">
+                      <label class="layui-form-label">图片描述：</label>
+                      <div class="layui-input-block">
+                        <div class="upload">
+                          <img src="../../static/images/upload.png" alt="" style="margin-top: 40px;margin-bottom: 10px;cursor: pointer;" onclick="javascript:program.upload(this);">
+                          <input type="file" name="file" accept="image/*" />
+                          <span class="mark">上传</span>
+                        </div>
+                        <p style="margin-top: 5px;line-height: 24px;color: #999">支持扩展名：png、jpg、jpeg...</p>
+                      </div>
+                    </div>
+                    <div class="layui-form-item layui-form-video" style="display: none">
+                      <label class="layui-form-label">视频封面：</label>
+                      <div class="layui-input-block">
+                        <div class="upload">
+                          <img src="../../static/images/upload.png" alt="" style="margin-top: 40px;margin-bottom: 10px;cursor: pointer;" onclick="javascript:program.upload(this);">
+                          <input type="file" name="file" accept="image/*" />
+                          <span class="mark">上传</span>
+                        </div>
+                        <p style="margin-top: 5px;line-height: 24px;color: #999">支持扩展名：png、jpg、jpeg...</p>
+                      </div>
+                    </div>
+                    <div class="layui-form-item layui-form-video" style="display: none">
+                      <label class="layui-form-label">视频文件：</label>
+                      <div class="layui-input-block">
+                        <button type="button" class="layui-btn layui-btn-primary" id="upload_video"><i class="layui-icon"></i>上传文件</button>
+                        <p style="margin-top: 5px;line-height: 24px;color: #999">支持扩展名：mp4、rmvb、avi、wmv...；大小：10M以内</p>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="layui-btn layui-btn-primary" data-dismiss="modal">取消</button>
+                  <button type="button" class="layui-btn layui-btn-normal">确定</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layui-tab-item">
+          <div class="layui-container">
+            <div class="layui-row">
+              <div class="layui-col-md4">
+                <button class="layui-btn layui-btn-normal" data-toggle="modal" data-target="#factoryModal" onclick="javascript:factory.add();">+  新建</button>
+                <button onclick="javascript:factory.batchDelete();" class="layui-btn layui-btn-primary">批量删除</button>
+              </div>
+              <div class="layui-col-md3 layui-col-md-offset5">
+                <div class="layui-inline">
+                  <input type="text" name="keywords" class="layui-input" placeholder="请输入关键词">
+                </div>
+                <button class="layui-btn layui-btn-normal">搜索</button>
+              </div>
+            </div>
+            <div class="ant-alert ant-alert-info">
+              <i class="anticon anticon-info-circle ant-alert-icon"></i>
+              <span class="ant-alert-message">已选择 <em class="usual-checked-count">0</em> 项</span>
+              <span class="ant-alert-description"></span>
+            </div>
+            <div class="layui-table-box usual-controll-tabel factory-table">
+              <table class="layui-table" lay-skin="line">
+                <thead>
+                  <tr>
+                    <th style="width: 44px">
+                      <input type="checkbox" class="usual-checked-all">
+                    </th>
+                    <th>序号</th>
+                    <th>资产公司名称</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="checkbox" name="factoryIds" value="1"></td>
+                    <td>1</td>
+                    <td>资产公司名称1</td>
+                    <td>
+                      <a class="operate-btn operate-btn-edit" data-toggle="modal" data-target="#factoryModal" onclick="javascript:factory.edit('1');">修改</a>
+                      <a class="operate-btn operate-btn-del" onclick="javascript:factory.delete('1');">删除</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="factoryIds" value="2"></td>
+                    <td>2</td>
+                    <td>资产公司名称2</td>
+                    <td>
+                      <a class="operate-btn operate-btn-edit" data-toggle="modal" data-target="#factoryModal" onclick="javascript:factory.edit('2');">修改</a>
+                      <a class="operate-btn operate-btn-del" onclick="javascript:factory.delete('2');">删除</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="factoryIds" value="3"></td>
+                    <td>3</td>
+                    <td>资产公司名称3</td>
+                    <td>
+                      <a class="operate-btn operate-btn-edit" data-toggle="modal" data-target="#factoryModal" onclick="javascript:factory.edit('3');">修改</a>
+                      <a class="operate-btn operate-btn-del" onclick="javascript:factory.delete('3');">删除</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="factoryIds" value="4"></td>
+                    <td>4</td>
+                    <td>资产公司名称4</td>
+                    <td>
+                      <a class="operate-btn operate-btn-edit" data-toggle="modal" data-target="#factoryModal" onclick="javascript:factory.edit('4');">修改</a>
+                      <a class="operate-btn operate-btn-del" onclick="javascript:factory.delete('4');">删除</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="factoryIds" value="5"></td>
+                    <td>5</td>
+                    <td>资产公司名称5</td>
+                    <td>
+                      <a class="operate-btn operate-btn-edit" data-toggle="modal" data-target="#factoryModal" onclick="javascript:factory.edit('5');">修改</a>
+                      <a class="operate-btn operate-btn-del" onclick="javascript:factory.delete('5');">删除</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 资产公司Modal -->
+          <div class="modal fade" id="factoryModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="factory_modal_title">新建资产公司</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="layui-form factory-form">
+                    <input type="hidden" name="factoryId" value="" />
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">资产公司名称：</label>
+                      <div class="layui-input-block">
+                        <input type="text" name="factoryName" class="layui-input" placeholder="请输入">
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="layui-btn layui-btn-primary" data-dismiss="modal">取消</button>
+                  <button type="button" class="layui-btn layui-btn-normal" onclick="factory.save()">确定</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../static/js/jquery.min.js"></script>
+  <script src="../../layuiadmin/layui/layui.js" charset="utf-8"></script>
+  <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../../static/js/public.js"></script>
+
+  <script>
+    layui.use(['element', 'layer', 'form', 'upload'], function() {
+      var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+      var layer = layui.layer;
+      var form = layui.form;
+      var upload = layui.upload;
+
+      upload.render({
+        elem: '#upload_video',
+        url: '/upload/',
+        accept: 'video',
+        done: function(res) {
+          console.log(res)
+        }
+      });
+
+      form.on('select(type)', function(data) {
+        var mapping = {
+          '0': 'text',
+          '1': 'picture',
+          '2': 'video',
+        };
+        program.showPreview(mapping[data.value]);
+      });
+
+      window.form = form;
+    });
+
+    $(".layui-tab-title > li").click(function() {
+      var index = $(this).index() == 0 ? 0 : 1;
+      doCheckbox(index);
+    });
+
+    var program = {
+      add: function() {
+        $('#program_modal_title').html('新建节目预览');
+        $("#selectedType").removeAttr('disabled').val(0);
+        form.render('select', 'type');
+        this.showPreview('text');
+
+        form.val('preview', {
+          "programName": "",
+          "programDirective": "",
+          "desc": ""
+        });
+      },
+      /**
+       * 修改节目预览
+       * @param  {number} id 节目预览id
+       * @param  {string} type 节目预览格式类型
+       * @return
+       */
+      edit: function(id, type) {
+        $('#program_modal_title').html('修改节目预览');
+        var mapping = {
+          'text': '0',
+          'picture': '1',
+          'video': '2',
+        };
+        $("#selectedType").attr("disabled", "disabled").val(mapping[type]);
+        form.render('select', 'type');
+        this.showPreview(type);
+
+        $.ajax({
+          url: '../../data/data3.json',
+          type: 'GET',
+          success: function(response) {
+            var data = response.data;
+            data.forEach(function(item, index) {
+              if (id == index + 1) {
+                form.val('preview', {
+                  "programName": item.name,
+                  "programDirective": item.directive,
+                  "desc": item.desc
+                });
+              }
+            });
+          }
+        });
+      },
+      /**
+       * 删除节目预览
+       * @param  {number} id 节目预览id
+       * @return
+       */
+      delete: function(id) {
+        layer.confirm('你确认删除该节目预览吗？', {
+          title: '删除'
+        }, function() {
+          layer.msg('你已删除id为' + id + '的节目预览', {
+            icon: 1,
+            time: 3000
+          });
+        });
+      },
+      /**
+       * select change 预览格式切换的时候显示对应的表单元素
+       * @param  {string} param1 需要隐藏的表单元素
+       * @param  {string} param2 需要隐藏的表单元素
+       * @param  {string} param3 需要显示的表单元素
+       * @return
+       */
+      change: function(param1, param2, param3) {
+        $('.layui-form-' + param1).hide();
+        $('.layui-form-' + param2).hide();
+        $('.layui-form-' + param3).show();
+      },
+      /**
+       * 根据当前节目预览格式显示对应的表单元素
+       * @param  {string} type 节目预览格式类型
+       * @return
+       */
+      showPreview: function(type) {
+        switch (type) {
+          case 'text':
+            this.change('picture', 'video', 'text');
+            break;
+          case 'picture':
+            this.change('text', 'video', 'picture');
+            break;
+          case 'video':
+            this.change('text', 'picture', 'video');
+            break;
+        }
+      },
+      upload: function(obj) {
+        $(obj).next().click();
+      }
+    };
+
+    var manufacturer = {
+      add: function() {
+        $('#modal_title').html('新建厂商');
+        $('input[name="manufacturerId"]').val('');
+        $('input[name="manufacturerName"]').val('');
+      },
+      /**
+       * 修改厂商
+       * @param  {number} id 厂商id
+       * @return
+       */
+      edit: function(id) {
+        $('#modal_title').html('修改厂商');
+        $('input[name="manufacturerId"]').val(id);
+        $.ajax({
+          url: '../../data/data1.json',
+          type: 'GET',
+          success: function(response) {
+            var data = response.data;
+            data.forEach(function(item, index) {
+              if (id == index + 1) {
+                $('input[name="manufacturerName"]').val(item.manufacturer);
+              }
+            });
+          }
+        });
+      },
+      /**
+       * 删除单个生产厂商
+       * @param  {number} id 厂商id
+       * @return
+       */
+      delete: function(id) {
+        layer.confirm('你确认删除该生产厂商吗？', {
+          title: '删除'
+        }, function() {
+          layer.msg('你已删除id为' + id + '的生产厂商', {
+            icon: 1,
+            time: 3000
+          });
+        });
+        $.ajax({
+          url: '/manufacturer/delete/' + id,
+          type: 'POST',
+          success: function(response) {
+            console.log(response);
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            // 状态码
+            console.log(XMLHttpRequest.status);
+            // 状态
+            console.log(XMLHttpRequest.readyState);
+            // 错误信息
+            console.log(textStatus);
+          }
+        });
+      },
+      batchDelete: function() {
+        layer.confirm('你确认删除这些生产厂商吗？', {
+          title: '删除'
+        }, function() {
+          var allInput = document.querySelectorAll(".manufacturer-table table tbody tr td input");
+          var array = [];
+          for (var i = 0; i < allInput.length; i++) {
+            if (allInput[i].checked) {
+              array.push(allInput[i]);
+            }
+          }
+          if (array.length > 0) {
+            layer.msg('删除成功', {
+              icon: 1,
+              time: 3000
+            })
+          } else {
+            layer.msg('请选择要删除的内容', {
+              icon: 5,
+              time: 3000
+            });
+          }
+        });
+      },
+      save: function() {
+        var id = $('input[name="manufacturerId"]').val();
+        var url = id === '' ? '/manufacturer/add' : '/manufacturer/update';
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: $('.manufacturer-form').serialize(),
+          success: function(response) {
+            console.log(response);
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            // 状态码
+            console.log(XMLHttpRequest.status);
+            // 状态
+            console.log(XMLHttpRequest.readyState);
+            // 错误信息
+            console.log(textStatus);
+          }
+        });
+      }
+    };
+
+    var factory = {
+      add: function() {
+        $('#factory_modal_title').html('新建厂商');
+        $('input[name="factoryId"]').val('');
+        $('input[name="factoryName"]').val('');
+      },
+      /**
+       * 修改资产公司
+       * @param  {number} id 资产公司id
+       * @return
+       */
+      edit: function(id) {
+        $('#factory_modal_title').html('修改资产公司');
+        $('input[name="factoryId"]').val(id);
+        $.ajax({
+          url: '../../data/data2.json',
+          type: 'GET',
+          success: function(response) {
+            console.log(response)
+            var data = response.data;
+            data.forEach(function(item, index) {
+              if (id == index + 1) {
+                $('input[name="factoryName"]').val(item.factory);
+              }
+            });
+          }
+        });
+      },
+      /**
+       * 删除单个资产公司
+       * @param  {number} id 资产公司id
+       * @return
+       */
+      delete: function(id) {
+        layer.confirm('你确认删除该资产公司吗？', {
+          title: '删除'
+        }, function() {
+          layer.msg('你已删除id为' + id + '的资产公司', {
+            icon: 1,
+            time: 3000
+          });
+        });
+      },
+      batchDelete: function() {
+        layer.confirm('你确认删除这些资产公司吗？', {
+          title: '删除'
+        }, function() {
+          var allInput = document.querySelectorAll(".factory-table table tbody tr td input");
+          var array = [];
+          for (var i = 0; i < allInput.length; i++) {
+            if (allInput[i].checked) {
+              array.push(allInput[i]);
+            }
+          }
+          if (array.length > 0) {
+            layer.msg('删除成功', {
+              icon: 1,
+              time: 3000
+            })
+          } else {
+            layer.msg('请选择要删除的内容', {
+              icon: 5,
+              time: 3000
+            });
+          }
+        });
+      },
+      save: function() {
+        var id = $('input[name="factoryId"]').val();
+        var url = id === '' ? '/factory/add' : '/factory/update';
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: $('.factory-form').serialize(),
+          success: function(response) {
+            console.log(response);
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            // 状态码
+            console.log(XMLHttpRequest.status);
+            // 状态
+            console.log(XMLHttpRequest.readyState);
+            // 错误信息
+            console.log(textStatus);
+          }
+        });
+      }
+    };
+  </script>
+
+</body>
+
+</html>

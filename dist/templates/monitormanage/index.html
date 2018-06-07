@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" />
+  <link rel="stylesheet" href="../../static/css/common.css" />
+  <style>
+    #container {
+      width: 100%;
+      height: 678px;
+    }
+
+    .main-wrapper {
+      position: relative;
+    }
+
+    /* infoWindow */
+
+    .info {
+      border: solid 1px silver;
+    }
+
+    div.info-top {
+      position: relative;
+      background: none repeat scroll 0 0 #F9F9F9;
+      border-bottom: 1px solid #CCC;
+      border-radius: 5px 5px 0 0;
+    }
+
+    div.info-top div {
+      display: inline-block;
+      color: #333333;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 31px;
+      padding: 0 10px;
+    }
+
+    div.info-top img {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      transition-duration: 0.25s;
+    }
+
+    div.info-top img:hover {
+      box-shadow: 0px 0px 5px #000;
+    }
+
+    div.info-middle {
+      font-size: 12px;
+      padding: 6px;
+      line-height: 20px;
+    }
+
+    div.info-middle p {
+      margin-bottom: 5px;
+    }
+
+    div.info-bottom {
+      height: 0px;
+      width: 100%;
+      clear: both;
+      text-align: center;
+    }
+
+    div.info-bottom img {
+      position: relative;
+      z-index: 104;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main-wrapper">
+    <div id="container"></div>
+    <div class="area">
+      <div class="theme-area">
+        <div class="theme-top">
+          <label><input type="checkbox" /></label>
+          <span>全部</span>
+        </div>
+        <dl>
+          <dt>
+            <label><input type="checkbox" /></label>
+            <span>路灯主题</span>
+          </dt>
+          <dd>
+            <label><input type="checkbox" /></label>
+            <span>集中控制器</span>
+          </dd>
+          <dd>
+            <label><input type="checkbox" /></label>
+            <span>灯杆</span>
+          </dd>
+          <dt>
+            <label><input type="checkbox" /></label>
+            <span>景观灯主题</span>
+          </dt>
+          <dd>
+            <label><input type="checkbox" /></label>
+            <span>集中控制器</span>
+          </dd>
+          <dd>
+            <label><input type="checkbox" /></label>
+            <span>主控器</span>
+          </dd>
+        </dl>
+      </div>
+      <ul class="status-area">
+        <li class="status-item">
+          <i class="status-icon status-color-green"></i>
+          <span class="status-text">正常</span>
+        </li>
+        <li class="status-item">
+          <i class="status-icon status-color-red"></i>
+          <span class="status-text">故障</span>
+        </li>
+        <li class="status-item">
+          <i class="status-icon status-color-yellow"></i>
+          <span class="status-text">亮</span>
+        </li>
+        <li class="status-item">
+          <i class="status-icon status-color-gary"></i>
+          <span class="status-text">关</span>
+        </li>
+      </ul>
+    </div>
+    <div class="serach layui-form">
+      <div class="layui-input-inline">
+        <select name="modules" lay-filter="modules" lay-search="">
+          <option value="">直接选择或搜索选择</option>
+          <option value="1">路灯集中控制器</option>
+          <option value="2">路灯灯杆</option>
+          <option value="3">景观灯集中控制器</option>
+          <option value="4">景观灯主控器</option>
+        </select>
+      </div>
+    </div>
+    <div class="detection">
+      <a class="detection-btn" data-toggle="modal" data-target="#myModal">状态检测</a>
+    </div>
+
+    <!-- 状态检测Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">详情</h4>
+          </div>
+          <div class="modal-body">状态检测</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../static/js/jquery.min.js"></script>
+  <script src="../../layuiadmin/layui/layui.js" charset="utf-8"></script>
+  <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=a7670840be2070dec801891aff5eac2c"></script>
+  <!-- UI组件库 1.0 -->
+  <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+
+  <script type="text/javascript">
+    layui.use(['form'], function() {
+      var form = layui.form;
+
+      form.on('select(modules)', function(data) {
+        var mapping = {
+          '1': '路灯集中控制器',
+          '2': '路灯灯杆',
+          '3': '景观灯集中控制器',
+          '4': '景观灯主控器'
+        };
+        alert(mapping[data.value]);
+      });
+    });
+
+    var map = new AMap.Map('container', {
+      resizeEnable: true,
+      zoom: 4 //级别
+    });
+
+    AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
+      //添加一个缩放控件
+      map.addControl(new BasicControl.Zoom({
+        position: 'lb'
+      }));
+    });
+
+    addMarker();
+
+    //将创建的点标记添加到已有的地图实例
+    function addMarker() {
+      map.clearMap();
+
+      $.ajax({
+        url: '../../data/data4.json',
+        type: 'GET',
+        success: function(response) {
+          var provinces = response.provinces;
+          for (var i = 0; i < provinces.length; i += 1) {
+            var marker;
+            var image = '../../static/images/icon_' + provinces[i].status + '.png';
+            var icon = new AMap.Icon({
+              size: new AMap.Size(30, 39),
+              image: image,
+              imageSize: new AMap.Size(30, 39)
+            });
+            marker = new AMap.Marker({
+              map: map,
+              position: provinces[i].center.split(','),
+              offset: new AMap.Pixel(-15, -19),
+              icon: icon,
+              title: provinces[i].name
+            });
+            //自定义传入的参数
+            marker.extData = {
+              'equipmentId': provinces[i].id,
+              'status': provinces[i].status
+            };
+            (function() {
+              //鼠标点击marker弹出自定义的信息窗体
+              AMap.event.addListener(marker, 'click', function(e) {
+                var target = e.target;
+                var infoWindow = instantInfoWindow(target.getTitle(), target.extData.equipmentId, target.extData.status);
+                infoWindow.open(map, target.getPosition()); //打开信息窗体
+              });
+            })(i);
+          }
+        }
+      });
+    }
+
+    //实例化信息窗体
+    function instantInfoWindow(title, equipmentId, status) {
+      var mapping = {
+        'normal': '正常',
+        'down': '故障',
+        'on': '亮',
+        'off': '关'
+      };
+      var content = [];
+      content.push("<p>设备ID：" + equipmentId + "</p>");
+      content.push("<p>状态：" + mapping[status] + "</p>");
+      content.push("<button class='layui-btn layui-btn-normal' data-toggle='modal' data-target='#myModal'>手动控制</button><button class='layui-btn layui-btn-normal'>派发工单</button>");
+      var infoWindow = new AMap.InfoWindow({ //创建信息窗体
+        isCustom: true, //使用自定义窗体
+        content: createInfoWindow(title, content.join("")), //信息窗体的内容可以是任意html内容
+        offset: new AMap.Pixel(16, -45)
+      });
+      return infoWindow;
+    }
+
+    //构建自定义信息窗体
+    function createInfoWindow(title, content) {
+      var info = document.createElement("div");
+      info.className = "info";
+
+      //可以通过下面的方式修改自定义窗体的宽高
+      //info.style.width = "400px";
+      // 定义顶部标题
+      var top = document.createElement("div");
+      var titleD = document.createElement("div");
+      var closeX = document.createElement("img");
+      top.className = "info-top";
+      titleD.innerHTML = title;
+      closeX.src = "http://webapi.amap.com/images/close2.gif";
+      closeX.onclick = closeInfoWindow;
+
+      top.appendChild(titleD);
+      top.appendChild(closeX);
+      info.appendChild(top);
+
+      // 定义中部内容
+      var middle = document.createElement("div");
+      middle.className = "info-middle";
+      middle.style.backgroundColor = 'white';
+      middle.innerHTML = content;
+      info.appendChild(middle);
+
+      // 定义底部内容
+      var bottom = document.createElement("div");
+      bottom.className = "info-bottom";
+      bottom.style.position = 'relative';
+      bottom.style.top = '0px';
+      bottom.style.margin = '0 auto';
+      var sharp = document.createElement("img");
+      sharp.src = "http://webapi.amap.com/images/sharp.png";
+      bottom.appendChild(sharp);
+      info.appendChild(bottom);
+      return info;
+    }
+
+    //关闭信息窗体
+    function closeInfoWindow() {
+      map.clearInfoWindow();
+    }
+  </script>
+</body>
+
+</html>

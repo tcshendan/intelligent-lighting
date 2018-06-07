@@ -1,0 +1,21 @@
+{
+    "code": 0,
+    "msg": "",
+    "count": 5,
+    "data": [{
+        "id": "1",
+        "manufacturer": "厂商名称1"
+    }, {
+        "id": "2",
+        "manufacturer": "厂商名称2"
+    }, {
+        "id": "3",
+        "manufacturer": "厂商名称3"
+    }, {
+        "id": "4",
+        "manufacturer": "厂商名称4"
+    }, {
+        "id": "5",
+        "manufacturer": "厂商名称5"
+    }]
+}
