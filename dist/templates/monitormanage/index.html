@@ -17,6 +17,11 @@
       position: relative;
     }
 
+    .layui-form-label {
+      margin-right: 5px;
+      padding: 9px 0;
+    }
+
     /* infoWindow */
 
     .info {
@@ -146,13 +151,87 @@
 
     <!-- 状态检测Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog" style="width: 900px;">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">详情</h4>
+            <h4 class="modal-title">状态检测</h4>
           </div>
-          <div class="modal-body">状态检测</div>
+          <div class="modal-body">
+            <div class="layui-row">
+              <div class="layui-inline">
+                <label class="layui-form-label">选择设备：</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="equipment" class="layui-input" placeholder="请输入设备名称" style="width: 440px;">
+                </div>
+                <button class="layui-btn layui-btn-normal">查询</button>
+              </div>
+            </div>
+            <div class="layui-table-box">
+              <table class="layui-table" lay-skin="line">
+                <thead>
+                  <tr>
+                    <th>设备名称</th>
+                    <th>电流</th>
+                    <th>电压</th>
+                    <th>调光值</th>
+                    <th>功率</th>
+                    <th>亮灯功耗</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><a href="javascript:;" data-toggle="modal" data-target="#lampCentralizedControllerModal">路灯集中控制器</a></td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>
+                      <a class="operate-btn operate-btn-edit">定位</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="javascript:;" data-toggle="modal" data-target="#lampCentralizedControllerModal">路灯灯杆</a></td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>
+                      <a class="operate-btn operate-btn-edit">定位</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="javascript:;" data-toggle="modal" data-target="#lampCentralizedControllerModal">景观灯集中控制器</a></td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>
+                      <a class="operate-btn operate-btn-edit">定位</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="javascript:;" data-toggle="modal" data-target="#lampCentralizedControllerModal">景观灯主控器</a></td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>
+                      <a class="operate-btn operate-btn-edit">定位</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="page">
+              <div id="pagination"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -166,8 +245,9 @@
   <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
 
   <script type="text/javascript">
-    layui.use(['form'], function() {
+    layui.use(['form', 'laypage'], function() {
       var form = layui.form;
+      var laypage = layui.laypage;
 
       form.on('select(modules)', function(data) {
         var mapping = {
@@ -177,6 +257,16 @@
           '4': '景观灯主控器'
         };
         alert(mapping[data.value]);
+      });
+
+      //完整功能
+      laypage.render({
+        elem: 'pagination',
+        count: 100,
+        layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+        jump: function(obj) {
+          console.log(obj)
+        }
       });
     });
 
