@@ -85,32 +85,32 @@
     <div class="area">
       <div class="theme-area">
         <div class="theme-top">
-          <label><input type="checkbox" /></label>
+          <label><input type="checkbox" id="all" onclick="util.checkAll()" /></label>
           <span>全部</span>
         </div>
-        <dl>
+        <dl id="dlBox">
           <dt>
-            <label><input type="checkbox" /></label>
+            <label><input type="checkbox" name="theme" onclick="util.checkThemeAll(this, '1')" /></label>
             <span>路灯主题</span>
           </dt>
           <dd>
-            <label><input type="checkbox" /></label>
+            <label><input type="checkbox" name="type1" /></label>
             <span>集中控制器</span>
           </dd>
           <dd>
-            <label><input type="checkbox" /></label>
+            <label><input type="checkbox" name="type1" /></label>
             <span>灯杆</span>
           </dd>
           <dt>
-            <label><input type="checkbox" /></label>
+            <label><input type="checkbox" name="theme" onclick="util.checkThemeAll(this, '2')" /></label>
             <span>景观灯主题</span>
           </dt>
           <dd>
-            <label><input type="checkbox" /></label>
+            <label><input type="checkbox" name="type2" /></label>
             <span>集中控制器</span>
           </dd>
           <dd>
-            <label><input type="checkbox" /></label>
+            <label><input type="checkbox" name="type2" /></label>
             <span>主控器</span>
           </dd>
         </dl>
@@ -240,11 +240,14 @@
   <script src="../../static/js/jquery.min.js"></script>
   <script src="../../layuiadmin/layui/layui.js" charset="utf-8"></script>
   <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=a7670840be2070dec801891aff5eac2c"></script>
-  <!-- UI组件库 1.0 -->
-  <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+  <!-- <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=a7670840be2070dec801891aff5eac2c"></script> -->
+  <script src="../../static/js/util.js"></script>
 
-  <script type="text/javascript">
+  </script>
+  <!-- UI组件库 1.0 -->
+  <!-- <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script> -->
+
+  <!-- <script type="text/javascript">
     layui.use(['form', 'laypage'], function() {
       var form = layui.form;
       var laypage = layui.laypage;
@@ -297,14 +300,14 @@
             var marker;
             var image = '../../static/images/icon_' + provinces[i].status + '.png';
             var icon = new AMap.Icon({
-              size: new AMap.Size(30, 39),
+              size: new AMap.Size(26, 32),
               image: image,
-              imageSize: new AMap.Size(30, 39)
+              imageSize: new AMap.Size(26, 32)
             });
             marker = new AMap.Marker({
               map: map,
               position: provinces[i].center.split(','),
-              offset: new AMap.Pixel(-15, -19),
+              offset: new AMap.Pixel(-13, -16),
               icon: icon,
               title: provinces[i].name
             });
@@ -390,7 +393,7 @@
     function closeInfoWindow() {
       map.clearInfoWindow();
     }
-  </script>
+  </script> -->
 </body>
 
 </html>
