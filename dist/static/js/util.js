@@ -1,25 +1,18 @@
 var util = {
   allBtn: document.getElementById('all'),
   inputs: document.getElementById('dlBox').querySelectorAll('input'),
-  themeInputs: document.getElementById('dlBox').querySelectorAll('input[name^="type"]'),
+  get: function(index) {
+    return document.getElementById('dlBox').querySelectorAll('input[name="type' + index + '"]');
+  },
+  getTheme: function(index) {
+    return document.getElementById('dlBox').querySelector('input[name="theme' + index + '"]');
+  },
   checkAll: function() {
     for (var i = 0; i < this.inputs.length; i++) {
       if (this.allBtn.checked) {
         this.inputs[i].checked = true;
       } else {
         this.inputs[i].checked = false;
-      }
-    }
-  },
-  monitorAll: function() {
-    var _this = this;
-    for (var i = 0; i < this.themeInputs.length; i++) {
-      this.themeInputs[i].onclick = function() {
-        if (_this.isAllChecked() == true) {
-          _this.allBtn.checked = true;
-        } else {
-          _this.allBtn.checked = false;
-        }
       }
     }
   },
@@ -30,12 +23,6 @@ var util = {
       }
     }
     return true;
-  },
-  get: function(index) {
-    return document.getElementById('dlBox').querySelectorAll('input[name="type' + index + '"]');
-  },
-  getTheme: function(index) {
-    return document.getElementById('dlBox').querySelectorAll('input[name="theme' + index + '"]');
   },
   checkThemeAll: function(obj, theme) {
     var allInputs = this.get(theme);
@@ -51,10 +38,19 @@ var util = {
       }
     }
   },
-  monitorThemeAll: function(theme) {
+  isAllThemeChecked: function(theme) {
+    var allInputs = this.get(theme);
+    for (var i = 0; i < allInputs.length; i++) {
+      if (allInputs[i].checked == false) {
+        return false;
+      }
+    }
+    return true;
+  },
+  monitor: function(theme) {
     var _this = this;
     var allInputs = this.get(theme);
-    var themeInput = this.getTheme(theme)[0];
+    var themeInput = this.getTheme(theme);
     for (var i = 0; i < allInputs.length; i++) {
       allInputs[i].onclick = function() {
         if (_this.isAllThemeChecked(theme) == true) {
@@ -69,17 +65,7 @@ var util = {
       }
     }
   },
-  isAllThemeChecked: function(theme) {
-    var allInputs = this.get(theme);
-    for (var i = 0; i < allInputs.length; i++) {
-      if (allInputs[i].checked == false) {
-        return false;
-      }
-    }
-    return true;
-  }
 };
 
-util.monitorAll();
-util.monitorThemeAll('1');
-util.monitorThemeAll('2');
+util.monitor('1');
+util.monitor('2');
