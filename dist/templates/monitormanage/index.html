@@ -304,6 +304,7 @@
               image: image,
               imageSize: new AMap.Size(26, 32)
             });
+            console.log(provinces[i].center.split(','));
             marker = new AMap.Marker({
               map: map,
               position: provinces[i].center.split(','),

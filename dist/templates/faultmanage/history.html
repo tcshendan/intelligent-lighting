@@ -7,6 +7,7 @@
   <link rel="stylesheet" rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css">
   <link rel="stylesheet" href="../../static/css/common.css">
+  <link href="https://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
   <style>
     html,
     body,
@@ -79,6 +80,131 @@
       padding: 0 10px;
       background: #fff
     }
+
+    #treeview-checkable {
+      display: none;
+      position: absolute;
+      top: 40px;
+      left: 0;
+      right: 0;
+      z-index: 10;
+    }
+
+    .ant-select-selection {
+      display: block;
+      width: 440px;
+      box-sizing: border-box;
+      background-color: #fff;
+      border-radius: 4px;
+      border: 1px solid #d9d9d9;
+      border-top-width: 1.02px;
+      min-height: 32px;
+      cursor: text;
+      padding-bottom: 3px;
+      zoom: 1;
+      -webkit-transition: all .3s cubic-bezier(.645, .045, .355, 1);
+      transition: all .3s cubic-bezier(.645, .045, .355, 1);
+    }
+
+    .ant-select-selection:hover {
+      border-color: #40a9ff;
+      border-right-width: 1px !important;
+    }
+
+    .ant-select-selection__rendered {
+      display: block;
+      position: relative;
+      line-height: 30px;
+      margin-left: 5px;
+      margin-bottom: -3px;
+      height: auto;
+    }
+
+    .ant-select-selection__choice {
+      color: rgba(0, 0, 0, .65);
+      background-color: #fafafa;
+      border: 1px solid #e8e8e8;
+      border-radius: 2px;
+      cursor: default;
+      float: left;
+      margin-right: 4px;
+      max-width: 99%;
+      position: relative;
+      overflow: hidden;
+      -webkit-transition: padding .3s cubic-bezier(.645, .045, .355, 1);
+      transition: padding .3s cubic-bezier(.645, .045, .355, 1);
+      padding: 0 20px 0 10px;
+      margin-top: 3px;
+      height: 24px;
+      line-height: 22px;
+    }
+
+    .ant-select-selection__choice__remove {
+      font-style: normal;
+      vertical-align: baseline;
+      text-align: center;
+      text-transform: none;
+      line-height: 1;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: rgba(0, 0, 0, .45);
+      line-height: inherit;
+      cursor: pointer;
+      font-weight: 700;
+      -webkit-transition: all .3s;
+      transition: all .3s;
+      display: inline-block;
+      font-size: 12px;
+      font-size: 10px\9;
+      -webkit-transform: scale(.83333333) rotate(0deg);
+      -ms-transform: scale(.83333333) rotate(0deg);
+      transform: scale(.83333333) rotate(0deg);
+      position: absolute;
+      right: 4px;
+    }
+
+    .ant-select-selection__choice__remove:before {
+      content: "\E633";
+    }
+
+    .ant-select-selection__choice__remove:before {
+      display: block;
+      font-family: anticon !important;
+    }
+
+    .ant-select-selection__choice__content {
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      -webkit-transition: margin .3s cubic-bezier(.645, .045, .355, 1);
+      transition: margin .3s cubic-bezier(.645, .045, .355, 1);
+    }
+
+    @font-face {
+      font-family: anticon;
+      src: url("https://at.alicdn.com/t/font_148784_v4ggb6wrjmkotj4i.eot");
+      src: url("https://at.alicdn.com/t/font_148784_v4ggb6wrjmkotj4i.woff") format("woff"), url("https://at.alicdn.com/t/font_148784_v4ggb6wrjmkotj4i.ttf") format("truetype"), url("https://at.alicdn.com/t/font_148784_v4ggb6wrjmkotj4i.svg#iconfont") format("svg")
+    }
+
+    .anticon {
+      display: inline-block;
+      font-style: normal;
+      vertical-align: baseline;
+      text-align: center;
+      text-transform: none;
+      line-height: 1;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .anticon:before {
+      display: block;
+      font-family: anticon !important;
+    }
   </style>
 </head>
 
@@ -92,12 +218,20 @@
             <input type="text" class="layui-input" id="datepicker" placeholder=" - ">
           </div>
         </div>
-        <div class="layui-inline">
+        <div class="layui-inline" style="position: relative;">
           <label class="layui-form-label">选择设备：</label>
           <div class="layui-input-inline">
-            <input type="text" name="equipment" class="layui-input" placeholder="请输入设备名称" style="width: 440px;">
+            <span class="ant-select-selection">
+              <ul class="ant-select-selection__rendered" id="ant-select-selection__rendered">
+                <!-- <li class="ant-select-selection__choice">
+                  <span class="ant-select-selection__choice__remove"></span>
+            <span class="ant-select-selection__choice__content">Node1</span>
+            </li> -->
+            </ul>
+            </span>
           </div>
           <button class="layui-btn layui-btn-normal">查询</button>
+          <div id="treeview-checkable" class=""></div>
         </div>
       </div>
       <div class="layui-table-box">
@@ -728,6 +862,99 @@
     <script src="../../static/js/jquery.min.js"></script>
     <script src="../../layuiadmin/layui/layui.js" charset="utf-8"></script>
     <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../static/js/jquery-2.1.0.min.js"></script>
+    <script src="../../static/js/bootstrap-treeview.js"></script>
+    <script type="text/javascript">
+      $(function() {
+
+        var defaultData = [{
+            text: '路灯配电柜',
+            nodes: [{
+                text: '路灯集中控制器1',
+                nodes: [{
+                    text: '灯杆1',
+                    nodes: [{
+                        text: '单灯控制器1',
+                        nodes: [{
+                          text: '灯具1',
+                        }, {
+                          text: '灯具2',
+                        }, {
+                          text: '灯具3',
+                        }]
+                      },
+                      {
+                        text: '单灯控制器2',
+                      }
+                    ]
+                  },
+                  {
+                    text: '灯杆2',
+                  }
+                ]
+              },
+              {
+                text: '路灯集中控制器2',
+              }
+            ]
+          },
+          {
+            text: '景观灯配电柜',
+            nodes: [{
+              text: '景观灯集中控制器',
+              nodes: [{
+                text: '景观灯主控器'
+              }]
+            }]
+          }
+        ];
+
+        var $checkableTree = $('#treeview-checkable').treeview({
+          data: defaultData,
+          showIcon: true,
+          showCheckbox: true,
+          levels: 3,
+          onNodeChecked: function(event, node) {
+            //console.log(node);
+            $("#ant-select-selection__rendered").append('<li class="ant-select-selection__choice" data-nodeid="' + node.nodeId + '">' +
+              '<span class="ant-select-selection__choice__remove"></span>' +
+              '<span class="ant-select-selection__choice__content">' + node.text + '</span>' +
+              '</li>');
+          },
+          onNodeUnchecked: function(event, node) {
+            // console.log(node);
+            $("#ant-select-selection__rendered .ant-select-selection__choice").each(function() {
+              if ($(this).attr('data-nodeid') == node.nodeId) {
+                $(this).remove();
+              }
+            });
+          }
+        });
+
+        var findCheckableNodess = function(val) {
+          return $checkableTree.treeview('search', [val, {
+            ignoreCase: false,
+            exactMatch: false
+          }]);
+        };
+
+        $("#ant-select-selection__rendered").on("click", ".ant-select-selection__choice__remove", function(e) {
+          var checkableNodes = findCheckableNodess($(this).next().text());
+          $checkableTree.treeview('uncheckNode', [checkableNodes]);
+          $(this).parent().remove();
+        });
+
+        $(".ant-select-selection").click(function(event) {
+          $("#treeview-checkable").toggle();
+          event.stopPropagation();
+        });
+
+        // $(document).click(function() {
+        //   $("#treeview-checkable").hide();
+        // });
+      });
+    </script>
 
     <script>
       layui.use(['element', 'laydate', 'laypage', 'layer'], function() {
