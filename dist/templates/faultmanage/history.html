@@ -81,65 +81,75 @@
       background: #fff
     }
 
-    #treeview-checkable {
+    #treeview {
       display: none;
       position: absolute;
-      top: 100%;
+      top: 105%;
       left: 0;
       right: 0;
       z-index: 10;
     }
 
-    .ant-select-selection {
+    .selection {
       display: block;
+      padding-bottom: 3px;
       width: 440px;
-      box-sizing: border-box;
-      background-color: #fff;
+      min-height: 32px;
       border-radius: 4px;
       border: 1px solid #d9d9d9;
-      border-top-width: 1.02px;
-      min-height: 32px;
       cursor: text;
-      padding-bottom: 3px;
       zoom: 1;
+      outline: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
       -webkit-transition: all .3s cubic-bezier(.645, .045, .355, 1);
-      transition: all .3s cubic-bezier(.645, .045, .355, 1);
+      transition: all .3s cubic-bezier(.645, .045, .355, 1)
     }
 
-    .ant-select-selection:hover {
+    .selection::after {
+      content: "";
+      display: table;
+    }
+
+    .selection:hover {
       border-color: #40a9ff;
-      border-right-width: 1px !important;
+      outline: 0;
     }
 
-    .ant-select-selection__rendered {
-      display: block;
+    .selection-rendered {
       position: relative;
-      line-height: 30px;
+      display: block;
       margin-left: 5px;
-      margin-bottom: -3px;
+      margin-bottom: 0px;
       height: auto;
+      line-height: 30px;
     }
 
-    .ant-select-selection__choice {
+    .selection-item {
+      position: relative;
+      overflow: hidden;
+      float: left;
+      padding: 0 20px 0 10px;
+      margin-right: 4px;
+      margin-top: 3px;
+      max-width: 99%;
+      height: 24px;
+      line-height: 22px;
       color: rgba(0, 0, 0, .65);
       background-color: #fafafa;
       border: 1px solid #e8e8e8;
       border-radius: 2px;
       cursor: default;
-      float: left;
-      margin-right: 4px;
-      max-width: 99%;
-      position: relative;
-      overflow: hidden;
+      user-select: none;
       -webkit-transition: padding .3s cubic-bezier(.645, .045, .355, 1);
       transition: padding .3s cubic-bezier(.645, .045, .355, 1);
-      padding: 0 20px 0 10px;
-      margin-top: 3px;
-      height: 24px;
-      line-height: 22px;
     }
 
-    .ant-select-selection__choice__remove {
+    .selection-item-remove {
       font-style: normal;
       vertical-align: baseline;
       text-align: center;
@@ -161,19 +171,16 @@
       -ms-transform: scale(.83333333) rotate(0deg);
       transform: scale(.83333333) rotate(0deg);
       position: absolute;
-      right: 4px;
+      right: 4px
     }
 
-    .ant-select-selection__choice__remove:before {
+    .selection-item-remove:before {
+      display: block;
+      font-family: anticon !important;
       content: "\E633";
     }
 
-    .ant-select-selection__choice__remove:before {
-      display: block;
-      font-family: anticon !important;
-    }
-
-    .ant-select-selection__choice__content {
+    .selection-item-content {
       display: inline-block;
       white-space: nowrap;
       overflow: hidden;
@@ -200,11 +207,6 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
-
-    .anticon:before {
-      display: block;
-      font-family: anticon !important;
-    }
   </style>
 </head>
 
@@ -221,15 +223,10 @@
         <div class="layui-inline">
           <label class="layui-form-label">选择设备：</label>
           <div class="layui-input-inline" style="position: relative;">
-            <span class="ant-select-selection clearfix">
-              <ul class="ant-select-selection__rendered" id="ant-select-selection__rendered">
-                <!-- <li class="ant-select-selection__choice">
-                  <span class="ant-select-selection__choice__remove"></span>
-            <span class="ant-select-selection__choice__content">Node1</span>
-            </li> -->
-            </ul>
+            <span class="selection">
+              <ul class="selection-rendered clearfix" id="selection-rendered"></ul>
             </span>
-            <div id="treeview-checkable" class=""></div>
+            <div id="treeview" class=""></div>
           </div>
           <button class="layui-btn layui-btn-normal">查询</button>
         </div>
@@ -910,21 +907,21 @@
           }
         ];
 
-        var $checkableTree = $('#treeview-checkable').treeview({
+        var $checkableTree = $('#treeview').treeview({
           data: defaultData,
           showIcon: true,
           showCheckbox: true,
           levels: 4,
           onNodeChecked: function(event, node) {
             //console.log(node);
-            $("#ant-select-selection__rendered").append('<li class="ant-select-selection__choice" data-nodeid="' + node.nodeId + '">' +
-              '<span class="ant-select-selection__choice__remove"></span>' +
-              '<span class="ant-select-selection__choice__content">' + node.text + '</span>' +
+            $("#selection-rendered").append('<li class="selection-item" data-nodeid="' + node.nodeId + '">' +
+              '<span class="selection-item-remove"></span>' +
+              '<span class="selection-item-content">' + node.text + '</span>' +
               '</li>');
           },
           onNodeUnchecked: function(event, node) {
             // console.log(node);
-            $("#ant-select-selection__rendered .ant-select-selection__choice").each(function() {
+            $("#selection-rendered .selection-item").each(function() {
               if ($(this).attr('data-nodeid') == node.nodeId) {
                 $(this).remove();
               }
@@ -939,22 +936,21 @@
           }]);
         };
 
-        $("#ant-select-selection__rendered").on("click", ".ant-select-selection__choice__remove", function(e) {
+        $("#selection-rendered").on("click", ".selection-item-remove", function(e) {
           var checkableNodes = findCheckableNodess($(this).next().text());
           $checkableTree.treeview('uncheckNode', [checkableNodes]);
           $(this).parent().remove();
           e.stopPropagation();
         });
 
-        $(".ant-select-selection").click(function(e) {
-          $("#treeview-checkable").toggle();
+        $(".selection").click(function(e) {
+          $("#treeview").toggle();
           e.stopPropagation();
         });
 
         $(document).click(function(e) {
-
           if (!$(e.target).hasClass('list-group-item') && !$(e.target).hasClass('icon')) {
-            $("#treeview-checkable").hide();
+            $("#treeview").hide();
           }
         });
       });
