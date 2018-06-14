@@ -84,7 +84,7 @@
     #treeview-checkable {
       display: none;
       position: absolute;
-      top: 40px;
+      top: 100%;
       left: 0;
       right: 0;
       z-index: 10;
@@ -218,10 +218,10 @@
             <input type="text" class="layui-input" id="datepicker" placeholder=" - ">
           </div>
         </div>
-        <div class="layui-inline" style="position: relative;">
+        <div class="layui-inline">
           <label class="layui-form-label">选择设备：</label>
-          <div class="layui-input-inline">
-            <span class="ant-select-selection">
+          <div class="layui-input-inline" style="position: relative;">
+            <span class="ant-select-selection clearfix">
               <ul class="ant-select-selection__rendered" id="ant-select-selection__rendered">
                 <!-- <li class="ant-select-selection__choice">
                   <span class="ant-select-selection__choice__remove"></span>
@@ -229,9 +229,9 @@
             </li> -->
             </ul>
             </span>
+            <div id="treeview-checkable" class=""></div>
           </div>
           <button class="layui-btn layui-btn-normal">查询</button>
-          <div id="treeview-checkable" class=""></div>
         </div>
       </div>
       <div class="layui-table-box">
@@ -914,7 +914,7 @@
           data: defaultData,
           showIcon: true,
           showCheckbox: true,
-          levels: 3,
+          levels: 4,
           onNodeChecked: function(event, node) {
             //console.log(node);
             $("#ant-select-selection__rendered").append('<li class="ant-select-selection__choice" data-nodeid="' + node.nodeId + '">' +
@@ -943,16 +943,20 @@
           var checkableNodes = findCheckableNodess($(this).next().text());
           $checkableTree.treeview('uncheckNode', [checkableNodes]);
           $(this).parent().remove();
+          e.stopPropagation();
         });
 
-        $(".ant-select-selection").click(function(event) {
+        $(".ant-select-selection").click(function(e) {
           $("#treeview-checkable").toggle();
-          event.stopPropagation();
+          e.stopPropagation();
         });
 
-        // $(document).click(function() {
-        //   $("#treeview-checkable").hide();
-        // });
+        $(document).click(function(e) {
+
+          if (!$(e.target).hasClass('list-group-item') && !$(e.target).hasClass('icon')) {
+            $("#treeview-checkable").hide();
+          }
+        });
       });
     </script>
 
