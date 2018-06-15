@@ -260,6 +260,7 @@ a, a:hover {
   position: absolute; //设置为绝对定位，不会影响到其他元素
   top: 0;
   right: 0;
+  z-index: 100;
   opacity: 0; //透明度为0
   filter: alpha(opacity=0);
   cursor: pointer;
@@ -275,6 +276,7 @@ a, a:hover {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 10;
 }
 
 /* area */
