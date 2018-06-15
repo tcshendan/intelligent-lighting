@@ -279,6 +279,10 @@ a, a:hover {
   z-index: 10;
 }
 
+#previewPicture img {
+  max-width: 100%;
+}
+
 /* area */
 
 .area {
