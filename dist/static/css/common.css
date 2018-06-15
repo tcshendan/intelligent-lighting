@@ -238,23 +238,43 @@ a, a:hover {
 
 /* upload */
 
-.upload {
+.upload-file {
+  position: relative;
   width: 100%;
   height: 150px;
   background-color: rgb(250, 250, 250);
   border: 1px dashed rgb(217, 217, 217);
   border-radius: 5px;
   text-align: center;
+  overflow: hidden;
 }
 
-.upload .mark {
+.upload-file .upload {
+  width: 100%;
+  height: 100%;
+}
+
+.upload-file input[type="file"] {
+  height: 100%;
+  width: 100%;
+  position: absolute; //设置为绝对定位，不会影响到其他元素
+  top: 0;
+  right: 0;
+  opacity: 0; //透明度为0
+  filter: alpha(opacity=0);
+  cursor: pointer;
+}
+
+.upload-file .mark {
   display: block;
   line-height: 20px;
   color: #999;
 }
 
-.upload input[type="file"] {
-  display: none;
+#previewPicture {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /* area */

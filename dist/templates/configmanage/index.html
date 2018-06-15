@@ -336,10 +336,13 @@
                     <div class="layui-form-item layui-form-picture" style="display: none">
                       <label class="layui-form-label">图片描述：</label>
                       <div class="layui-input-block">
-                        <div class="upload">
-                          <img src="../../static/images/upload.png" alt="" style="margin-top: 40px;margin-bottom: 10px;cursor: pointer;" onclick="javascript:program.upload(this);">
-                          <input type="file" name="file" accept="image/*" />
-                          <span class="mark">上传</span>
+                        <div class="upload-file">
+                          <div class="upload">
+                            <img src="../../static/images/upload.png" alt="" style="margin-top: 40px;">
+                            <input type="file" name="file" accept="image/*" onchange="program.preview(this)" />
+                            <span class="mark">上传</span>
+                          </div>
+                          <div id="previewPicture"></div>
                         </div>
                         <p style="margin-top: 5px;line-height: 24px;color: #999">支持扩展名：png、jpg、jpeg...</p>
                       </div>
@@ -347,10 +350,13 @@
                     <div class="layui-form-item layui-form-video" style="display: none">
                       <label class="layui-form-label">视频封面：</label>
                       <div class="layui-input-block">
-                        <div class="upload">
-                          <img src="../../static/images/upload.png" alt="" style="margin-top: 40px;margin-bottom: 10px;cursor: pointer;" onclick="javascript:program.upload(this);">
-                          <input type="file" name="file" accept="image/*" />
-                          <span class="mark">上传</span>
+                        <div class="upload-file">
+                          <div class="upload">
+                            <img src="../../static/images/upload.png" alt="" style="margin-top: 40px;">
+                            <input type="file" name="file" accept="image/*" onchange="program.preview(this)" />
+                            <span class="mark">上传</span>
+                          </div>
+                          <div id="previewPicture"></div>
                         </div>
                         <p style="margin-top: 5px;line-height: 24px;color: #999">支持扩展名：png、jpg、jpeg...</p>
                       </div>
@@ -615,8 +621,17 @@
             break;
         }
       },
-      upload: function(obj) {
-        $(obj).next().click();
+      preview: function(file) {
+        var previewDiv = document.getElementById('previewPicture');
+        if (file.files && file.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function(evt) {
+            previewDiv.innerHTML = '<img src="' + evt.target.result + '" />';
+          }
+          reader.readAsDataURL(file.files[0]);
+        } else {
+          previewDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
+        }
       }
     };
 
@@ -704,6 +719,8 @@
       save: function() {
         var id = $('input[name="manufacturerId"]').val();
         var url = id === '' ? '/manufacturer/add' : '/manufacturer/update';
+
+        console.log($('.manufacturer-form').serialize());
         $.ajax({
           url: url,
           type: 'POST',
