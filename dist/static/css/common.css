@@ -272,15 +272,34 @@ a, a:hover {
   color: #999;
 }
 
-#previewPicture {
+.previewPicture {
   position: absolute;
   top: 0;
   left: 0;
   z-index: 10;
+  padding: 2px;
 }
 
-#previewPicture img {
+.previewPicture img {
   max-width: 100%;
+  max-height: 100%;
+}
+
+.upload-tip {
+  margin-left: 10px;
+  display: none;
+}
+
+.upload-video {
+  height: 38px;
+  width: 115px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  cursor: pointer;
 }
 
 /* area */
