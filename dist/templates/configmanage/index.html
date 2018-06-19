@@ -339,7 +339,7 @@
                         <div class="upload-file">
                           <div class="upload">
                             <img src="../../static/images/upload.png" alt="" style="margin-top: 40px;">
-                            <input type="file" name="file" accept="image/*" onchange="program.preview(this)" />
+                            <input type="file" name="file" onchange="program.preview(this, 1)" />
                             <span class="mark">上传</span>
                           </div>
                           <div class="previewPicture"></div>
@@ -353,7 +353,7 @@
                         <div class="upload-file">
                           <div class="upload">
                             <img src="../../static/images/upload.png" alt="" style="margin-top: 40px;">
-                            <input type="file" name="file" accept="image/*" onchange="program.preview(this)" />
+                            <input type="file" name="file" onchange="program.preview(this, 1)" />
                             <span class="mark">上传</span>
                           </div>
                           <div class="previewPicture"></div>
@@ -366,7 +366,7 @@
                       <div class="layui-input-block" style="position: relative;">
                         <button type="button" class="layui-btn layui-btn-primary"><i class="layui-icon"></i>上传文件</button>
                         <span class="upload-tip j-upload-tip"></span>
-                        <input type="file" name="file" class="upload-video j-upload-video" onchange="program.showSelectedFile(this)">
+                        <input type="file" name="file" class="upload-video j-upload-video" onchange="program.preview(this, 2)" />
                         <p style="margin-top: 5px;line-height: 24px;color: #999">支持扩展名：mp4、rmvb、avi、wmv...；大小：10M以内</p>
                       </div>
                     </div>
@@ -523,7 +523,7 @@
     });
 
     var program = {
-      allowSize: {1: 1, 2: 10},
+      allowSize: {1: 2, 2: 10},
       allowType: {
         ".png": 1, ".jpg": 1, ".jpeg": 1,
         ".mp4": 2, ".rmvb": 2, ".avi": 2, ".wmv": 2
@@ -627,64 +627,54 @@
             break;
         }
       },
-      preview: function(file) {
+      /**
+       * 图片或视频标题预览
+       * @param  {[type]} file input[type=file]对象
+       * @param  {[type]} type 1：图片  2:视频
+       * @return
+       */
+      preview: function(file, type) {
         var fileObj = $(file);
         var fileVal = fileObj.val();
-        var previewDiv = $(file).parent().next()[0];
 
-        if (!this.checkFileType(fileVal, 1)) {
-          layer.msg(this.errMsg[1], {
+        if (!this.checkFileType(fileVal, type)) {
+          layer.msg(this.errMsg[type], {
             icon: 5
           });
           fileObj.val('');
           return false;
         }
 
-        if (!this.checkFileSize(file, this.allowSize[1])) {
-          layer.msg(this.errSizeMsg[1], {
+        if (!this.checkFileSize(file, this.allowSize[type])) {
+          layer.msg(this.errSizeMsg[type], {
             icon: 5
           });
           fileObj.val('');
           return false;
         }
 
-        if (file.files && file.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function(evt) {
-            previewDiv.innerHTML = '<img src="' + evt.target.result + '" />';
+        if (type === 1) {
+          var previewDiv = $(file).parent().next()[0];
+
+          if (file.files && file.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(evt) {
+              previewDiv.innerHTML = '<img src="' + evt.target.result + '" />';
+            }
+            reader.readAsDataURL(file.files[0]);
+          } else {
+            //IE浏览器
+            file.select();
+            var src = document.selection.createRange().text;
+            previewDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + src + '\'"></div>';
           }
-          reader.readAsDataURL(file.files[0]);
         } else {
-          //IE浏览器
-          file.select();
-          var src = document.selection.createRange().text;
-          previewDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + src + '\'"></div>';
-        }
-      },
-      showSelectedFile: function(file) {
-        var fileObj = $(file);
-        var fileVal = fileObj.val();
 
-        if (!this.checkFileType(fileVal, 2)) {
-          layer.msg(this.errMsg[2], {
-            icon: 5
-          });
-          fileObj.val('');
-          return false;
+          var urlArr = fileVal.split("\\");
+          var fileName = urlArr[urlArr.length - 1];
+          console.log(fileName);
+          $('.j-upload-tip').text(fileName).show();
         }
-
-        if (!this.checkFileSize(file, this.allowSize[2])) {
-          layer.msg(this.errSizeMsg[2], {
-            icon: 5
-          });
-          fileObj.val('');
-          return false;
-        }
-
-        var urlArr = fileVal.split("\\");
-        var fileName = urlArr[urlArr.length - 1];
-        console.log(fileName);
-        $('.j-upload-tip').text(fileName).show();
       },
       /**
        * 检测文件格式类型
