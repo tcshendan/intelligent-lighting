@@ -278,6 +278,30 @@
       zoom: 4 //级别
     });
 
+    var lnglatXY = [116.405285, 39.904989]; //已知点坐标
+
+    function regeocoder() {  //逆地理编码
+        var geocoder = new AMap.Geocoder({
+            radius: 1000,
+            extensions: "all"
+        });
+        geocoder.getAddress(lnglatXY, function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+                geocoder_CallBack(result);
+            }
+        });
+        var marker = new AMap.Marker({  //加点
+            map: map,
+            position: lnglatXY
+        });
+        map.setFitView();
+    }
+
+    function geocoder_CallBack(data) {
+        var address = data.regeocode.formattedAddress; //返回地址描述
+        document.getElementById("result").innerHTML = address;
+    }
+
     AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
       //添加一个缩放控件
       map.addControl(new BasicControl.Zoom({
