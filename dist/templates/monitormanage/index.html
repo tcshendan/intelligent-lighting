@@ -6,6 +6,7 @@
   <title></title>
   <link rel="stylesheet" rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css" />
   <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" />
+  <link rel="stylesheet" href="../../static/ztree/css/zTreeStyle/zTreeStyle.css" />
   <link rel="stylesheet" href="../../static/css/common.css" />
   <style>
     #container {
@@ -161,8 +162,13 @@
             <div class="layui-row">
               <div class="layui-inline">
                 <label class="layui-form-label">选择设备：</label>
-                <div class="layui-input-inline">
-                  <input type="text" name="equipment" class="layui-input" placeholder="请输入设备名称" style="width: 440px;">
+                <div class="selection-treeview">
+                  <span class="selection j-selection">
+                        <ul class="selection-rendered clearfix" id="selection-rendered"></ul>
+                    </span>
+                  <div id="treeBox" class="usual-tree-box">
+                    <ul id="treeDemo" class="ztree"></ul>
+                  </div>
                 </div>
                 <button class="layui-btn layui-btn-normal">查询</button>
               </div>
@@ -240,6 +246,8 @@
   <script src="../../static/js/jquery.min.js"></script>
   <script src="../../layuiadmin/layui/layui.js" charset="utf-8"></script>
   <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../../static/ztree/js/jquery.ztree.core.js"></script>
+  <script src="../../static/ztree/js/jquery.ztree.excheck.js"></script>
   <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=a7670840be2070dec801891aff5eac2c"></script>
   <script src="../../static/js/util.js"></script>
 
@@ -268,10 +276,156 @@
         count: 100,
         layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
         jump: function(obj) {
-          console.log(obj)
+          //console.log(obj)
         }
       });
     });
+
+    var setting = {
+      check: {
+        enable: true
+      },
+      data: {
+        simpleData: {
+          enable: true
+        }
+      },
+      callback: {
+        onCheck: zTreeOnCheck
+      }
+    };
+
+    var zNodes = [{
+        id: 1,
+        pId: 0,
+        name: "随意勾选 1",
+        open: true
+      },
+      {
+        id: 11,
+        pId: 1,
+        name: "随意勾选 1-1",
+        open: true
+      },
+      {
+        id: 111,
+        pId: 11,
+        name: "随意勾选 1-1-1"
+      },
+      {
+        id: 112,
+        pId: 11,
+        name: "随意勾选 1-1-2"
+      },
+      {
+        id: 12,
+        pId: 1,
+        name: "随意勾选 1-2",
+        open: true
+      },
+      {
+        id: 121,
+        pId: 12,
+        name: "随意勾选 1-2-1"
+      },
+      {
+        id: 122,
+        pId: 12,
+        name: "随意勾选 1-2-2"
+      },
+      {
+        id: 2,
+        pId: 0,
+        name: "随意勾选 2",
+        open: true
+      },
+      {
+        id: 21,
+        pId: 2,
+        name: "随意勾选 2-1"
+      },
+      {
+        id: 22,
+        pId: 2,
+        name: "随意勾选 2-2",
+        open: true
+      },
+      {
+        id: 221,
+        pId: 22,
+        name: "随意勾选 2-2-1"
+      },
+      {
+        id: 222,
+        pId: 22,
+        name: "随意勾选 2-2-2"
+      },
+      {
+        id: 23,
+        pId: 2,
+        name: "随意勾选 2-3"
+      }
+    ];
+
+    $(document).ready(function() {
+      $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+
+      $(".j-selection").click(function(e) {
+        $("#treeBox").toggle();
+        e.stopPropagation();
+      });
+    });
+
+    function zTreeOnCheck(e, treeId, treeNode) {
+      //console.log(treeNode);
+      if (treeNode.checked) {
+        if (!treeNode.getParentNode()) {
+          insertSelectionItem(treeNode.id, treeNode.name);
+        } else {
+          iterationPNode(treeNode.getParentNode(), treeNode);
+        }
+      }
+    }
+
+    function insertSelectionItem(id, name) {
+      $("#selection-rendered").append('<li class="selection-item" data-id="' + id + '">' +
+        '<span class="selection-item-remove"></span>' +
+        '<span class="selection-item-content">' + name + '</span>' +
+        '</li>');
+    }
+
+    function deleteSelectionItem(id) {
+      $("#selection-rendered .selection-item").each(function() {
+        if ($(this).attr('data-id') == id) {
+          $(this).remove();
+        }
+      });
+    }
+
+    function iterationPNode(parentNode, treeNode) {
+      if (isTreeNodeAllSelected(parentNode)) {
+        for (var i = 0; i < parentNode.children.length; i++) {
+          deleteSelectionItem(parentNode.children[i].id);
+        }
+        insertSelectionItem(parentNode.id, parentNode.name);
+      } else {
+        insertSelectionItem(treeNode.id, treeNode.name);
+      }
+    }
+
+    function isTreeNodeAllSelected(treeNode) {
+      var count = 0;
+      for (var i = 0; i < treeNode.children.length; i++) {
+        if (treeNode.children[i].checked == true) {
+          count += 1;
+        }
+      }
+      if (count == treeNode.children.length) {
+        return true;
+      } else {
+        return false;
+      }
+    }
 
     var map = new AMap.Map('container', {
       resizeEnable: true,
@@ -280,26 +434,26 @@
 
     var lnglatXY = [116.405285, 39.904989]; //已知点坐标
 
-    function regeocoder() {  //逆地理编码
-        var geocoder = new AMap.Geocoder({
-            radius: 1000,
-            extensions: "all"
-        });
-        geocoder.getAddress(lnglatXY, function(status, result) {
-            if (status === 'complete' && result.info === 'OK') {
-                geocoder_CallBack(result);
-            }
-        });
-        var marker = new AMap.Marker({  //加点
-            map: map,
-            position: lnglatXY
-        });
-        map.setFitView();
+    function regeocoder() { //逆地理编码
+      var geocoder = new AMap.Geocoder({
+        radius: 1000,
+        extensions: "all"
+      });
+      geocoder.getAddress(lnglatXY, function(status, result) {
+        if (status === 'complete' && result.info === 'OK') {
+          geocoder_CallBack(result);
+        }
+      });
+      var marker = new AMap.Marker({ //加点
+        map: map,
+        position: lnglatXY
+      });
+      map.setFitView();
     }
 
     function geocoder_CallBack(data) {
-        var address = data.regeocode.formattedAddress; //返回地址描述
-        document.getElementById("result").innerHTML = address;
+      var address = data.regeocode.formattedAddress; //返回地址描述
+      document.getElementById("result").innerHTML = address;
     }
 
     AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
@@ -328,7 +482,7 @@
               image: image,
               imageSize: new AMap.Size(26, 32)
             });
-            console.log(provinces[i].center.split(','));
+            //console.log(provinces[i].center.split(','));
             marker = new AMap.Marker({
               map: map,
               position: provinces[i].center.split(','),
