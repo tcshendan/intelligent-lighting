@@ -295,77 +295,22 @@
       }
     };
 
-    var zNodes = [{
-        id: 1,
-        pId: 0,
-        name: "随意勾选 1",
-        open: true
-      },
-      {
-        id: 11,
-        pId: 1,
-        name: "随意勾选 1-1",
-        open: true
-      },
-      {
-        id: 111,
-        pId: 11,
-        name: "随意勾选 1-1-1"
-      },
-      {
-        id: 112,
-        pId: 11,
-        name: "随意勾选 1-1-2"
-      },
-      {
-        id: 12,
-        pId: 1,
-        name: "随意勾选 1-2",
-        open: true
-      },
-      {
-        id: 121,
-        pId: 12,
-        name: "随意勾选 1-2-1"
-      },
-      {
-        id: 122,
-        pId: 12,
-        name: "随意勾选 1-2-2"
-      },
-      {
-        id: 2,
-        pId: 0,
-        name: "随意勾选 2",
-        open: true
-      },
-      {
-        id: 21,
-        pId: 2,
-        name: "随意勾选 2-1"
-      },
-      {
-        id: 22,
-        pId: 2,
-        name: "随意勾选 2-2",
-        open: true
-      },
-      {
-        id: 221,
-        pId: 22,
-        name: "随意勾选 2-2-1"
-      },
-      {
-        id: 222,
-        pId: 22,
-        name: "随意勾选 2-2-2"
-      },
-      {
-        id: 23,
-        pId: 2,
-        name: "随意勾选 2-3"
-      }
-    ];
+    var zNodes = [
+    {id: 1, pId: 0, name: "随意勾选 1", open: true},
+    {id: 11, pId: 1, name: "随意勾选 1-1", open: true},
+    {id: 111, pId: 11, name: "随意勾选 1-1-1"},
+    {id: 112, pId: 11, name: "随意勾选 1-1-2"},
+    {id: 12, pId: 1, name: "随意勾选 1-2", open: true},
+    {id: 121, pId: 12, name: "随意勾选 1-2-1"},
+    {id: 122, pId: 12, name: "随意勾选 1-2-2"},
+    {id: 2, pId: 0, name: "随意勾选 2", open: true},
+    {id: 21, pId: 2, name: "随意勾选 2-1"},
+    {id: 22, pId: 2, name: "随意勾选 2-2", open: true},
+    {id: 221, pId: 22, name: "随意勾选 2-2-1"},
+    {id: 222, pId: 22, name: "随意勾选 2-2-2"},
+    {id: 23, pId: 2, name: "随意勾选 2-3"}
+];
+
 
     $(document).ready(function() {
       $.fn.zTree.init($("#treeDemo"), setting, zNodes);
@@ -377,12 +322,23 @@
     });
 
     function zTreeOnCheck(e, treeId, treeNode) {
-      //console.log(treeNode);
       if (treeNode.checked) {
-        if (!treeNode.getParentNode()) {
+        if (!treeNode.getParentNode()) { //是第一级节点
           insertSelectionItem(treeNode.id, treeNode.name);
         } else {
-          iterationPNode(treeNode.getParentNode(), treeNode);
+          var parentNode = treeNode;
+          for (var i= 0 ; i < treeNode.level; i++) {
+            parentNode = parentNode.getParentNode();
+            iterationPNode(parentNode, treeNode, parseInt(treeNode.level - i));
+          }
+        }
+      }
+      else {
+        var parentNode = treeNode.getParentNode();
+        if (parentNode && parentNode.checked) {
+          reverseIterationPNode(parentNode);
+        } else {
+          deleteSelectionItem(treeNode.id);
         }
       }
     }
@@ -402,25 +358,39 @@
       });
     }
 
-    function iterationPNode(parentNode, treeNode) {
+    function iterationPNode(parentNode, treeNode, count) {
       if (isTreeNodeAllSelected(parentNode)) {
         for (var i = 0; i < parentNode.children.length; i++) {
           deleteSelectionItem(parentNode.children[i].id);
         }
         insertSelectionItem(parentNode.id, parentNode.name);
       } else {
-        insertSelectionItem(treeNode.id, treeNode.name);
+        if (count == treeNode.level) {
+          insertSelectionItem(treeNode.id, treeNode.name);
+        }
+      }
+    }
+
+    function reverseIterationPNode(parentNode) {
+      var childrens = $.fn.zTree.getZTreeObj("treeDemo").transformToArray(parentNode);
+      deleteSelectionItem(parentNode.id);
+      for (var i = 1; i < childrens.length; i++) {
+        var item = childrens[i];
+        if (item.checked) {
+          insertSelectionItem(item.id, item.name);
+        }
       }
     }
 
     function isTreeNodeAllSelected(treeNode) {
       var count = 0;
-      for (var i = 0; i < treeNode.children.length; i++) {
-        if (treeNode.children[i].checked == true) {
+      var childrens = $.fn.zTree.getZTreeObj("treeDemo").transformToArray(treeNode);
+      for (var i = 0; i < childrens.length; i++) {
+        if (childrens[i].checked == true) {
           count += 1;
         }
       }
-      if (count == treeNode.children.length) {
+      if (count == childrens.length) {
         return true;
       } else {
         return false;
