@@ -591,6 +591,16 @@ a, a:hover {
     overflow: hidden;
 }
 
+.board-title {
+    padding: 0 20px;
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    font-size: 16px;
+    color: #333;
+    border-bottom: 1px solid #efefef;
+}
+
 .content-container .left {
     margin-right: 350px;
     height: 100%;
@@ -611,11 +621,150 @@ a, a:hover {
     background-color: #fff;
 }
 
+.content-container .statistics .amount {
+    height: 118px;
+}
+
+.content-container .statistics .lamp, .content-container .statistics .landscape {
+    padding-left: 35px;
+    height: 100%;
+}
+
+.content-container .statistics .lamp {
+    float: left;
+    width: calc(50% - 1px);
+    border-right: 1px solid #efefef;
+}
+
+.content-container .statistics .landscape {
+    float: right;
+    width: 50%;
+}
+
+.content-container .statistics .amount h6 {
+    margin-top: 18px;
+    font-size: 16px;
+    color: #999;
+}
+
+.content-container .statistics .amount p {
+    margin: 5px 0;
+    font-size: 30px;
+    color: #333;
+}
+
+.content-container .statistics .amount span {
+    display: block;
+    font-family: "Hiragino Sans GB W3", sans-serif;
+    font-size: 14px;
+    color: #999;
+}
+
+.content-container .statistics .amount span em {
+    margin-left: 10px;
+    font-style: normal;
+    color: #333;
+}
+
 .content-container .map {
     margin-top: 10px;
     width: 100%;
     height: 390px;
     background-color: #fff;
+}
+
+.content-container .info-list-box {
+    position: relative;
+    padding-top: 20px;
+    width: 100%;
+    height: 259px;
+}
+
+.content-container .border-bottom::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #efefef;
+    width: 100%;
+    height: 1px;
+}
+
+.content-container .info-title {
+    padding: 0 16px;
+}
+
+.content-container .info-title span {
+    float: left;
+    display: inline-block;
+    line-height: 34px;
+    font-size: 16px;
+    color: #999;
+}
+
+.content-container .info-title em {
+    float: right;
+    display: inline-block;
+    font-style: normal;
+    font-size: 30px;
+    color: #333;
+}
+
+.content-container .info-list {
+    padding: 0 32px;
+}
+
+.content-container .info-item {
+    font-size: 0;
+    margin: 13px 0;
+}
+
+.content-container .info-item .icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    width: 24px;
+    height: 24px;
+}
+
+.content-container .info-item .icon.icon-lamp-distbox {
+    background: url("../images/icon/lamp/distbox.png") no-repeat center center;
+}
+
+.content-container .info-item .icon.icon-lamp-ctrl {
+    background: url("../images/icon/lamp/ctrl.png") no-repeat center center;
+}
+
+.content-container .info-item .icon.icon-lamp-post {
+    background: url("../images/icon/lamp/post.png") no-repeat center center;
+}
+
+.content-container .info-item .icon.icon-lamp-sctrl {
+    background: url("../images/icon/lamp/sctrl.png") no-repeat center center;
+}
+
+.content-container .info-item .icon.icon-lamp-lantern {
+    background: url("../images/icon/lamp/lantern.png") no-repeat center center;
+}
+
+.content-container .info-item .icon.icon-land-distbox {
+    background: url("../images/icon/landscape/distbox.png") no-repeat center center;
+}
+
+.content-container .info-item .icon.icon-land-ctrl {
+    background: url("../images/icon/landscape/ctrl.png") no-repeat center center;
+}
+
+.content-container .info-item .icon.icon-land-mctrl {
+    background: url("../images/icon/landscape/mctrl.png") no-repeat center center;
+}
+
+.content-container .info-item .text {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #efae25;
 }
 
 .chart-container {
