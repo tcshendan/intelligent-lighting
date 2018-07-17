@@ -673,10 +673,65 @@ a, a:hover {
 }
 
 .content-container .map {
+    position: relative;
     margin-top: 10px;
     width: 100%;
     height: 390px;
     background-color: #fff;
+}
+
+.content-container .intro {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+    width: 200px;
+    height: 34px;
+    line-height: 34px;
+    font-size: 0;
+    background-color: #fff;
+    border: 1px solid #efefef;
+    border-radius: 1px;
+}
+
+.content-container .intro-item {
+    position: relative;
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+}
+
+.content-container .intro-item-1::after {
+    content: '';
+    position: absolute;
+    top: 7px;
+    right: -1px;
+    background-color: #e4e4e4;
+    width: 1px;
+    height: 21px;
+}
+
+.content-container .intro-item i {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 9px;
+    width: 10px;
+    height: 10px;
+}
+
+.content-container .intro-item-1 i {
+    background: url('../images/home/lamp.png') no-repeat;
+}
+
+.content-container .intro-item-2 i {
+    background: url('../images/home/landscape.png') no-repeat;
+}
+
+.content-container .intro-item span {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #333;
 }
 
 .content-container .info-list-box {

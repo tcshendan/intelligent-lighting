@@ -44,7 +44,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="map">地图</div>
+                <div class="map">
+                    <div id="container" style="height: 390px;"></div>
+                    <div class="intro">
+                        <div class="intro-item intro-item-1">
+                            <i></i>
+                            <span>联网路灯</span>
+                        </div>
+                        <div class="intro-item intro-item-2">
+                            <i></i>
+                            <span>景观灯</span>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="right">
                 <div class="info">
@@ -134,7 +146,36 @@
     <script src="../../static/js/jquery.min.js"></script>
     <script src="../../layuiadmin/layui/layui.js" charset="utf-8"></script>
     <script src="../../static/js/echarts.js"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.8&key=a7670840be2070dec801891aff5eac2c"></script>
+    <script src="../../static/data/citys.js"></script>
     <script type="text/javascript">
+        var map = new AMap.Map('container', {
+            zoom: 4,
+            center: [102.342785, 35.312316],
+            zoomEnable: false,
+            dragEnable: false
+        });
+        var style = [{
+            url: '../../static/images/home/lamp.png',
+            anchor: new AMap.Pixel(5, 5),
+            size: new AMap.Size(10, 10)
+        }, {
+            url: '../../static/images/home/landscape.png',
+            anchor: new AMap.Pixel(5, 5),
+            size: new AMap.Size(10, 10)
+        }];
+        var mass = new AMap.MassMarks(citys, {
+            opacity: 0.8,
+            zIndex: 111,
+            cursor: 'default',
+            style: style
+        });
+        var marker = new AMap.Marker({
+            content: ' ',
+            map: map
+        })
+        mass.setMap(map);
+
         drawPieChart('lamp-container', 1);
         drawPieChart('landscape-container', 1);
         drawPieChart('saving-container', 2);
