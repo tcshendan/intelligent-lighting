@@ -32,12 +32,12 @@
                 <div class="statistics">
                     <div class="board-title">灯具统计</div>
                     <div class="amount clearfix">
-                        <div class="lamp">
+                        <div class="lamp usual-left">
                             <h6>联网路灯数量</h6>
                             <p>125,266</p>
                             <span>近一月新增数量<em>26</em></span>
                         </div>
-                        <div class="landscape">
+                        <div class="landscape usual-right">
                             <h6>景观灯数量</h6>
                             <p>125,266</p>
                             <span>近一月新增数量<em>26</em></span>
@@ -51,8 +51,8 @@
                     <div class="board-title">故障信息</div>
                     <div class="info-list-box border-bottom">
                         <div class="info-title clearfix">
-                            <span>路灯故障数量</span>
-                            <em>125,266</em>
+                            <span class="usual-left">路灯故障数量</span>
+                            <em class="usual-right">125,266</em>
                         </div>
                         <div class="info-list">
                             <div class="info-item">
@@ -79,8 +79,8 @@
                     </div>
                     <div class="info-list-box">
                         <div class="info-title clearfix">
-                            <span>景观灯故障数量</span>
-                            <em>126</em>
+                            <span class="usual-left">景观灯故障数量</span>
+                            <em class="usual-right">126</em>
                         </div>
                         <div class="info-list">
                             <div class="info-item">
@@ -101,18 +101,113 @@
             </div>
         </div>
         <div class="chart-container">
-            <div class="left">
+            <div class="left usual-left">
                 <div class="board-title">亮灯率</div>
+                <div class="chart-group clearfix">
+                    <div class="lamp-chart usual-left">
+                        <div id="lamp-container" style="height: 174px;"></div>
+                        <p>路灯</p>
+                    </div>
+                    <div class="landscape-chart usual-right">
+                        <div id="landscape-container" style="height: 174px;"></div>
+                        <p>景观灯</p>
+                    </div>
+                </div>
             </div>
-            <div class="right">
+            <div class="right usual-right">
                 <div class="board-title">用电情况</div>
+                <div class="elec-saving clearfix">
+                    <div class="elec usual-left">
+                        <h6>当月总电量</h6>
+                        <p>125,266<span>Kw.h</span></p>
+                        <h6>当月节电量</h6>
+                        <p>125,266<span>Kw.h</span></p>
+                    </div>
+                    <div class="saving usual-right">
+                        <div id="saving-container" style="height: 208px;"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="../../static/js/jquery.min.js"></script>
     <script src="../../layuiadmin/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript"></script>
+    <script src="../../static/js/echarts.js"></script>
+    <script type="text/javascript">
+        drawPieChart('lamp-container', 1);
+        drawPieChart('landscape-container', 1);
+        drawPieChart('saving-container', 2);
+
+        function drawPieChart(id, type) {
+
+            var myChart = echarts.init(document.getElementById(id));
+
+            var option = {
+                tooltip: {
+                    show: false
+                },
+                legend: {
+                    show: false
+                },
+                color: ['#efae25', '#f0f2f5'],
+                series: [{
+                    name: type === 1 ? '亮灯率' : '节电率',
+                    type: 'pie',
+                    radius: type === 1 ? ['60%', '80%'] : ['48%', '68%'],
+                    center: ['50%', '50%'],
+                    hoverAnimation: false,
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            position: 'center',
+                            textStyle: {
+                                fontSize: '16',
+                                color: '#999'
+                            },
+                            formatter: "{a} \n {d}%"
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [{
+                            value: 28,
+                            label: {
+                                normal: {
+                                    show: true
+                                }
+                            },
+                            itemStyle: {
+                                emphasis: {
+                                    color: '#efae25'
+                                }
+                            },
+                        },
+                        {
+                            value: 72,
+                            label: {
+                                normal: {
+                                    show: false
+                                }
+                            },
+                            itemStyle: {
+                                emphasis: {
+                                    color: '#f0f2f5'
+                                }
+                            }
+                        }
+                    ]
+                }]
+            };;
+
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+        }
+    </script>
 </body>
 
 </html>

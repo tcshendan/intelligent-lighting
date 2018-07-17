@@ -584,6 +584,14 @@ a, a:hover {
 
 /* 综合看板 */
 
+.usual-left {
+    float: left;
+}
+
+.usual-right {
+    float: right;
+}
+
 .content-container {
     position: relative;
     width: 100%;
@@ -631,13 +639,11 @@ a, a:hover {
 }
 
 .content-container .statistics .lamp {
-    float: left;
     width: calc(50% - 1px);
     border-right: 1px solid #efefef;
 }
 
 .content-container .statistics .landscape {
-    float: right;
     width: 50%;
 }
 
@@ -675,7 +681,7 @@ a, a:hover {
 
 .content-container .info-list-box {
     position: relative;
-    padding-top: 20px;
+    padding: 20px 16px 0 16px;
     width: 100%;
     height: 259px;
 }
@@ -691,12 +697,7 @@ a, a:hover {
     height: 1px;
 }
 
-.content-container .info-title {
-    padding: 0 16px;
-}
-
 .content-container .info-title span {
-    float: left;
     display: inline-block;
     line-height: 34px;
     font-size: 16px;
@@ -704,15 +705,35 @@ a, a:hover {
 }
 
 .content-container .info-title em {
-    float: right;
     display: inline-block;
+    margin-right: 26px;
     font-style: normal;
     font-size: 30px;
     color: #333;
 }
 
 .content-container .info-list {
-    padding: 0 32px;
+    padding: 0 16px;
+    height: 198px;
+    overflow: auto;
+}
+
+.content-container .info-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content-container .info-list::-webkit-scrollbar-track {
+    background-color: #fff;
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
+}
+
+.content-container .info-list::-webkit-scrollbar-thumb {
+    background-color: #f4f4f4;
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
 }
 
 .content-container .info-item {
@@ -781,10 +802,43 @@ a, a:hover {
 }
 
 .chart-container .left {
-    float: left;
     margin-right: 10px;
 }
 
-.chart-container .right {
-    float: right;
+.chart-group, .elec-saving {
+    width: 100%;
+    height: 208px;
+}
+
+.chart-group .lamp-chart, .chart-group .landscape-chart, .elec-saving .elec, .elec-saving .saving {
+    width: 50%;
+    height: 208px;
+}
+
+.chart-group p {
+    margin-bottom: 12px;
+    line-height: 22px;
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+}
+
+.elec-saving .elec {
+    padding-left: 80px;
+}
+
+.elec-saving .elec h6 {
+    margin-top: 26px;
+    font-size: 16px;
+    color: #999;
+}
+
+.elec-saving .elec p {
+    margin-top: 8px;
+    font-size: 30px;
+    color: #333;
+}
+
+.elec-saving .elec p span {
+    font-size: 16px;
 }
