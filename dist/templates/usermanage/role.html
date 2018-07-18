@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css">
+    <link rel="stylesheet" href="../../static/css/paging.css">
+    <link rel="stylesheet" href="../../static/css/s_public.css">
+    <style>
+        .usual-content-padding {
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <form id="role-form" action="" method="get">
+            <div class="layui-containers usual-content-padding">
+                <div hidden="hidden">
+                    <input type="text" id="pageNum" name="pageNum" value="1" />
+                    <input type="text" id="pages" name="pages" value="1" />
+                </div>
+
+                <div class="layui-row clearfix">
+                    <div class="layui-inline usual-left">
+                        <button type="button" class="layui-btn layui-btn-normal" data-toggle="modal" data-target="#roleModal" onclick="javascript:role.add();">+ 新建</button>
+                        <button type="button" class="layui-btn layui-btn-primary" onclick="javascript:role.batchDelete();">批量删除</button>
+                    </div>
+                    <div class="layui-inline usual-right" style="position: relative;">
+                        <input type="text" name="keywords" class="layui-input" placeholder="请输入关键词" style="padding-right: 34px;" />
+                        <span class="search-icon" onclick="formSubmit()"></span>
+                    </div>
+                </div>
+
+                <div class="ant-alert ant-alert-info">
+                    <i class="anticon anticon-info-circle ant-alert-icon"></i>
+                    <span class="ant-alert-message">已选择 <em class="usual-checked-count">0</em> 项</span>
+                    <span class="ant-alert-description"></span>
+                </div>
+
+                <div class="layui-table-box usual-controll-tabel manufacturer-table">
+                    <table class="layui-table" lay-skin="line">
+                        <thead>
+                            <tr>
+                                <th style="width: 48px">
+                                    <input type="checkbox" class="usual-checked-all" />
+                                    <label class="check-label"></label>
+                                </th>
+                                <th>序号</th>
+                                <th>角色名称</th>
+                                <th>权限</th>
+                                <th>备注</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="roleIds" value="1" />
+                                    <label class="check-label"></label>
+                                </td>
+                                <td>1</td>
+                                <td>角色名称</td>
+                                <td>权限xxx，权限xxx，权限xxx，权限...</td>
+                                <td>这是备注这是备注这是备注这是...</td>
+                                <td>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#roleModal" onclick="javascript:role.edit('1');">修改</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:role.delete('1');">删除</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="roleIds" value="2" />
+                                    <label class="check-label"></label>
+                                </td>
+                                <td>2</td>
+                                <td>角色名称</td>
+                                <td>权限xxx，权限xxx</td>
+                                <td>这是备注这是备注</td>
+                                <td>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#roleModal" onclick="javascript:role.edit('2');">修改</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:role.delete('2');">删除</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="roleIds" value="3" />
+                                    <label class="check-label"></label>
+                                </td>
+                                <td>3</td>
+                                <td>角色名称</td>
+                                <td>权限xxx，权限xxx，权限xxx，权限...</td>
+                                <td>这是备注这是备注这是备注这是</td>
+                                <td>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#roleModal" onclick="javascript:role.edit('3');">修改</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:role.delete('3');">删除</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="roleIds" value="4" />
+                                    <label class="check-label"></label>
+                                </td>
+                                <td>4</td>
+                                <td>角色名称</td>
+                                <td>权限xxx，权限xxx，权限xxx</td>
+                                <td>这是备注这是备注</td>
+                                <td>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#roleModal" onclick="javascript:role.edit('4');">修改</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:role.delete('4');">删除</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="roleIds" value="5" />
+                                    <label class="check-label"></label>
+                                </td>
+                                <td>5</td>
+                                <td>角色名称</td>
+                                <td>权限xxx，权限xxx，权限xxx，权限...</td>
+                                <td>这是备注这是备注这是备注这是</td>
+                                <td>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#roleModal" onclick="javascript:role.edit('5');">修改</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:role.delete('5');">删除</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="page">
+                    <div id="page" class="pagination"></div>
+                </div>
+
+            </div>
+
+            <!-- 角色管理 -->
+            <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="title">新建角色</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="roleId" value="" />
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">角色名称：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="roleName" class="layui-input" placeholder="请输入" />
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">选择权限：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="rolePermission" class="layui-input" placeholder="请输入" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="layui-btn layui-btn-primary" data-dismiss="modal">取消</button>
+                            <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:role.save();">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="../../static/js/jquery.min.js"></script>
+    <script src="../../layuiadmin/layui/layui.js" charset="utf-8"></script>
+    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../static/js/query.js"></script>
+    <script src="../../static/js/paging.js"></script>
+    <script src="../../static/js/public.js"></script>
+    <script type="text/javascript">
+        var totalPages = $("#pages").val(); //总页数
+        var currentPage = $("#pageNum").val(); //当前页
+
+        //分页
+        if (totalPages > 0) {
+            $('#page').Paging({
+                pagesize: 5,
+                pagecount: totalPages,
+                current: currentPage,
+                callback: function(pageNum) {
+                    $("#pageNum").val(pageNum);
+                    formSubmit();
+                }
+            })
+        }
+
+        function formSubmit() {
+            $('#role-form').submit();
+        }
+
+        layui.use(['layer'], function() {
+            var layer = layui.layer;
+        });
+
+        var role = {
+            add: function() {
+                $('#title').html('新建角色');
+                $('input[name="roleId"]').val('');
+                $('input[name="roleName"]').val('');
+            },
+            /**
+             * 修改角色
+             * @param  {[type]} id 角色id
+             * @return
+             */
+            edit: function(id) {
+                $('#title').html('修改角色');
+                $('input[name="roleId"]').val(id);
+                $.ajax({
+                    url: '/light/user/get',
+                    type: 'GET',
+                    data: 'id=' + id,
+                    success: function(response) {
+                        var data = response.data;
+                        $('input[name="roleName"]').val(data.name);
+                    }
+                });
+            },
+            /**
+             * 删除单个角色
+             * @param  {[type]} id 角色id
+             * @return
+             */
+            delete: function(id) {
+                layer.confirm('你确认删除该角色吗？', {
+                    title: '删除'
+                }, function() {
+                    $.ajax({
+                        url: '/light/user/delete',
+                        data: {
+                            'id': id
+                        },
+                        type: 'post',
+                        success: function(response) {
+                            console.log(response);
+                            if (response.code == 200) {
+                                layer.msg('操作成功！', {
+                                    icon: 1,
+                                    time: 2000
+                                }, function() {
+                                    formSubmit();
+                                });
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            // 状态码
+                            console.log(XMLHttpRequest.status);
+                            // 状态
+                            console.log(XMLHttpRequest.readyState);
+                            // 错误信息
+                            console.log(textStatus);
+                        }
+                    });
+                });
+            },
+            /**
+             * 批量删除角色
+             * @return
+             */
+            batchDelete: function() {
+                layer.confirm('你确认删除这些角色吗？', {
+                    title: '删除'
+                }, function() {
+                    var allInput = document.querySelectorAll("table tbody tr td input");
+                    var checkedArr = new Array();
+                    for (var i = 0; i < allInput.length; i++) {
+                        if (allInput[i].checked) {
+                            checkedArr.push(allInput[i].value);
+                        }
+                    }
+                    if (checkedArr.length > 0) {
+                        $.ajax({
+                            url: '/light/user/batchDelete',
+                            data: {'ids': checkedArr},
+                            type: 'post',
+                            success: function(response) {
+                                console.log(response);
+                                if (response.code == 200) {
+                                    layer.msg('操作成功！', {
+                                        icon: 1,
+                                        time: 2000
+                                    }, function() {
+                                        formSubmit();
+                                    });
+                                }
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                // 状态码
+                                console.log(XMLHttpRequest.status);
+                                // 状态
+                                console.log(XMLHttpRequest.readyState);
+                                // 错误信息
+                                console.log(textStatus);
+                            }
+                        });
+                    } else {
+                        layer.msg('请选择要删除的内容', {
+                            icon: 5,
+                            time: 2000
+                        });
+                    }
+                });
+            },
+            save: function() {
+                var id = $('input[name="roleId"]').val();
+                var name = $('input[name="roleName"]').val();
+                var url = id === '' ? '/light/user/add' : '/light/user/update';
+                var postData;
+
+                if ($.trim(name) == '') {
+                    layer.msg('角色名称不能为空！', {
+                        icon: 2,
+                        time: 2000
+                    });
+                    return false;
+                }
+
+                if (id === '') {
+                    postData = {'name': name};
+                } else {
+                    postData = {'id': id, 'name': name};
+                }
+
+                postData = (function(obj) {
+                    var str = [];
+                    for (var p in obj) {
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    }
+                    return str.join("&");
+                })(postData);
+
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data: postData,
+                    success: function(response) {
+                        console.log(response);
+                        if (response.code == 200) {
+                            layer.msg('操作成功！', {
+                                icon: 1,
+                                time: 2000
+                            }, function() {
+                                $('#roleModal').modal('hide');
+                                formSubmit();
+                            });
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        // 状态码
+                        console.log(XMLHttpRequest.status);
+                        // 状态
+                        console.log(XMLHttpRequest.readyState);
+                        // 错误信息
+                        console.log(textStatus);
+                    }
+                });
+            }
+        };
+    </script>
+</body>
+
+</html>
