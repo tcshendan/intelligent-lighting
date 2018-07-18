@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>角色管理</title>
+    <title>用户管理</title>
     <link rel="stylesheet" rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css">
     <link rel="stylesheet" href="../../static/css/paging.css">
@@ -17,7 +17,7 @@
 
 <body>
     <div class="main-wrapper">
-        <form id="role-form" action="" method="get">
+        <form id="user-form" action="" method="get">
             <div class="layui-containers usual-content-padding">
                 <div hidden="hidden">
                     <input type="text" id="pageNum" name="pageNum" value="1" />
@@ -26,8 +26,8 @@
 
                 <div class="layui-row clearfix">
                     <div class="layui-inline usual-left">
-                        <button type="button" class="layui-btn layui-btn-normal" data-toggle="modal" data-target="#roleModal" onclick="javascript:role.add();">+ 新建</button>
-                        <button type="button" class="layui-btn layui-btn-primary" onclick="javascript:role.batchDelete();">批量删除</button>
+                        <button type="button" class="layui-btn layui-btn-normal" data-toggle="modal" data-target="#userModal" onclick="javascript:user.add();">+ 新建</button>
+                        <button type="button" class="layui-btn layui-btn-primary" onclick="javascript:user.batchDelete();">批量删除</button>
                     </div>
                     <div class="layui-inline usual-right" style="position: relative;">
                         <input type="text" name="keywords" class="layui-input" placeholder="请输入关键词" style="padding-right: 34px;" />
@@ -50,81 +50,86 @@
                                     <label class="check-label"></label>
                                 </th>
                                 <th>序号</th>
-                                <th>角色名称</th>
-                                <th>权限</th>
-                                <th>备注</th>
+                                <th>姓名</th>
+                                <th>用户</th>
+                                <th>电话号码</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="roleIds" value="1" />
+                                    <input type="checkbox" name="userIds" value="1" />
                                     <label class="check-label"></label>
                                 </td>
                                 <td>1</td>
-                                <td>角色名称</td>
-                                <td>权限xxx，权限xxx，权限xxx，权限...</td>
-                                <td>这是备注这是备注这是备注这是...</td>
+                                <td>admin</td>
+                                <td>超级管理员</td>
+                                <td>13000000000</td>
                                 <td>
-                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#roleModal" onclick="javascript:role.edit('1');">修改</a>
-                                    <a class="operate-btn operate-btn-orange" onclick="javascript:role.delete('1');">删除</a>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#userModal" onclick="javascript:user.edit('1');">修改</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:user.delete('1');">删除</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:user.reset('1');">重置密码</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="roleIds" value="2" />
+                                    <input type="checkbox" name="userIds" value="2" />
                                     <label class="check-label"></label>
                                 </td>
                                 <td>2</td>
-                                <td>角色名称</td>
-                                <td>权限xxx，权限xxx</td>
-                                <td>这是备注这是备注</td>
+                                <td>admin</td>
+                                <td>普通管理员</td>
+                                <td>13100000000</td>
                                 <td>
-                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#roleModal" onclick="javascript:role.edit('2');">修改</a>
-                                    <a class="operate-btn operate-btn-orange" onclick="javascript:role.delete('2');">删除</a>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#userModal" onclick="javascript:user.edit('2');">修改</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:user.delete('2');">删除</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:user.reset('2');">重置密码</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="roleIds" value="3" />
+                                    <input type="checkbox" name="userIds" value="3" />
                                     <label class="check-label"></label>
                                 </td>
                                 <td>3</td>
-                                <td>角色名称</td>
-                                <td>权限xxx，权限xxx，权限xxx，权限...</td>
-                                <td>这是备注这是备注这是备注这是</td>
+                                <td>admin</td>
+                                <td>运营经理</td>
+                                <td>13100000000</td>
                                 <td>
-                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#roleModal" onclick="javascript:role.edit('3');">修改</a>
-                                    <a class="operate-btn operate-btn-orange" onclick="javascript:role.delete('3');">删除</a>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#userModal" onclick="javascript:user.edit('3');">修改</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:user.delete('3');">删除</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:user.reset('3');">重置密码</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="roleIds" value="4" />
+                                    <input type="checkbox" name="userIds" value="4" />
                                     <label class="check-label"></label>
                                 </td>
                                 <td>4</td>
-                                <td>角色名称</td>
-                                <td>权限xxx，权限xxx，权限xxx</td>
-                                <td>这是备注这是备注</td>
+                                <td>admin</td>
+                                <td>操作员</td>
+                                <td>13100000000</td>
                                 <td>
-                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#roleModal" onclick="javascript:role.edit('4');">修改</a>
-                                    <a class="operate-btn operate-btn-orange" onclick="javascript:role.delete('4');">删除</a>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#userModal" onclick="javascript:user.edit('4');">修改</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:user.delete('4');">删除</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:user.reset('4');">重置密码</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="roleIds" value="5" />
+                                    <input type="checkbox" name="userIds" value="5" />
                                     <label class="check-label"></label>
                                 </td>
                                 <td>5</td>
-                                <td>角色名称</td>
-                                <td>权限xxx，权限xxx，权限xxx，权限...</td>
-                                <td>这是备注这是备注这是备注这是</td>
+                                <td>admin</td>
+                                <td>操作员</td>
+                                <td>13100000000</td>
                                 <td>
-                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#roleModal" onclick="javascript:role.edit('5');">修改</a>
-                                    <a class="operate-btn operate-btn-orange" onclick="javascript:role.delete('5');">删除</a>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#userModal" onclick="javascript:user.edit('5');">修改</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:user.delete('5');">删除</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:user.reset('5');">重置密码</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -137,32 +142,46 @@
 
             </div>
 
-            <!-- 新建/修改角色 Modal -->
-            <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+            <!-- 新建/修改用户Modal -->
+            <div class="modal fade" id="userModal" tabindex="-1" user="dialog" aria-labelledby="" aria-hidden="true">
+                <div class="modal-dialog" user="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="title">新建角色</h4>
+                            <h4 class="modal-title" id="title">新建用户</h4>
                         </div>
-                        <div class="modal-body">
-                            <input type="hidden" name="roleId" value="" />
+                        <div class="modal-body layui-form">
+                            <input type="hidden" name="userId" value="" />
                             <div class="layui-form-item">
-                                <label class="layui-form-label">角色名称：</label>
+                                <label class="layui-form-label">姓名：</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="roleName" class="layui-input" placeholder="请输入" />
+                                    <input type="text" name="userName" class="layui-input" placeholder="请输入" />
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <label class="layui-form-label">选择权限：</label>
+                                <label class="layui-form-label">手机号码：</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="rolePermission" class="layui-input" placeholder="请选择" />
+                                    <input type="text" name="phone" class="layui-input" placeholder="请输入" />
+                                    <span class="usual-complementary">手机号码作为登录号码，初始密码为123456</span>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <input type="hidden" name="selectedRole" value="0" />
+                                <label class="layui-form-label">选择角色：</label>
+                                <div class="layui-input-block">
+                                    <select name="role" lay-filter="role">
+                                        <option value="0">请选择</option>
+                                        <option value="1">超级管理员</option>
+                                        <option value="2">普通管理员</option>
+                                        <option value="3">运营经理</option>
+                                        <option value="4">操作员</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="layui-btn layui-btn-primary" data-dismiss="modal">取消</button>
-                            <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:role.save();">确定</button>
+                            <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:user.save();">确定</button>
                         </div>
                     </div>
                 </div>
@@ -194,49 +213,72 @@
         }
 
         function formSubmit() {
-            $('#role-form').submit();
+            $('#user-form').submit();
         }
 
-        layui.use(['layer'], function() {
+        layui.use(['layer', 'form'], function() {
             var layer = layui.layer;
+            var form = layui.form;
+
+            /**
+             * 选择角色下拉框事件
+             */
+            form.on('select(role)', function(data) {
+                console.log(data);
+                $('input[name="selectedRole"]').val(data.value);
+            });
+
+            window.form = form;
         });
 
-        var role = {
+        var user = {
             add: function() {
-                $('#title').html('新建角色');
-                $('input[name="roleId"]').val('');
-                $('input[name="roleName"]').val('');
+                $('#title').html('新建用户');
+                $('input[name="userId"]').val('');
+                $('input[name="userName"]').val('');
+                $('input[name="phone"]').val('');
+
+                $('input[name="selectedRole"]').val(0);
+                $('select[name="role"]').val(0);
+                form.render('select');
             },
             /**
-             * 修改角色
-             * @param  {[type]} id 角色id
+             * 修改用户
+             * @param  {[type]} id 用户id
              * @return
              */
             edit: function(id) {
-                $('#title').html('修改角色');
-                $('input[name="roleId"]').val(id);
+                $('#title').html('修改用户');
+                $('input[name="userId"]').val(id);
                 $.ajax({
                     url: '/light/user/get',
                     type: 'GET',
                     data: 'id=' + id,
                     success: function(response) {
                         var data = response.data;
-                        $('input[name="roleName"]').val(data.name);
+                        $('input[name="userName"]').val(data.name);
+                        $('input[name="phone"]').val(data.phone);
+
+                        $('input[name="selectedRole"]').val(data.role);
+                        $('select[name="role"]').val(data.role);
+                        form.render('select');
                     }
                 });
             },
             /**
-             * 删除单个角色
-             * @param  {[type]} id 角色id
+             * 删除单个用户
+             * @param  {[type]} id 用户id
              * @return
              */
             delete: function(id) {
-                layer.confirm('你确认删除该角色吗？', {
+                layer.confirm('你确认删除该用户吗？', {
                     title: '删除'
                 }, function() {
                     $.ajax({
                         url: '/light/user/delete',
-                        data: {'id': id},
+                        data: {
+                            'id': id
+                        },
                         type: 'post',
                         success: function(response) {
                             console.log(response);
@@ -261,11 +303,11 @@
                 });
             },
             /**
-             * 批量删除角色
+             * 批量删除用户
              * @return
              */
             batchDelete: function() {
-                layer.confirm('你确认删除这些角色吗？', {
+                layer.confirm('你确认删除这些用户吗？', {
                     title: '删除'
                 }, function() {
                     var allInput = document.querySelectorAll("table tbody tr td input");
@@ -278,7 +320,9 @@
                     if (checkedArr.length > 0) {
                         $.ajax({
                             url: '/light/user/batchDelete',
-                            data: {'ids': checkedArr},
+                            data: {
+                                'ids': checkedArr
+                            },
                             type: 'post',
                             success: function(response) {
                                 console.log(response);
@@ -308,14 +352,65 @@
                     }
                 });
             },
+            /**
+             * 重置密码
+             * @param  {[type]} id 用户id
+             * @return
+             */
+            reset: function(id) {
+                layer.confirm('你确认重置该用户密码吗？', {
+                    title: '重置密码'
+                }, function() {
+                    $.ajax({
+                        url: '/light/user/reset',
+                        data: {
+                            'id': id
+                        },
+                        type: 'post',
+                        success: function(response) {
+                            console.log(response);
+                            if (response.code == 200) {
+                                layer.msg('操作成功！', {
+                                    icon: 1,
+                                    time: 2000
+                                }, function() {
+                                    formSubmit();
+                                });
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            // 状态码
+                            console.log(XMLHttpRequest.status);
+                            // 状态
+                            console.log(XMLHttpRequest.readyState);
+                            // 错误信息
+                            console.log(textStatus);
+                        }
+                    });
+                });
+            },
             save: function() {
-                var id = $('input[name="roleId"]').val();
-                var name = $('input[name="roleName"]').val();
+                var id = $('input[name="userId"]').val();
+                var name = $('input[name="userName"]').val();
+                var phone = $('input[name="phone"]').val();
+                var role = $('input[name="selectedRole"]').val();
                 var url = id === '' ? '/light/user/add' : '/light/user/update';
                 var postData;
 
                 if ($.trim(name) == '') {
-                    layer.msg('角色名称不能为空！', {
+                    layer.msg('姓名不能为空！', {
+                        icon: 2,
+                        time: 2000
+                    });
+                    return false;
+                } else if ($.trim(phone) == '') {
+                    layer.msg('电话号码不能为空！', {
+                        icon: 2,
+                        time: 2000
+                    });
+                    return false;
+                } else if (role === '0') {
+                    layer.msg('请选择角色', {
                         icon: 2,
                         time: 2000
                     });
@@ -323,9 +418,18 @@
                 }
 
                 if (id === '') {
-                    postData = {'name': name};
+                    postData = {
+                        'name': name,
+                        'phone': phone,
+                        'role': role
+                    };
                 } else {
-                    postData = {'id': id, 'name': name};
+                    postData = {
+                        'id': id,
+                        'name': name,
+                        'phone': phone,
+                        'role': role
+                    };
                 }
 
                 postData = (function(obj) {
@@ -347,7 +451,7 @@
                                 icon: 1,
                                 time: 2000
                             }, function() {
-                                $('#roleModal').modal('hide');
+                                $('#userModal').modal('hide');
                                 formSubmit();
                             });
                         }
@@ -364,6 +468,7 @@
             }
         };
     </script>
+
 </body>
 
 </html>
