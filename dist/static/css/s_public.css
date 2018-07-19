@@ -88,6 +88,10 @@ body {
     background-color: #fff;
 }
 
+.usual-content-padding {
+    padding: 20px;
+}
+
 .usual-left {
     float: left;
 }
@@ -1501,20 +1505,49 @@ div.info-bottom img {
 }
 
 @media (min-width: 768px) {
-    #manufacturerModal .modal-dialog, #programModal .modal-dialog, #factoryModal .modal-dialog, #roleModal .modal-dialog, #userModal .modal-dialog {
+    #verifyModal .modal-dialog {
+        width: 350px;
+    }
+    #manufacturerModal .modal-dialog,
+    #programModal .modal-dialog,
+    #factoryModal .modal-dialog,
+    #roleModal .modal-dialog,
+    #userModal .modal-dialog,
+    #faultWorkListModal .modal-dialog {
         width: 500px;
+    }
+    #detailModal .modal-dialog {
+        width: 600px;
     }
     #detectionModal .modal-dialog {
         width: 900px;
     }
 }
 
-#manufacturerModal .layui-form-label, #programModal .layui-form-label, #factoryModal .layui-form-label, #roleModal .layui-form-label, #userModal .layui-form-label {
+#manufacturerModal .layui-form-label,
+#programModal .layui-form-label,
+#factoryModal .layui-form-label,
+#roleModal .layui-form-label,
+#userModal .layui-form-label,
+#faultWorkListModal .layui-form-label {
     padding: 9px 0;
 }
 
-#manufacturerModal .layui-input-block, #programModal .layui-input-block, #factoryModal .layui-input-block, #roleModal .layui-input-block, #userModal .layui-input-block {
+#manufacturerModal .layui-input-block,
+#programModal .layui-input-block,
+#factoryModal .layui-input-block,
+#roleModal .layui-input-block,
+#userModal .layui-input-block,
+#faultWorkListModal .layui-input-block {
     margin-left: 90px;
+}
+
+#faultWorkListModal .layui-form-label {
+    width: 112px;
+}
+
+#faultWorkListModal .layui-input-block {
+    margin-left: 122px;
 }
 
 /*filter*/
@@ -1672,4 +1705,15 @@ div.info-bottom img {
     margin: 6px 0 0 3px;
     font-size: 13px;
     color: #8c8c8c;
+}
+
+/* verify-modal */
+
+.usual-form-item {
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.usual-form-item .layui-form-radio {
+    margin: 6px 25px 0 25px;
 }

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>正在进行</title>
+    <link rel="stylesheet" rel="stylesheet" href="../../../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css">
+    <link rel="stylesheet" href="../../../static/css/paging.css">
+    <link rel="stylesheet" href="../../../static/css/s_public.css">
+    <style>
+        .selection-box {
+            width: 100%;
+            min-height: 80px;
+            height: auto;
+            line-height: 20px;
+            padding: 6px 10px;
+            border: 1px solid #e6e6e6;
+            border-radius: 2px;
+        }
+
+        #detailModal .layui-form-item {
+            margin-bottom: 0;
+            font-size: 0;
+            overflow: hidden;
+        }
+
+        #detailModal .layui-form-item label {
+            display: block;
+            padding: 9px 5px;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        .img-box {
+            padding: 9px 5px;
+        }
+
+        .img-box img {
+            display: block;
+            margin-bottom: 10px;
+            max-width: 497px;
+        }
+
+        .img-box img:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <form id="form" action="" method="get">
+            <div class="layui-containers usual-content-padding">
+                <div hidden="hidden">
+                    <input type="text" id="pageNum" name="pageNum" value="1" />
+                    <input type="text" id="pages" name="pages" value="1" />
+                </div>
+
+                <div class="layui-row clearfix">
+                    <div class="layui-inline usual-left">
+                        <button type="button" class="layui-btn layui-btn-normal" data-toggle="modal" data-target="#faultWorkListModal">+ 新建故障工单</button>
+                        <button type="button" class="layui-btn layui-btn-primary">批量审核</button>
+                    </div>
+                    <div class="layui-inline usual-right" style="position: relative;">
+                        <input type="text" name="keywords" class="layui-input" placeholder="请输入关键词" style="padding-right: 34px;" />
+                        <span class="search-icon" onclick="formSubmit()"></span>
+                    </div>
+                </div>
+
+                <div class="ant-alert ant-alert-info">
+                    <i class="anticon anticon-info-circle ant-alert-icon"></i>
+                    <span class="ant-alert-message">已选择 <em class="usual-checked-count">0</em> 项</span>
+                    <span class="ant-alert-description"></span>
+                </div>
+
+                <div class="layui-table-box usual-controll-tabel manufacturer-table">
+                    <table class="layui-table" lay-skin="line">
+                        <thead>
+                            <tr>
+                                <th style="width: 48px">
+                                    <input type="checkbox" class="usual-checked-all" />
+                                    <label class="check-label"></label>
+                                </th>
+                                <th>序号</th>
+                                <th>派发时间</th>
+                                <th>派发人</th>
+                                <th>运维人员</th>
+                                <th>工单类型</th>
+                                <th>设备</th>
+                                <th>故障类型</th>
+                                <th>任务时长（天）</th>
+                                <th>备注</th>
+                                <th>工单状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="workListIds" value="1" />
+                                    <label class="check-label"></label>
+                                </td>
+                                <td>1</td>
+                                <td>2016-09-21 08:50:08</td>
+                                <td>自动派发</td>
+                                <td>李四</td>
+                                <td>周巡检</td>
+                                <td>xxx，xxx，xxx</td>
+                                <td>设备故障</td>
+                                <td>3</td>
+                                <td>这是备注这是备注...</td>
+                                <td>待审核</td>
+                                <td>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#detailModal">记录单</a>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#verifyModal">审核</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="workListIds" value="2" />
+                                    <label class="check-label"></label>
+                                </td>
+                                <td>2</td>
+                                <td>2016-09-21 08:50:08</td>
+                                <td>张三</td>
+                                <td>李四</td>
+                                <td>故障</td>
+                                <td>xxx，xxx，xxx</td>
+                                <td>设备故障</td>
+                                <td>4</td>
+                                <td>这是备注这是备注...</td>
+                                <td>进行中</td>
+                                <td>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#detailModal">记录单</a>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#verifyModal">审核</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="workListIds" value="3" />
+                                    <label class="check-label"></label>
+                                </td>
+                                <td>3</td>
+                                <td>2016-09-21 08:50:08</td>
+                                <td>自动派发</td>
+                                <td>李四</td>
+                                <td>月巡检</td>
+                                <td>xxx，xxx，xxx</td>
+                                <td>设备故障</td>
+                                <td>5</td>
+                                <td>这是备注这是备注...</td>
+                                <td>待审核</td>
+                                <td>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#detailModal">记录单</a>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#verifyModal">审核</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="workListIds" value="4" />
+                                    <label class="check-label"></label>
+                                </td>
+                                <td>4</td>
+                                <td>2016-09-21 08:50:08</td>
+                                <td>自动派发</td>
+                                <td>李四</td>
+                                <td>季巡检</td>
+                                <td>xxx，xxx，xxx</td>
+                                <td>设备故障</td>
+                                <td>6</td>
+                                <td>这是备注这是备注...</td>
+                                <td>进行中</td>
+                                <td>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#detailModal">记录单</a>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#verifyModal">审核</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="workListIds" value="5" />
+                                    <label class="check-label"></label>
+                                </td>
+                                <td>5</td>
+                                <td>2016-09-21 08:50:08</td>
+                                <td>自动派发</td>
+                                <td>李四</td>
+                                <td>季巡检</td>
+                                <td>xxx，xxx，xxx</td>
+                                <td>设备故障</td>
+                                <td>6</td>
+                                <td>这是备注这是备注...</td>
+                                <td>进行中</td>
+                                <td>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#detailModal">记录单</a>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#verifyModal">审核</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="page">
+                    <div id="page" class="pagination"></div>
+                </div>
+
+            </div>
+
+            <!-- 新建故障工单 Modal -->
+            <div class="modal fade" id="faultWorkListModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">新建故障工单</h4>
+                        </div>
+                        <div class="modal-body layui-form">
+                            <input type="hidden" name="workListId" value="" />
+                            <input type="hidden" name="selectedUser" value="0" />
+                            <input type="hidden" name="selectedFaultType" value="0" />
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">选择用户：</label>
+                                <div class="layui-input-block">
+                                    <select name="user" lay-filter="user">
+                                        <option value="0">请选择</option>
+                                        <option value="1">张三</option>
+                                        <option value="2">李四</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">选择设备：</label>
+                                <div class="layui-input-block">
+                                    <div class="selection-box"></div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">故障类型：</label>
+                                <div class="layui-input-block">
+                                    <select name="faultType" lay-filter="fault-type">
+                                        <option value="0">请选择</option>
+                                        <option value="1">设备故障</option>
+                                        <option value="2">连接故障</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">任务时长（天）：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="days" class="layui-input" placeholder="请输入" />
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">备注<label style="color: #8c8c8c;">（可选）</label>：</label>
+                                <div class="layui-input-block">
+                                    <textarea placeholder="请输入备注，30字以内" name="remarks" class="layui-textarea" maxlength="30"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="layui-btn layui-btn-primary" data-dismiss="modal">取消</button>
+                            <button type="button" class="layui-btn layui-btn-normal">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 审核工单 Modal -->
+            <div class="modal fade" id="verifyModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">工单审核</h4>
+                        </div>
+                        <div class="modal-body layui-form">
+                            <input type="hidden" name="selectedStatus" value="1" />
+                            <div class="layui-form-item usual-form-item">
+                                <input type="radio" name="status" lay-filter="verify-pass" value="1" title="通过" checked />
+                                <input type="radio" name="status" lay-filter="verify-pass" value="0" title="不通过" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="layui-btn layui-btn-primary" data-dismiss="modal">取消</button>
+                            <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:workList.confirm();">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 工单记录单详情 -->
+            <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">工单记录单详情</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="layui-form-item">
+                                <label class="usual-left">上传事件：</label>
+                                <label style="margin-left: 80px;">2018-09-09 12:12:12</label>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="usual-left">是否完成维修和巡检：</label>
+                                <label style="margin-left: 150px;">否</label>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="usual-left">位置：</label>
+                                <label style="margin-left: 52px;">黄山市xxx区长河街道111号</label>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="usual-left">照片：</label>
+                                <div class="img-box" style="margin-left: 52px;">
+                                    <img src="../../../static/images/demo.png" alt="" />
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="usual-left">未完成原因：</label>
+                                <label style="margin-left: 94px;">原因xxxx原因xxxx原因xxxx原因xxxx原因xxxx原因xxxx原因xxxx原因xxxx</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="layui-btn layui-btn-primary" data-dismiss="modal">取消</button>
+                            <button type="button" class="layui-btn layui-btn-normal">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="../../../static/js/jquery.min.js"></script>
+    <script src="../../../layuiadmin/layui/layui.js" charset="utf-8"></script>
+    <script src="../../../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../static/js/query.js"></script>
+    <script src="../../../static/js/paging.js"></script>
+    <script src="../../../static/js/public.js"></script>
+    <script type="text/javascript">
+        var totalPages = $("#pages").val(); //总页数
+        var currentPage = $("#pageNum").val(); //当前页
+
+        //分页
+        if (totalPages > 0) {
+            $('#page').Paging({
+                pagesize: 5,
+                pagecount: totalPages,
+                current: currentPage,
+                callback: function(pageNum) {
+                    $("#pageNum").val(pageNum);
+                    formSubmit();
+                }
+            })
+        }
+
+        function formSubmit() {
+            $('#form').submit();
+        }
+
+        layui.use(['layer', 'form'], function() {
+            var layer = layui.layer;
+            var form = layui.form;
+
+            /**
+             * 选择用户下拉框事件监听
+             */
+            form.on('select(user)', function(data) {
+                // console.log(data);
+                $('input[name="selectedUser"]').val(data.value);
+            });
+
+            /**
+             * 故障类型下拉框事件监听
+             */
+            form.on('select(fault-type)', function(data) {
+                $('input[name="selectedFaultType"]').val(data.value);
+            });
+
+            /**
+             * 审核通过/不通过单选框事件监听
+             */
+            form.on('radio(verify-pass)', function(data) {
+                $('input[name="selectedStatus"]').val(data.value);
+            });
+
+            window.form = form;
+        });
+
+        var workList = {
+            confirm: function() {
+                var isPass = $('input[name="selectedStatus"]').val();
+                $('#verifyModal').modal('hide');
+                layer.msg(isPass === '1' ? '审核通过！' : '审核失败！', {
+                    icon: isPass === '1' ? 1 : 2,
+                    time: 2000
+                }, function() {
+                    formSubmit();
+                });
+            }
+        };
+    </script>
+</body>
+
+</html>

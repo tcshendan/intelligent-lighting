@@ -8,11 +8,6 @@
     <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css">
     <link rel="stylesheet" href="../../static/css/paging.css">
     <link rel="stylesheet" href="../../static/css/s_public.css">
-    <style>
-        .usual-content-padding {
-            padding: 20px;
-        }
-    </style>
 </head>
 
 <body>
@@ -313,15 +308,7 @@
                 var name = $('input[name="roleName"]').val();
                 var url = id === '' ? '/light/role/add' : '/light/role/update';
                 var postData;
-
-                if ($.trim(name) == '') {
-                    layer.msg('角色名称不能为空！', {
-                        icon: 2,
-                        time: 2000
-                    });
-                    return false;
-                }
-
+                
                 if (id === '') {
                     postData = {'name': name};
                 } else {

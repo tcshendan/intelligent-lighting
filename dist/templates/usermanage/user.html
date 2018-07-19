@@ -8,11 +8,6 @@
     <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css">
     <link rel="stylesheet" href="../../static/css/paging.css">
     <link rel="stylesheet" href="../../static/css/s_public.css">
-    <style>
-        .usual-content-padding {
-            padding: 20px;
-        }
-    </style>
 </head>
 
 <body>
@@ -152,6 +147,7 @@
                         </div>
                         <div class="modal-body layui-form">
                             <input type="hidden" name="userId" value="" />
+                            <input type="hidden" name="selectedRole" value="0" />
                             <div class="layui-form-item">
                                 <label class="layui-form-label">姓名：</label>
                                 <div class="layui-input-block">
@@ -166,7 +162,6 @@
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <input type="hidden" name="selectedRole" value="0" />
                                 <label class="layui-form-label">选择角色：</label>
                                 <div class="layui-input-block">
                                     <select name="role" lay-filter="role">
@@ -276,9 +271,7 @@
                 }, function() {
                     $.ajax({
                         url: '/light/user/delete',
-                        data: {
-                            'id': id
-                        },
+                        data: {'id': id},
                         type: 'post',
                         success: function(response) {
                             console.log(response);
@@ -320,9 +313,7 @@
                     if (checkedArr.length > 0) {
                         $.ajax({
                             url: '/light/user/batchDelete',
-                            data: {
-                                'ids': checkedArr
-                            },
+                            data: {'ids': checkedArr},
                             type: 'post',
                             success: function(response) {
                                 console.log(response);
@@ -363,9 +354,7 @@
                 }, function() {
                     $.ajax({
                         url: '/light/user/reset',
-                        data: {
-                            'id': id
-                        },
+                        data: {'id': id},
                         type: 'post',
                         success: function(response) {
                             console.log(response);
@@ -396,40 +385,11 @@
                 var role = $('input[name="selectedRole"]').val();
                 var url = id === '' ? '/light/user/add' : '/light/user/update';
                 var postData;
-
-                if ($.trim(name) == '') {
-                    layer.msg('姓名不能为空！', {
-                        icon: 2,
-                        time: 2000
-                    });
-                    return false;
-                } else if ($.trim(phone) == '') {
-                    layer.msg('电话号码不能为空！', {
-                        icon: 2,
-                        time: 2000
-                    });
-                    return false;
-                } else if (role === '0') {
-                    layer.msg('请选择角色', {
-                        icon: 2,
-                        time: 2000
-                    });
-                    return false;
-                }
-
+                
                 if (id === '') {
-                    postData = {
-                        'name': name,
-                        'phone': phone,
-                        'role': role
-                    };
+                    postData = {'name': name,'phone': phone,'role': role};
                 } else {
-                    postData = {
-                        'id': id,
-                        'name': name,
-                        'phone': phone,
-                        'role': role
-                    };
+                    postData = {'id': id,'name': name,'phone': phone,'role': role};
                 }
 
                 postData = (function(obj) {
