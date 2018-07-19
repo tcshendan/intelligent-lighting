@@ -3,11 +3,289 @@
 
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>历史工单</title>
+    <link rel="stylesheet" rel="stylesheet" href="../../../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css">
+    <link rel="stylesheet" href="../../../static/css/paging.css">
+    <link rel="stylesheet" href="../../../static/css/s_public.css">
+    <style>
+        .layui-tab-content {
+            padding: 0;
+        }
+
+        .layui-row {
+            padding-bottom: 20px;
+        }
+
+        .layui-row .layui-input {
+            padding-right: 30px;
+        }
+
+        .layui-table td,
+        .layui-table th {
+            text-align: center;
+        }
+
+        #recordModal .layui-form-item {
+            margin-bottom: 0;
+            font-size: 0;
+            overflow: hidden;
+        }
+
+        #recordModal .layui-form-item label {
+            display: block;
+            padding: 9px 5px;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        .img-box {
+            padding: 9px 5px;
+        }
+
+        .img-box img {
+            display: block;
+            margin-bottom: 10px;
+            max-width: 497px;
+        }
+
+        .img-box img:last-child {
+            margin-bottom: 0;
+        }
+    </style>
 </head>
 
 <body>
-    历史工单
+    <div class="main-wrapper">
+        <form id="form" action="" method="get">
+            <div class="layui-tab layui-tab-brief" lay-filter="config-tab">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">历史查询</li>
+                    <li lay-id="program">日历模式</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-containers" style="background-color: #f0f2f5;">
+                            <div hidden="hidden">
+                                <input type="text" id="pageNum" name="pageNum" value="1" />
+                                <input type="text" id="pages" name="pages" value="1" />
+                            </div>
+                            <div class="usual-content layui-form">
+                                <div class="layui-row">
+                                    <div class="layui-inline usual-left">
+                                        <label class="layui-form-label usual-label">选择派发人：</label>
+                                        <input type="hidden" name="selectedSender" value="0" />
+                                        <div class="layui-input-block">
+                                            <select name="sender" lay-filter="sender">
+                                                <option value="0">请选择</option>
+                                                <option value="1">张三</option>
+                                                <option value="2">李四</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline usual-left">
+                                        <label class="layui-form-label usual-label">派发时间：</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" class="layui-input" id="datepicker" placeholder=" 开始时间 ~ 结束时间 " name="date" />
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline usual-left">
+                                        <label class="layui-form-label usual-label">选择接受人：</label>
+                                        <input type="hidden" name="selectedReceiver" value="0" />
+                                        <div class="layui-input-block">
+                                            <select name="receiver" lay-filter="receiver">
+                                                <option value="0">请选择</option>
+                                                <option value="1">张三</option>
+                                                <option value="2">李四</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-row">
+                                    <div class="layui-inline usual-left">
+                                        <label class="layui-form-label usual-label">选择设备：</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="equipment" class="layui-input" placeholder="请选择" />
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline usual-left">
+                                        <label class="layui-form-label usual-label">工单类型：</label>
+                                        <input type="hidden" name="selectedFaultType" value="0" />
+                                        <div class="layui-input-block">
+                                            <select name="fault_type" lay-filter="fault_type">
+                                                <option value="0">请选择</option>
+                                                <option value="1">周巡检</option>
+                                                <option value="2">月巡检</option>
+                                                <option value="3">季巡检</option>
+                                                <option value="4">故障</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline usual-left">
+                                        <label class="layui-form-label usual-label">工单类型：</label>
+                                        <input type="hidden" name="selectedFaultStatus" value="0" />
+                                        <div class="layui-input-block">
+                                            <select name="fault_status" lay-filter="fault_status">
+                                                <option value="0">请选择</option>
+                                                <option value="1">已完成</option>
+                                                <option value="2">未完成</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline usual-left">
+                                        <button class="layui-btn layui-btn-normal btn-query">查询</button>
+                                    </div>
+                                </div>
+                                <div class="layui-row" style="padding-bottom: 0;">
+                                    <button class="layui-btn layui-btn-normal btn-export">导出选择</button>
+                                </div>
+                            </div>
+
+                            <div class="layui-table-box usual-controll-tabel usual-content">
+                                <table class="layui-table usual-table" lay-skin="line">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>派发时间</th>
+                                            <th>派发人</th>
+                                            <th>运维人员</th>
+                                            <th>工单类型</th>
+                                            <th>设备</th>
+                                            <th>故障类型</th>
+                                            <th>备注</th>
+                                            <th>工单状态</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>2016-09-21 08:50:08</td>
+                                            <td>自动派发</td>
+                                            <td>张三</td>
+                                            <td>周巡检</td>
+                                            <td>xxx,xxx,xxx,...</td>
+                                            <td>连接故障</td>
+                                            <td>这是备注这是备注这是备注...</td>
+                                            <td>已完成</td>
+                                            <td>
+                                                <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#recordModal">记录单</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>2016-09-21 08:50:08</td>
+                                            <td>自动派发</td>
+                                            <td>张三</td>
+                                            <td>故障</td>
+                                            <td>xxx,xxx,xxx,...</td>
+                                            <td>电力故障</td>
+                                            <td>这是备注这是备注这是备注...</td>
+                                            <td>未完成</td>
+                                            <td>/</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>2016-09-21 08:50:08</td>
+                                            <td>自动派发</td>
+                                            <td>张三</td>
+                                            <td>月巡检</td>
+                                            <td>xxx,xxx,xxx,...</td>
+                                            <td>设备故障</td>
+                                            <td>这是备注这是备注这是备注...</td>
+                                            <td>已完成</td>
+                                            <td>
+                                                <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#recordModal">记录单</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="page">
+                                    <div id="page" class="pagination"></div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- 工单记录单详情 -->
+                        <div class="modal fade" id="recordModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title">工单记录单详情</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="layui-form-item">
+                                            <label class="usual-left">上传事件：</label>
+                                            <label style="margin-left: 80px;">2018-09-09 12:12:12</label>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="usual-left">是否完成维修和巡检：</label>
+                                            <label style="margin-left: 150px;">否</label>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="usual-left">位置：</label>
+                                            <label style="margin-left: 52px;">黄山市xxx区长河街道111号</label>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="usual-left">照片：</label>
+                                            <div class="img-box" style="margin-left: 52px;">
+                                                <img src="../../../static/images/demo.png" alt="" />
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="usual-left">未完成原因：</label>
+                                            <label style="margin-left: 94px;">原因xxxx原因xxxx原因xxxx原因xxxx原因xxxx原因xxxx原因xxxx原因xxxx</label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="layui-btn layui-btn-primary" data-dismiss="modal">取消</button>
+                                        <button type="button" class="layui-btn layui-btn-normal">确定</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">日历模式</div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="../../../static/js/jquery.min.js"></script>
+    <script src="../../../layuiadmin/layui/layui.js" charset="utf-8"></script>
+    <script src="../../../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../static/js/query.js"></script>
+    <script src="../../../static/js/paging.js"></script>
+    <script type="text/javascript">
+        var totalPages = $("#pages").val(); //总页数
+        var currentPage = $("#pageNum").val(); //当前页
+
+        //分页
+        if (totalPages > 0) {
+            $('#page').Paging({
+                pagesize: 5,
+                pagecount: totalPages,
+                current: currentPage,
+                callback: function(pageNum) {
+                    $("#pageNum").val(pageNum);
+                    formSubmit();
+                }
+            })
+        }
+
+        function formSubmit() {
+            $('#form').submit();
+        }
+
+        layui.use(['element', 'form'], function() {
+            var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+            var form = layui.form;
+        });
+    </script>
 </body>
 
 </html>

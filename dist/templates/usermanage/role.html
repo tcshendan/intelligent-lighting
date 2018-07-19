@@ -36,7 +36,7 @@
                     <span class="ant-alert-description"></span>
                 </div>
 
-                <div class="layui-table-box usual-controll-tabel manufacturer-table">
+                <div class="layui-table-box usual-controll-tabel">
                     <table class="layui-table" lay-skin="line">
                         <thead>
                             <tr>
@@ -308,7 +308,7 @@
                 var name = $('input[name="roleName"]').val();
                 var url = id === '' ? '/light/role/add' : '/light/role/update';
                 var postData;
-                
+
                 if (id === '') {
                     postData = {'name': name};
                 } else {

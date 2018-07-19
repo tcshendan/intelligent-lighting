@@ -19,13 +19,13 @@
             border-radius: 2px;
         }
 
-        #detailModal .layui-form-item {
+        #recordModal .layui-form-item {
             margin-bottom: 0;
             font-size: 0;
             overflow: hidden;
         }
 
-        #detailModal .layui-form-item label {
+        #recordModal .layui-form-item label {
             display: block;
             padding: 9px 5px;
             font-weight: 400;
@@ -75,7 +75,7 @@
                     <span class="ant-alert-description"></span>
                 </div>
 
-                <div class="layui-table-box usual-controll-tabel manufacturer-table">
+                <div class="layui-table-box usual-controll-tabel">
                     <table class="layui-table" lay-skin="line">
                         <thead>
                             <tr>
@@ -113,7 +113,7 @@
                                 <td>这是备注这是备注...</td>
                                 <td>待审核</td>
                                 <td>
-                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#detailModal">记录单</a>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#recordModal">记录单</a>
                                     <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#verifyModal">审核</a>
                                 </td>
                             </tr>
@@ -133,7 +133,7 @@
                                 <td>这是备注这是备注...</td>
                                 <td>进行中</td>
                                 <td>
-                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#detailModal">记录单</a>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#recordModal">记录单</a>
                                     <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#verifyModal">审核</a>
                                 </td>
                             </tr>
@@ -153,7 +153,7 @@
                                 <td>这是备注这是备注...</td>
                                 <td>待审核</td>
                                 <td>
-                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#detailModal">记录单</a>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#recordModal">记录单</a>
                                     <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#verifyModal">审核</a>
                                 </td>
                             </tr>
@@ -173,7 +173,7 @@
                                 <td>这是备注这是备注...</td>
                                 <td>进行中</td>
                                 <td>
-                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#detailModal">记录单</a>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#recordModal">记录单</a>
                                     <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#verifyModal">审核</a>
                                 </td>
                             </tr>
@@ -193,7 +193,7 @@
                                 <td>这是备注这是备注...</td>
                                 <td>进行中</td>
                                 <td>
-                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#detailModal">记录单</a>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#recordModal">记录单</a>
                                     <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#verifyModal">审核</a>
                                 </td>
                             </tr>
@@ -254,13 +254,13 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">备注<label style="color: #8c8c8c;">（可选）</label>：</label>
                                 <div class="layui-input-block">
-                                    <textarea placeholder="请输入备注，30字以内" name="remarks" class="layui-textarea" maxlength="30"></textarea>
+                                    <textarea placeholder="请输入备注，30字以内" name="content" class="layui-textarea" maxlength="30"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="layui-btn layui-btn-primary" data-dismiss="modal">取消</button>
-                            <button type="button" class="layui-btn layui-btn-normal">确定</button>
+                            <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:workList.save();">确定</button>
                         </div>
                     </div>
                 </div>
@@ -290,7 +290,7 @@
             </div>
 
             <!-- 工单记录单详情 -->
-            <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal fade" id="recordModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -388,6 +388,42 @@
         });
 
         var workList = {
+            save: function() {
+                var user = $('input[name="selectedUser"]').val();
+                var faultType = $('input[name="selectedFaultType"]').val();
+                var days = $('input[name="days"]').val();
+                var content = $('textarea[name="content"]').val();
+                var postData;
+
+                postData = {'user': user,'faultType': faultType,'days': days,'content': content};
+
+                postData = (function(obj) {
+                    var str = [];
+                    for (var p in obj) {
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    }
+                    return str.join("&");
+                })(postData);
+                console.log(postData);
+
+                $.ajax({
+                    url: '',
+                    type: 'post',
+                    data: postData,
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        // 状态码
+                        console.log(XMLHttpRequest.status);
+                        // 状态
+                        console.log(XMLHttpRequest.readyState);
+                        // 错误信息
+                        console.log(textStatus);
+                    }
+                });
+
+            },
             confirm: function() {
                 var isPass = $('input[name="selectedStatus"]').val();
                 $('#verifyModal').modal('hide');

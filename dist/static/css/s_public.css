@@ -250,9 +250,20 @@ body {
     border-color: #D2D2D2 !important;
 }
 
+.btn-search, .btn-query, .btn-export {
+    padding: 0 30px;
+}
+
 .btn-search {
     margin-left: 6px;
-    padding: 0 30px;
+}
+
+.btn-query {
+    margin-left: 20px;
+}
+
+.btn-export {
+    margin-left: 16px;
 }
 
 /* layui-form */
@@ -1516,7 +1527,7 @@ div.info-bottom img {
     #faultWorkListModal .modal-dialog {
         width: 500px;
     }
-    #detailModal .modal-dialog {
+    #recordModal .modal-dialog {
         width: 600px;
     }
     #detectionModal .modal-dialog {
