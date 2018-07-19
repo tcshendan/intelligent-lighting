@@ -216,7 +216,7 @@
                 $('#title').html('修改角色');
                 $('input[name="roleId"]').val(id);
                 $.ajax({
-                    url: '/light/user/get',
+                    url: '/light/role/get',
                     type: 'GET',
                     data: 'id=' + id,
                     success: function(response) {
@@ -235,7 +235,7 @@
                     title: '删除'
                 }, function() {
                     $.ajax({
-                        url: '/light/user/delete',
+                        url: '/light/role/delete',
                         data: {'id': id},
                         type: 'post',
                         success: function(response) {
@@ -277,7 +277,7 @@
                     }
                     if (checkedArr.length > 0) {
                         $.ajax({
-                            url: '/light/user/batchDelete',
+                            url: '/light/role/batchDelete',
                             data: {'ids': checkedArr},
                             type: 'post',
                             success: function(response) {
@@ -311,7 +311,7 @@
             save: function() {
                 var id = $('input[name="roleId"]').val();
                 var name = $('input[name="roleName"]').val();
-                var url = id === '' ? '/light/user/add' : '/light/user/update';
+                var url = id === '' ? '/light/role/add' : '/light/role/update';
                 var postData;
 
                 if ($.trim(name) == '') {
