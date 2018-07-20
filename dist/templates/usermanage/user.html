@@ -74,7 +74,7 @@
                                 </td>
                                 <td>2</td>
                                 <td>admin</td>
-                                <td>普通管理员</td>
+                                <td>管理员</td>
                                 <td>13100000000</td>
                                 <td>
                                     <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#userModal" onclick="javascript:user.edit('2');">修改</a>
@@ -104,27 +104,12 @@
                                 </td>
                                 <td>4</td>
                                 <td>admin</td>
-                                <td>操作员</td>
+                                <td>业务员</td>
                                 <td>13100000000</td>
                                 <td>
                                     <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#userModal" onclick="javascript:user.edit('4');">修改</a>
                                     <a class="operate-btn operate-btn-orange" onclick="javascript:user.delete('4');">删除</a>
                                     <a class="operate-btn operate-btn-orange" onclick="javascript:user.reset('4');">重置密码</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="userIds" value="5" />
-                                    <label class="check-label"></label>
-                                </td>
-                                <td>5</td>
-                                <td>admin</td>
-                                <td>操作员</td>
-                                <td>13100000000</td>
-                                <td>
-                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#userModal" onclick="javascript:user.edit('5');">修改</a>
-                                    <a class="operate-btn operate-btn-orange" onclick="javascript:user.delete('5');">删除</a>
-                                    <a class="operate-btn operate-btn-orange" onclick="javascript:user.reset('5');">重置密码</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -167,9 +152,9 @@
                                     <select name="role" lay-filter="role">
                                         <option value="0">请选择</option>
                                         <option value="1">超级管理员</option>
-                                        <option value="2">普通管理员</option>
+                                        <option value="2">管理员</option>
                                         <option value="3">运营经理</option>
-                                        <option value="4">操作员</option>
+                                        <option value="4">业务员</option>
                                     </select>
                                 </div>
                             </div>
@@ -231,7 +216,7 @@
                 $('#modal_title').html('新建用户');
 
                 form.val('user-form', {
-                    'userId': '',                
+                    'userId': '',
                     'userName': '',
                     'phone': '',
                     'role': 0,
