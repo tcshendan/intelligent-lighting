@@ -3,11 +3,433 @@
 
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>巡检设置</title>
+    <link rel="stylesheet" rel="stylesheet" href="../../../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css">
+    <link rel="stylesheet" href="../../../static/css/paging.css">
+    <link rel="stylesheet" href="../../../static/css/s_public.css">
+    <style>
+        .selection-box {
+            width: 100%;
+            min-height: 80px;
+            height: auto;
+            line-height: 20px;
+            padding: 6px 10px;
+            border: 1px solid #e6e6e6;
+            border-radius: 2px;
+        }
+
+        .inspection-time {
+            width: 50%;
+        }
+
+        .inspection-time .layui-form-label {
+            width: 60px !important;
+            text-align: center;
+        }
+
+        .inspection-time .layui-input-block {
+            margin-left: 60px !important;
+        }
+    </style>
 </head>
 
 <body>
-    巡检设置
+    <div class="main-wrapper">
+        <form id="form" action="" method="get">
+            <div class="layui-containers usual-content-padding">
+                <div hidden="hidden">
+                    <input type="text" id="pageNum" name="pageNum" value="1" />
+                    <input type="text" id="pages" name="pages" value="1" />
+                </div>
+
+                <div class="layui-row clearfix">
+                    <div class="layui-inline usual-left">
+                        <button type="button" class="layui-btn layui-btn-normal" data-toggle="modal" data-target="#inspectionTaskModal" onclick="javascript:inspection.add();">+ 新建</button>
+                        <button type="button" class="layui-btn layui-btn-primary" onclick="javascript:inspection.batchDelete();">批量删除</button>
+                    </div>
+                    <div class="layui-inline usual-right" style="position: relative;">
+                        <input type="text" name="keywords" class="layui-input" placeholder="请输入关键词" style="padding-right: 34px;" />
+                        <span class="search-icon" onclick="formSubmit()"></span>
+                    </div>
+                </div>
+
+                <div class="ant-alert ant-alert-info">
+                    <i class="anticon anticon-info-circle ant-alert-icon"></i>
+                    <span class="ant-alert-message">已选择 <em class="usual-checked-count">0</em> 项</span>
+                    <span class="ant-alert-description"></span>
+                </div>
+
+                <div class="layui-table-box usual-controll-tabel">
+                    <table class="layui-table" lay-skin="line">
+                        <thead>
+                            <tr>
+                                <th style="width: 48px">
+                                    <input type="checkbox" class="usual-checked-all" />
+                                    <label class="check-label"></label>
+                                </th>
+                                <th>序号</th>
+                                <th>巡检类型</th>
+                                <th>运维人员</th>
+                                <th>设备</th>
+                                <th>巡检时间</th>
+                                <th>任务时长（天）</th>
+                                <th>创建人</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="" value="1" />
+                                    <label class="check-label"></label>
+                                </td>
+                                <td>1</td>
+                                <td>周巡检</td>
+                                <td>李四</td>
+                                <td>集中控制器、灯控器、灯具</td>
+                                <td>周三</td>
+                                <td>3</td>
+                                <td>admin</td>
+                                <td>2016-09-21 08:50:08</td>
+                                <td>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#inspectionTaskModal" onclick="javascript:inspection.edit('1');">修改</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:inspection.delete('1');">删除</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="" value="1" />
+                                    <label class="check-label"></label>
+                                </td>
+                                <td>2</td>
+                                <td>月巡检</td>
+                                <td>李四</td>
+                                <td>集中控制器、灯控器、灯具</td>
+                                <td>每月28号</td>
+                                <td>3</td>
+                                <td>admin</td>
+                                <td>2016-09-21 08:50:08</td>
+                                <td>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#inspectionTaskModal" onclick="javascript:inspection.edit('2');">修改</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:inspection.delete('2');">删除</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="" value="1" />
+                                    <label class="check-label"></label>
+                                </td>
+                                <td>3</td>
+                                <td>季巡检</td>
+                                <td>李四</td>
+                                <td>集中控制器、灯控器、灯具</td>
+                                <td>春：3月30日；夏：6月30日...</td>
+                                <td>3</td>
+                                <td>admin</td>
+                                <td>2016-09-21 08:50:08</td>
+                                <td>
+                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#inspectionTaskModal" onclick="javascript:inspection.edit('3');">修改</a>
+                                    <a class="operate-btn operate-btn-orange" onclick="javascript:inspection.delete('3');">删除</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="page">
+                    <div id="page" class="pagination"></div>
+                </div>
+
+            </div>
+
+            <!-- 新建/修改巡检任务 Modal -->
+            <div class="modal fade" id="inspectionTaskModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="modal_title">新建巡检任务</h4>
+                        </div>
+                        <div class="modal-body layui-form" lay-filter="inspection-form">
+                            <div hidden="hidden">
+                                <input type="hidden" name="taskId" value="" />
+                                <input type="hidden" name="selectedType" value="0" />
+                                <input type="hidden" name="selectedUser" value="0" />
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">巡检类型：</label>
+                                <div class="layui-input-block">
+                                    <select name="type" lay-filter="type">
+                                        <option value="0">周巡检</option>
+                                        <option value="1">月巡检</option>
+                                        <option value="2">季巡检</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item j-inspection-time">
+                                <label class="layui-form-label">巡检时间：</label>
+                                <div class="layui-input-block">
+                                    <select name="weekday" lay-filter="weekday">
+                                        <option value="1">周一</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item j-inspection-time" style="display: none;">
+                                <label class="layui-form-label">巡检时间：</label>
+                                <div class="layui-input-block">
+                                    <select name="monthday" lay-filter="monthday">
+                                        <option value="28">28号</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item j-inspection-time" style="display: none;">
+                                <label class="layui-form-label">巡检时间：</label>
+                                <div class="layui-input-block">
+                                    <div class="inspection-block clearfix" style="margin-bottom: 10px;">
+                                        <div class="inspection-time usual-left">
+                                            <label class="layui-form-label">一季度</label>
+                                            <div class="layui-input-block">
+                                                <select name="first-quarter" lay-filter="first-quarter">
+                                                    <option value="3月30日">3月30日</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="inspection-time usual-left">
+                                            <label class="layui-form-label">二季度</label>
+                                            <div class="layui-input-block">
+                                                <select name="second-quarter" lay-filter="second-quarter">
+                                                    <option value="6月30日">6月30日</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="inspection-block clearfix">
+                                        <div class="inspection-time usual-left">
+                                            <label class="layui-form-label">三季度</label>
+                                            <div class="layui-input-block">
+                                                <select name="third-quarter" lay-filter="third-quarter">
+                                                    <option value="9月30日">9月30日</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="inspection-time usual-left">
+                                            <label class="layui-form-label">四季度</label>
+                                            <div class="layui-input-block">
+                                                <select name="fourth-quarter" lay-filter="fourth-quarter">
+                                                    <option value="12月30日">12月30日</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">任务时长（天）：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="days" class="layui-input" placeholder="请输入" />
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">选择用户：</label>
+                                <div class="layui-input-block">
+                                    <select name="user" lay-filter="user">
+                                        <option value="0">请选择</option>
+                                        <option value="1">张三</option>
+                                        <option value="2">李四</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">选择设备：</label>
+                                <div class="layui-input-block">
+                                    <div class="selection-box"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="layui-btn layui-btn-primary" data-dismiss="modal">取消</button>
+                            <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:inspection.save();">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <script src="../../../static/js/jquery.min.js"></script>
+    <script src="../../../layuiadmin/layui/layui.js" charset="utf-8"></script>
+    <script src="../../../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../static/js/query.js"></script>
+    <script src="../../../static/js/paging.js"></script>
+    <script src="../../../static/js/public.js"></script>
+    <script type="text/javascript">
+        var totalPages = $("#pages").val(); //总页数
+        var currentPage = $("#pageNum").val(); //当前页
+
+        //分页
+        if (totalPages > 0) {
+            $('#page').Paging({
+                pagesize: 5,
+                pagecount: totalPages,
+                current: currentPage,
+                callback: function(pageNum) {
+                    $("#pageNum").val(pageNum);
+                    formSubmit();
+                }
+            })
+        }
+
+        //表单提交
+        function formSubmit() {
+            $('#form').submit();
+        }
+
+        layui.use(['layer', 'form'], function() {
+            var layer = layui.layer;
+            var form = layui.form;
+
+            /**
+             * 巡检类型下拉框事件监听
+             */
+            form.on('select(type)', function(data) {
+                $('input[name="selectedType"]').val(data.value);
+                inspection.show(data.value);
+            });
+
+            /**
+             * 选择用户下拉框事件监听
+             */
+            form.on('select(user)', function(data) {
+                $('input[name="selectedUser"]').val(data.value);
+            });
+
+            window.form = form;
+        });
+
+        var inspection = {
+            add: function() {
+                $('#modal_title').html('新建巡检任务');
+
+                form.val('inspection-form', {
+                    'taskId': '',
+                    'type': 0,
+                    'selectedType': 0,
+                    'days': '',
+                    'user': 0,
+                    'selectedUser': 0
+                });
+
+                form.render();
+
+                inspection.show(0);
+            },
+            /**
+             * 修改巡检任务
+             * @param  {[type]} id
+             * @return
+             */
+            edit: function(id) {
+                $('#modal_title').html('修改巡检任务');
+            },
+            /**
+             * 删除单个巡检任务
+             * @param  {[type]} id
+             * @return
+             */
+            delete: function(id) {
+                layer.confirm('你确认删除该巡检任务吗？', {
+                    title: '删除'
+                }, function() {
+                    $.ajax({
+                        url: '',
+                        type: 'POST',
+                        data: {'id': id},
+                        success: function(response) {
+                            console.log(response);
+                            if (response.code == 200) {
+                                layer.msg('操作成功！', {
+                                    icon: 1,
+                                    time: 2000
+                                }, function() {
+                                    formSubmit();
+                                });
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            // 状态码
+                            console.log(XMLHttpRequest.status);
+                            // 状态
+                            console.log(XMLHttpRequest.readyState);
+                            // 错误信息
+                            console.log(textStatus);
+                        }
+                    });
+                });
+            },
+            /**
+             * 批量删除巡检任务
+             */
+            batchDelete: function() {
+                layer.confirm('你确认删除这些巡检任务吗？', {
+                    title: '删除'
+                }, function() {
+                    var allInput = document.querySelectorAll("table tbody tr td input");
+                    var checkedArr = new Array();
+                    for (var i = 0; i < allInput.length; i++) {
+                        if (allInput[i].checked) {
+                            checkedArr.push(allInput[i].value);
+                        }
+                    }
+                    if (checkedArr.length > 0) {
+                        $.ajax({
+                            url: '',
+                            type: 'POST',
+                            data: {'ids': checkedArr},
+                            success: function(response) {
+                                console.log(response);
+                                if (response.code == 200) {
+                                    layer.msg('操作成功！', {
+                                        icon: 1,
+                                        time: 2000
+                                    }, function() {
+                                        formSubmit();
+                                    });
+                                }
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                // 状态码
+                                console.log(XMLHttpRequest.status);
+                                // 状态
+                                console.log(XMLHttpRequest.readyState);
+                                // 错误信息
+                                console.log(textStatus);
+                            }
+                        });
+                    } else {
+                        layer.msg('请选择要删除的内容', {
+                            icon: 5,
+                            time: 2000
+                        });
+                    }
+                });
+            },
+            save: function() {
+                console.log('表单提交');
+            },
+            /**
+             * 根据巡检类型显示对应的巡检时间
+             * @param index
+             */
+            show: function(index) {
+                var $inspectionTime = $('.j-inspection-time');
+                $inspectionTime.hide();
+                $inspectionTime.eq(index).show();
+            }
+        };
+    </script>
 </body>
 
 </html>

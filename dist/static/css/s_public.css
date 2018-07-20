@@ -1524,7 +1524,8 @@ div.info-bottom img {
     #factoryModal .modal-dialog,
     #roleModal .modal-dialog,
     #userModal .modal-dialog,
-    #faultWorkListModal .modal-dialog {
+    #faultWorkOrderModal .modal-dialog,
+    #inspectionTaskModal .modal-dialog {
         width: 500px;
     }
     #recordModal .modal-dialog {
@@ -1539,8 +1540,7 @@ div.info-bottom img {
 #programModal .layui-form-label,
 #factoryModal .layui-form-label,
 #roleModal .layui-form-label,
-#userModal .layui-form-label,
-#faultWorkListModal .layui-form-label {
+#userModal .layui-form-label {
     padding: 9px 0;
 }
 
@@ -1548,16 +1548,18 @@ div.info-bottom img {
 #programModal .layui-input-block,
 #factoryModal .layui-input-block,
 #roleModal .layui-input-block,
-#userModal .layui-input-block,
-#faultWorkListModal .layui-input-block {
+#userModal .layui-input-block {
     margin-left: 90px;
 }
 
-#faultWorkListModal .layui-form-label {
+#faultWorkOrderModal .layui-form-label,
+#inspectionTaskModal .layui-form-label {
+    padding: 9px 0;
     width: 112px;
 }
 
-#faultWorkListModal .layui-input-block {
+#faultWorkOrderModal .layui-input-block,
+#inspectionTaskModal .layui-input-block {
     margin-left: 122px;
 }
 

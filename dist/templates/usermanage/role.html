@@ -12,7 +12,7 @@
 
 <body>
     <div class="main-wrapper">
-        <form id="role-form" action="" method="get">
+        <form id="form" action="" method="get">
             <div class="layui-containers usual-content-padding">
                 <div hidden="hidden">
                     <input type="text" id="pageNum" name="pageNum" value="1" />
@@ -138,7 +138,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="title">新建角色</h4>
+                            <h4 class="modal-title" id="modal_title">新建角色</h4>
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="roleId" value="" />
@@ -189,7 +189,7 @@
         }
 
         function formSubmit() {
-            $('#role-form').submit();
+            $('#form').submit();
         }
 
         layui.use(['layer'], function() {
@@ -198,7 +198,7 @@
 
         var role = {
             add: function() {
-                $('#title').html('新建角色');
+                $('#modal_title').html('新建角色');
                 $('input[name="roleId"]').val('');
                 $('input[name="roleName"]').val('');
             },
@@ -208,7 +208,7 @@
              * @return
              */
             edit: function(id) {
-                $('#title').html('修改角色');
+                $('#modal_title').html('修改角色');
                 $('input[name="roleId"]').val(id);
                 $.ajax({
                     url: '/light/role/get',
@@ -231,8 +231,8 @@
                 }, function() {
                     $.ajax({
                         url: '/light/role/delete',
+                        type: 'POST',
                         data: {'id': id},
-                        type: 'post',
                         success: function(response) {
                             console.log(response);
                             if (response.code == 200) {
@@ -273,8 +273,8 @@
                     if (checkedArr.length > 0) {
                         $.ajax({
                             url: '/light/role/batchDelete',
+                            type: 'POST',
                             data: {'ids': checkedArr},
-                            type: 'post',
                             success: function(response) {
                                 console.log(response);
                                 if (response.code == 200) {
@@ -325,7 +325,7 @@
 
                 $.ajax({
                     url: url,
-                    type: 'post',
+                    type: 'POST',
                     data: postData,
                     success: function(response) {
                         console.log(response);

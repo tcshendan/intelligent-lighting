@@ -60,7 +60,7 @@
 
                 <div class="layui-row clearfix">
                     <div class="layui-inline usual-left">
-                        <button type="button" class="layui-btn layui-btn-normal" data-toggle="modal" data-target="#faultWorkListModal">+ 新建故障工单</button>
+                        <button type="button" class="layui-btn layui-btn-normal" data-toggle="modal" data-target="#faultWorkOrderModal">+ 新建故障工单</button>
                         <button type="button" class="layui-btn layui-btn-primary">批量审核</button>
                     </div>
                     <div class="layui-inline usual-right" style="position: relative;">
@@ -99,7 +99,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="workListIds" value="1" />
+                                    <input type="checkbox" name="workOrderIds" value="1" />
                                     <label class="check-label"></label>
                                 </td>
                                 <td>1</td>
@@ -107,7 +107,7 @@
                                 <td>自动派发</td>
                                 <td>李四</td>
                                 <td>周巡检</td>
-                                <td>xxx，xxx，xxx</td>
+                                <td>集中控制器，灯控器，灯具</td>
                                 <td>设备故障</td>
                                 <td>3</td>
                                 <td>这是备注这是备注...</td>
@@ -119,37 +119,17 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="workListIds" value="2" />
+                                    <input type="checkbox" name="workOrderIds" value="2" />
                                     <label class="check-label"></label>
                                 </td>
                                 <td>2</td>
                                 <td>2016-09-21 08:50:08</td>
-                                <td>张三</td>
-                                <td>李四</td>
-                                <td>故障</td>
-                                <td>xxx，xxx，xxx</td>
-                                <td>设备故障</td>
-                                <td>4</td>
-                                <td>这是备注这是备注...</td>
-                                <td>进行中</td>
-                                <td>
-                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#recordModal">记录单</a>
-                                    <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#verifyModal">审核</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="workListIds" value="3" />
-                                    <label class="check-label"></label>
-                                </td>
-                                <td>3</td>
-                                <td>2016-09-21 08:50:08</td>
                                 <td>自动派发</td>
                                 <td>李四</td>
                                 <td>月巡检</td>
-                                <td>xxx，xxx，xxx</td>
+                                <td>集中控制器，灯控器，灯具</td>
                                 <td>设备故障</td>
-                                <td>5</td>
+                                <td>3</td>
                                 <td>这是备注这是备注...</td>
                                 <td>待审核</td>
                                 <td>
@@ -159,19 +139,19 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="workListIds" value="4" />
+                                    <input type="checkbox" name="workOrderIds" value="3" />
                                     <label class="check-label"></label>
                                 </td>
-                                <td>4</td>
+                                <td>3</td>
                                 <td>2016-09-21 08:50:08</td>
                                 <td>自动派发</td>
                                 <td>李四</td>
                                 <td>季巡检</td>
-                                <td>xxx，xxx，xxx</td>
+                                <td>集中控制器，灯控器，灯具</td>
                                 <td>设备故障</td>
-                                <td>6</td>
+                                <td>3</td>
                                 <td>这是备注这是备注...</td>
-                                <td>进行中</td>
+                                <td>待审核</td>
                                 <td>
                                     <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#recordModal">记录单</a>
                                     <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#verifyModal">审核</a>
@@ -179,17 +159,17 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="workListIds" value="5" />
+                                    <input type="checkbox" name="workOrderIds" value="4" />
                                     <label class="check-label"></label>
                                 </td>
-                                <td>5</td>
+                                <td>4</td>
                                 <td>2016-09-21 08:50:08</td>
-                                <td>自动派发</td>
+                                <td>admin</td>
                                 <td>李四</td>
-                                <td>季巡检</td>
-                                <td>xxx，xxx，xxx</td>
+                                <td>故障</td>
+                                <td>集中控制器，灯控器，灯具</td>
                                 <td>设备故障</td>
-                                <td>6</td>
+                                <td>3</td>
                                 <td>这是备注这是备注...</td>
                                 <td>进行中</td>
                                 <td>
@@ -208,7 +188,7 @@
             </div>
 
             <!-- 新建故障工单 Modal -->
-            <div class="modal fade" id="faultWorkListModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal fade" id="faultWorkOrderModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -216,7 +196,7 @@
                             <h4 class="modal-title">新建故障工单</h4>
                         </div>
                         <div class="modal-body layui-form">
-                            <input type="hidden" name="workListId" value="" />
+                            <input type="hidden" name="workOrderId" value="" />
                             <input type="hidden" name="selectedUser" value="0" />
                             <input type="hidden" name="selectedFaultType" value="0" />
                             <div class="layui-form-item">
@@ -260,7 +240,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="layui-btn layui-btn-primary" data-dismiss="modal">取消</button>
-                            <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:workList.save();">确定</button>
+                            <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:workOrder.save();">确定</button>
                         </div>
                     </div>
                 </div>
@@ -283,7 +263,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="layui-btn layui-btn-primary" data-dismiss="modal">取消</button>
-                            <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:workList.confirm();">确定</button>
+                            <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:workOrder.confirm();">确定</button>
                         </div>
                     </div>
                 </div>
@@ -366,7 +346,6 @@
              * 选择用户下拉框事件监听
              */
             form.on('select(user)', function(data) {
-                // console.log(data);
                 $('input[name="selectedUser"]').val(data.value);
             });
 
@@ -387,7 +366,7 @@
             window.form = form;
         });
 
-        var workList = {
+        var workOrder = {
             save: function() {
                 var user = $('input[name="selectedUser"]').val();
                 var faultType = $('input[name="selectedFaultType"]').val();
@@ -395,7 +374,12 @@
                 var content = $('textarea[name="content"]').val();
                 var postData;
 
-                postData = {'user': user,'faultType': faultType,'days': days,'content': content};
+                postData = {
+                    'user': user,
+                    'faultType': faultType,
+                    'days': days,
+                    'content': content
+                };
 
                 postData = (function(obj) {
                     var str = [];
@@ -408,7 +392,7 @@
 
                 $.ajax({
                     url: '',
-                    type: 'post',
+                    type: 'POST',
                     data: postData,
                     success: function(response) {
                         console.log(response);

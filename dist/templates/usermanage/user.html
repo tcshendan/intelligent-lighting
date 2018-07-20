@@ -12,7 +12,7 @@
 
 <body>
     <div class="main-wrapper">
-        <form id="user-form" action="" method="get">
+        <form id="form" action="" method="get">
             <div class="layui-containers usual-content-padding">
                 <div hidden="hidden">
                     <input type="text" id="pageNum" name="pageNum" value="1" />
@@ -143,9 +143,9 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="title">新建用户</h4>
+                            <h4 class="modal-title" id="modal_title">新建用户</h4>
                         </div>
-                        <div class="modal-body layui-form">
+                        <div class="modal-body layui-form" lay-filter="user-form">
                             <input type="hidden" name="userId" value="" />
                             <input type="hidden" name="selectedRole" value="0" />
                             <div class="layui-form-item">
@@ -208,7 +208,7 @@
         }
 
         function formSubmit() {
-            $('#user-form').submit();
+            $('#form').submit();
         }
 
         layui.use(['layer', 'form'], function() {
@@ -228,14 +228,17 @@
 
         var user = {
             add: function() {
-                $('#title').html('新建用户');
-                $('input[name="userId"]').val('');
-                $('input[name="userName"]').val('');
-                $('input[name="phone"]').val('');
+                $('#modal_title').html('新建用户');
 
-                $('input[name="selectedRole"]').val(0);
-                $('select[name="role"]').val(0);
-                form.render('select');
+                form.val('user-form', {
+                    'userId': '',                
+                    'userName': '',
+                    'phone': '',
+                    'role': 0,
+                    'selectedRole': 0
+                });
+
+                form.render();
             },
             /**
              * 修改用户
@@ -243,7 +246,7 @@
              * @return
              */
             edit: function(id) {
-                $('#title').html('修改用户');
+                $('#modal_title').html('修改用户');
                 $('input[name="userId"]').val(id);
                 $.ajax({
                     url: '/light/user/get',
@@ -251,12 +254,15 @@
                     data: 'id=' + id,
                     success: function(response) {
                         var data = response.data;
-                        $('input[name="userName"]').val(data.name);
-                        $('input[name="phone"]').val(data.phone);
 
-                        $('input[name="selectedRole"]').val(data.role);
-                        $('select[name="role"]').val(data.role);
-                        form.render('select');
+                        form.val('user-form', {
+                            'userName': data.name,
+                            'phone': data.phone,
+                            'role': data.role,
+                            'selectedRole': data.role,
+                        });
+
+                        form.render();
                     }
                 });
             },
@@ -271,8 +277,8 @@
                 }, function() {
                     $.ajax({
                         url: '/light/user/delete',
+                        type: 'POST',
                         data: {'id': id},
-                        type: 'post',
                         success: function(response) {
                             console.log(response);
                             if (response.code == 200) {
@@ -313,8 +319,8 @@
                     if (checkedArr.length > 0) {
                         $.ajax({
                             url: '/light/user/batchDelete',
+                            type: 'POST',
                             data: {'ids': checkedArr},
-                            type: 'post',
                             success: function(response) {
                                 console.log(response);
                                 if (response.code == 200) {
@@ -354,8 +360,8 @@
                 }, function() {
                     $.ajax({
                         url: '/light/user/reset',
+                        type: 'POST',
                         data: {'id': id},
-                        type: 'post',
                         success: function(response) {
                             console.log(response);
                             if (response.code == 200) {
@@ -402,7 +408,7 @@
 
                 $.ajax({
                     url: url,
-                    type: 'post',
+                    type: 'POST',
                     data: postData,
                     success: function(response) {
                         console.log(response);

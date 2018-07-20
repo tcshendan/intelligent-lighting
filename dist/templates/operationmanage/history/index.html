@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css">
     <link rel="stylesheet" href="../../../static/css/paging.css">
     <link rel="stylesheet" href="../../../static/css/s_public.css">
+    <link rel="stylesheet" href="../../../static/css/s_datepicker.css">
     <style>
         .layui-tab-content {
             padding: 0;
@@ -134,15 +135,15 @@
                                         </div>
                                     </div>
                                     <div class="layui-inline usual-left">
-                                        <button class="layui-btn layui-btn-normal btn-query">查询</button>
+                                        <button type="button" class="layui-btn layui-btn-normal btn-query" onclick="formSubmit()">查询</button>
                                     </div>
                                 </div>
                                 <div class="layui-row" style="padding-bottom: 0;">
-                                    <button class="layui-btn layui-btn-normal btn-export">导出选择</button>
+                                    <button type="button" class="layui-btn layui-btn-normal btn-export">导出选择</button>
                                 </div>
                             </div>
 
-                            <div class="layui-table-box usual-controll-tabel usual-content">
+                            <div class="layui-table-box usual-content">
                                 <table class="layui-table usual-table" lay-skin="line">
                                     <thead>
                                         <tr>
@@ -165,39 +166,47 @@
                                             <td>自动派发</td>
                                             <td>张三</td>
                                             <td>周巡检</td>
-                                            <td>xxx,xxx,xxx,...</td>
+                                            <td>集中控制器，灯控器，灯具</td>
                                             <td>连接故障</td>
                                             <td>这是备注这是备注这是备注...</td>
                                             <td>已完成</td>
-                                            <td>
-                                                <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#recordModal">记录单</a>
-                                            </td>
+                                            <td><a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#recordModal">记录单</a></td>
                                         </tr>
                                         <tr>
                                             <td>2</td>
                                             <td>2016-09-21 08:50:08</td>
                                             <td>自动派发</td>
                                             <td>张三</td>
-                                            <td>故障</td>
-                                            <td>xxx,xxx,xxx,...</td>
+                                            <td>月巡检</td>
+                                            <td>集中控制器，灯控器，灯具</td>
                                             <td>电力故障</td>
                                             <td>这是备注这是备注这是备注...</td>
-                                            <td>未完成</td>
-                                            <td>/</td>
+                                            <td>已完成</td>
+                                            <td><a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#recordModal">记录单</a></td>
                                         </tr>
                                         <tr>
                                             <td>3</td>
                                             <td>2016-09-21 08:50:08</td>
                                             <td>自动派发</td>
                                             <td>张三</td>
-                                            <td>月巡检</td>
-                                            <td>xxx,xxx,xxx,...</td>
+                                            <td>季巡检</td>
+                                            <td>集中控制器，灯控器，灯具</td>
                                             <td>设备故障</td>
                                             <td>这是备注这是备注这是备注...</td>
                                             <td>已完成</td>
-                                            <td>
-                                                <a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#recordModal">记录单</a>
-                                            </td>
+                                            <td><a class="operate-btn operate-btn-orange" data-toggle="modal" data-target="#recordModal">记录单</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>2016-09-21 08:50:08</td>
+                                            <td>admin</td>
+                                            <td>张三</td>
+                                            <td>故障</td>
+                                            <td>集中控制器，灯控器，灯具</td>
+                                            <td>设备故障</td>
+                                            <td>这是备注这是备注这是备注...</td>
+                                            <td>未完成</td>
+                                            <td>/</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -249,7 +258,44 @@
                             </div>
                         </div>
                     </div>
-                    <div class="layui-tab-item">日历模式</div>
+                    <div class="layui-tab-item">
+                        <div class="layui-containers">
+                            <div hidden="hidden">
+                                <input type="text" name="selectedYear" value="2018" />
+                                <input type="text" name="selectedMonth" value="7" />
+                            </div>
+                            <div class="usual-content layui-form">
+                                <div class="layui-row">
+                                    <div class="layui-inline usual-left">
+                                        <select name="year" lay-filter="year">
+                                            <option value="0">请选择</option>
+                                            <option value="2016">2016年</option>
+                                            <option value="2017">2017年</option>
+                                            <option value="2018" selected="">2018年</option>
+                                        </select>
+                                    </div>
+                                    <div class="layui-inline usual-left" style="margin-left: 10px;">
+                                        <select name="month" lay-filter="month">
+                                            <option value="0">请选择</option>
+                                            <option value="1">1月</option>
+                                            <option value="2">2月</option>
+                                            <option value="3">3月</option>
+                                            <option value="4">4月</option>
+                                            <option value="5">5月</option>
+                                            <option value="6">6月</option>
+                                            <option value="7" selected="">7月</option>
+                                            <option value="8">8月</option>
+                                            <option value="9">9月</option>
+                                            <option value="10">10月</option>
+                                            <option value="11">11月</option>
+                                            <option value="12">12月</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="calendar"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
@@ -260,6 +306,8 @@
     <script src="../../../static/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../../static/js/query.js"></script>
     <script src="../../../static/js/paging.js"></script>
+    <script src="../../../static/js/s_date.js"></script>
+    <script src="../../../static/js/s_datepicker.js"></script>
     <script type="text/javascript">
         var totalPages = $("#pages").val(); //总页数
         var currentPage = $("#pageNum").val(); //当前页
@@ -284,7 +332,27 @@
         layui.use(['element', 'form'], function() {
             var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
             var form = layui.form;
+
+            /**
+             * 选择日期下拉框事件监听
+             */
+            form.on('select(year)', function(data) {
+                $('input[name="selectedYear"]').val(data.value);
+                var year = data.value;
+                var month = $('input[name="selectedMonth"]').val();
+                datepicker.render(year, month);
+            });
+
+            form.on('select(month)', function(data) {
+                $('input[name="selectedMonth"]').val(data.value);
+                var year = $('input[name="selectedYear"]').val();
+                var month = data.value;
+                datepicker.render(year, month);
+            });
         });
+
+        //日历模式
+        datepicker.init();
     </script>
 </body>
 
