@@ -6,10 +6,11 @@
     <title>巡检设置</title>
     <link rel="stylesheet" rel="stylesheet" href="../../../static/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css">
+    <link rel="stylesheet" href="../../../static/ztree/css/zTreeStyle/zTreeStyle.css">
     <link rel="stylesheet" href="../../../static/css/paging.css">
     <link rel="stylesheet" href="../../../static/css/s_public.css">
     <style>
-        .selection-box {
+        .selection {
             width: 100%;
             min-height: 80px;
             height: auto;
@@ -17,6 +18,10 @@
             padding: 6px 10px;
             border: 1px solid #e6e6e6;
             border-radius: 2px;
+        }
+
+        .selection-rendered {
+          margin-left: 0;
         }
 
         .inspection-time {
@@ -30,6 +35,37 @@
 
         .inspection-time .layui-input-block {
             margin-left: 60px !important;
+        }
+
+        /*zTree*/
+
+        .usual-tree-box {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            background-color: #fff;
+            border: 1px solid #ededed;
+            border-top: none;
+            border-radius: 3px;
+        }
+
+        .usual-tree-box .btns {
+            margin: 10px;
+            text-align: right;
+        }
+
+        .usual-tree-box .btns .layui-btn {
+            height: 28px;
+            line-height: 28px;
+            padding: 0 12px;
+            font-size: 12px;
+        }
+
+        .ztree li span.button.chk.checkbox_true_part {
+            background-position: 0 0;
         }
     </style>
 </head>
@@ -244,7 +280,21 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">选择设备：</label>
                                 <div class="layui-input-block">
-                                    <div class="selection-box"></div>
+                                    <div class="selection j-selection">
+                                      <ul class="selection-rendered clearfix" id="selection_rendered">
+                                        <!-- <li class="selection-item" data-id="1111">
+                                          <span class="selection-item-content">AAA配电柜</span>
+                                        </li> -->
+                                        请选择
+                                      </ul>
+                                    </div>
+                                    <div class="usual-tree-box" id="treeBox">
+                                      <ul id="treeDemo" class="ztree"></ul>
+                                      <div class="btns">
+                                        <button type="button" class="layui-btn layui-btn-primary" onclick="javascript:treeBox.reset();">重置</button>
+                                        <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:treeBox.confirm();">确定</button>
+                                      </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -262,6 +312,8 @@
     <script src="../../../static/js/jquery.min.js"></script>
     <script src="../../../layuiadmin/layui/layui.js" charset="utf-8"></script>
     <script src="../../../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../static/ztree/js/jquery.ztree.core.js"></script>
+    <script src="../../../static/ztree/js/jquery.ztree.excheck.js"></script>
     <script src="../../../static/js/query.js"></script>
     <script src="../../../static/js/paging.js"></script>
     <script src="../../../static/js/public.js"></script>
@@ -429,6 +481,84 @@
                 $inspectionTime.eq(index).show();
             }
         };
+
+        var setting = {
+    			check: {
+    				enable: true
+    			},
+    			data: {
+    				simpleData: {
+    					enable: true
+    				}
+    			}
+    		};
+
+        var zNodes =[
+    			{ id:1, pId:0, name:"杭州市", open:true},
+    			{ id:11, pId:1, name:"江干区"},
+    			{ id:111, pId:11, name:"四季青街道"},
+          { id:1111, pId:111, name:"AAA配电柜"},
+          { id:11111, pId:1111, name:"路灯集中控制器"},
+          { id:111111, pId:11111, name:"灯控器"},
+          { id:1111111, pId:111111, name:"灯具"},
+          { id:11112, pId:1111, name:"景观灯集中控制器"},
+          { id:111121, pId:11112, name:"主控器"},
+          { id:1112, pId:111, name:"BBB配电柜"},
+    			{ id:112, pId:11, name:"采荷街道"},
+    			{ id:12, pId:1, name:"滨江区"},
+    			{ id:121, pId:12, name:"长河街道"},
+    			{ id:122, pId:12, name:"西兴街道"}
+    		];
+
+        $(document).ready(function() {
+          $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+
+          $(".j-selection").click(function(e) {
+            $("#treeBox").toggle();
+            e.stopPropagation();
+          });
+        });
+
+        var treeBox = {
+          insertSelectionItem: function(id, name) {
+            $("#selection_rendered").append('<li class="selection-item" data-id="' + id + '"><span class="selection-item-content">' + name + '</span></li>');
+          },
+          showSelectedNodes: function(nodes) {
+            var temp = [];
+            for (var i = 0; i < nodes.length; i++) {
+              if (nodes[i].isParent) {
+                temp = nodes[i].children;
+              }
+            }
+          },
+          confirm: function() {
+            var treeObj = $.fn.zTree.getZTreeObj('treeDemo');
+            var nodes = treeObj.getCheckedNodes(true);
+            //console.log(nodes);
+            var selectedNodes;
+            var htmlStr;
+            if (nodes && nodes.length > 0) {
+              selectedNodes = [];
+              htmlStr = '';
+              for (var i = 0, len = nodes.length; i < len; i++) {
+                if (nodes[i].getCheckStatus().half != true) {
+                  selectedNodes.push(nodes[i]);
+                  htmlStr += '<li class="selection-item" data-id="'+ nodes[i].id +'">' +
+                               '<span class="selection-item-content">'+ nodes[i].name +'</span>' +
+                             '</li>';
+                }
+              }
+            }
+            //console.log(selectedNodes);
+            $('#selection_rendered').html(selectedNodes ? '' : '请选择').append(htmlStr);
+            $('#treeBox').hide();
+          },
+          reset: function() {
+            var treeObj = $.fn.zTree.getZTreeObj('treeDemo');
+            treeObj.checkAllNodes(false);
+            $('#selection_rendered').html('请选择');
+          }
+        }
     </script>
 </body>
 
