@@ -6,10 +6,11 @@
     <title>正在进行</title>
     <link rel="stylesheet" rel="stylesheet" href="../../../static/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css">
+    <link rel="stylesheet" href="../../../static/ztree/css/zTreeStyle/zTreeStyle.css">
     <link rel="stylesheet" href="../../../static/css/paging.css">
     <link rel="stylesheet" href="../../../static/css/s_public.css">
     <style>
-        .selection-box {
+        .selection {
             width: 100%;
             min-height: 80px;
             height: auto;
@@ -17,6 +18,41 @@
             padding: 6px 10px;
             border: 1px solid #e6e6e6;
             border-radius: 2px;
+        }
+
+        .selection-rendered {
+          margin-left: 0;
+        }
+
+        /*zTree*/
+
+        .usual-tree-box {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            background-color: #fff;
+            border: 1px solid #ededed;
+            border-top: none;
+            border-radius: 3px;
+        }
+
+        .usual-tree-box .btns {
+            margin: 10px;
+            text-align: right;
+        }
+
+        .usual-tree-box .btns .layui-btn {
+            height: 28px;
+            line-height: 28px;
+            padding: 0 12px;
+            font-size: 12px;
+        }
+
+        .ztree li span.button.chk.checkbox_true_part {
+            background-position: 0 0;
         }
 
         #recordModal .layui-form-item {
@@ -212,7 +248,21 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">选择设备：</label>
                                 <div class="layui-input-block">
-                                    <div class="selection-box"></div>
+                                  <div class="selection j-selection">
+                                    <ul class="selection-rendered clearfix" id="selection_rendered">
+                                      <!-- <li class="selection-item" data-id="1111">
+                                        <span class="selection-item-content">AAA配电柜</span>
+                                      </li> -->
+                                      请选择
+                                    </ul>
+                                  </div>
+                                  <div class="usual-tree-box" id="treeBox">
+                                    <ul id="treeDemo" class="ztree"></ul>
+                                    <div class="btns">
+                                      <button type="button" class="layui-btn layui-btn-primary" onclick="javascript:treeBox.reset();">重置</button>
+                                      <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:treeBox.confirm();">确定</button>
+                                    </div>
+                                  </div>
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -314,9 +364,12 @@
     <script src="../../../static/js/jquery.min.js"></script>
     <script src="../../../layuiadmin/layui/layui.js" charset="utf-8"></script>
     <script src="../../../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../static/ztree/js/jquery.ztree.core.js"></script>
+    <script src="../../../static/ztree/js/jquery.ztree.excheck.js"></script>
     <script src="../../../static/js/query.js"></script>
     <script src="../../../static/js/paging.js"></script>
     <script src="../../../static/js/public.js"></script>
+    <script src="../../../static/js/s_tree.js"></script>
     <script type="text/javascript">
         var totalPages = $("#pages").val(); //总页数
         var currentPage = $("#pageNum").val(); //当前页
