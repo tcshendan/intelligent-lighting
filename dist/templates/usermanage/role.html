@@ -423,20 +423,6 @@
                 });
             }
         };
-
-        $(function() {
-            $(".item-name > i").click(function() {
-                $(this).parent().parent().toggleClass("unfold")
-                $(this).parent().parent().find("ul:first").slideToggle(500);
-                $(this).toggleClass("unfold");
-                $(this).parent().children(".filename").toggleClass("filename-open");
-            });
-        });
-        $(function() {
-            $(".checkbox").click(function() {
-                $(this).toggleClass("c-selected");
-            });
-        });
     </script>
 </body>
 
