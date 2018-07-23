@@ -21,7 +21,7 @@
         }
 
         .selection-rendered {
-          margin-left: 0;
+            margin-left: 0;
         }
 
         /*zTree*/
@@ -248,21 +248,21 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">选择设备：</label>
                                 <div class="layui-input-block">
-                                  <div class="selection j-selection">
-                                    <ul class="selection-rendered clearfix" id="selection_rendered">
-                                      <!-- <li class="selection-item" data-id="1111">
+                                    <div class="selection j-selection">
+                                        <ul class="selection-rendered clearfix" id="selection_rendered">
+                                            <!-- <li class="selection-item" data-id="1111">
                                         <span class="selection-item-content">AAA配电柜</span>
                                       </li> -->
-                                      请选择
-                                    </ul>
-                                  </div>
-                                  <div class="usual-tree-box" id="treeBox">
-                                    <ul id="treeDemo" class="ztree"></ul>
-                                    <div class="btns">
-                                      <button type="button" class="layui-btn layui-btn-primary" onclick="javascript:treeBox.reset();">重置</button>
-                                      <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:treeBox.confirm();">确定</button>
+                                            请选择
+                                        </ul>
                                     </div>
-                                  </div>
+                                    <div class="usual-tree-box" id="treeBox">
+                                        <ul id="treeDemo" class="ztree"></ul>
+                                        <div class="btns">
+                                            <button type="button" class="layui-btn layui-btn-primary" onclick="javascript:treeBox.reset();">重置</button>
+                                            <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:treeBox.confirm();">确定</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -391,7 +391,7 @@
             $('#form').submit();
         }
 
-        layui.use(['layer', 'form'], function() {
+        layui.use(['layer', 'form', 'table'], function() {
             var layer = layui.layer;
             var form = layui.form;
 
