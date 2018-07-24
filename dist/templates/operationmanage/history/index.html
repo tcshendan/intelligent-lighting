@@ -60,6 +60,12 @@
 <body>
     <div class="main-wrapper">
         <form id="form" action="" method="get">
+            <div hidden="hidden">
+                <input type="text" id="pageNum" name="pageNum" value="1" />
+                <input type="text" id="pages" name="pages" value="1" />
+                <input type="text" id="calendarPageNum" name="calendarPageNum" value="1" />
+                <input type="text" id="calendarPages" name="calendarPages" value="1" />
+            </div>
             <div class="layui-tab layui-tab-brief" lay-filter="config-tab">
                 <ul class="layui-tab-title">
                     <li class="layui-this">历史查询</li>
@@ -68,10 +74,6 @@
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                         <div class="layui-containers" style="background-color: #f0f2f5;">
-                            <div hidden="hidden">
-                                <input type="text" id="pageNum" name="pageNum" value="1" />
-                                <input type="text" id="pages" name="pages" value="1" />
-                            </div>
                             <div class="usual-content layui-form">
                                 <div class="layui-row">
                                     <div class="layui-inline usual-left">
@@ -140,7 +142,7 @@
                                     </div>
                                 </div>
                                 <div class="layui-row" style="padding-bottom: 0;">
-                                    <button type="button" class="layui-btn layui-btn-normal btn-export">导出选择</button>
+                                    <button type="button" class="layui-btn layui-btn-normal btn-export">导出选择...</button>
                                 </div>
                             </div>
 
@@ -243,7 +245,7 @@
                                         <div class="layui-form-item">
                                             <label class="usual-left">照片：</label>
                                             <div class="img-box" style="margin-left: 52px;">
-                                                <img src="../../../static/images/demo.png" alt="" />
+                                                <img th:src="@{/images/demo.png}" alt="" />
                                             </div>
                                         </div>
                                         <div class="layui-form-item">
@@ -260,14 +262,14 @@
                         </div>
                     </div>
                     <div class="layui-tab-item">
-                        <div class="layui-containers">
+                        <div class="layui-containers" style="background-color: #f0f2f5;">
                             <div hidden="hidden">
                                 <input type="text" name="selectedYear" value="2018" />
                                 <input type="text" name="selectedMonth" value="7" />
                             </div>
                             <div class="usual-content layui-form">
                                 <div class="layui-row">
-                                    <div class="layui-inline usual-left">
+                                    <div class="layui-inline usual-left" style="width: 120px;">
                                         <select name="year" lay-filter="year">
                                             <option value="0">请选择</option>
                                             <option value="2016">2016年</option>
@@ -275,7 +277,7 @@
                                             <option value="2018" selected="">2018年</option>
                                         </select>
                                     </div>
-                                    <div class="layui-inline usual-left" style="margin-left: 10px;">
+                                    <div class="layui-inline usual-left" style="margin-left: 10px; width: 120px;">
                                         <select name="month" lay-filter="month">
                                             <option value="0">请选择</option>
                                             <option value="1">1月</option>
@@ -292,8 +294,79 @@
                                             <option value="12">12月</option>
                                         </select>
                                     </div>
+                                    <div class="layui-inline usual-right">
+                                        <div class="calendar-intro">
+                                            <p><i style="background-color: #0ad72c;"></i><span>已完成</span></p>
+                                            <p><i style="background-color: #faad14;"></i><span>逾期</span></p>
+                                            <p><i style="background-color: #ed3e3e;"></i><span>审核未通过</span></p>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div id="calendar"></div>
+                            </div>
+                            <div class="usual-content layui-table-box">
+                                <div class="layui-row" style="text-align: right;">
+                                    <button type="button" class="layui-btn layui-btn-normal btn-export" style="background-color: #25292a;">导出</button>
+                                </div>
+                                <table class="layui-table usual-table" lay-skin="line">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>派发时间</th>
+                                            <th>派发人</th>
+                                            <th>运维人员</th>
+                                            <th>工单类型</th>
+                                            <th>设备</th>
+                                            <th>故障类型</th>
+                                            <th>备注</th>
+                                            <th>工单状态</th>
+                                            <th>不通过备注</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>2015.06.04 18:56:06</td>
+                                            <td>自动派发</td>
+                                            <td>王大陆</td>
+                                            <td>周巡检</td>
+                                            <td>集中控制器，灯控器，灯具</td>
+                                            <td>连接故障</td>
+                                            <td>这是备注这是备注这是备注...</td>
+                                            <td>已完成</td>
+                                            <td>/</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>2015.06.04 18:56:06</td>
+                                            <td>王大陆派发</td>
+                                            <td>王大陆</td>
+                                            <td>故障</td>
+                                            <td>集中控制器，灯控器，灯具</td>
+                                            <td>电力故障</td>
+                                            <td>这是备注这是备注这是备注...</td>
+                                            <td>逾期</td>
+                                            <td>巡检时间逾期</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>2015.06.04 18:56:06</td>
+                                            <td>自动派发</td>
+                                            <td>王大陆</td>
+                                            <td>月巡检</td>
+                                            <td>集中控制器，灯控器，灯具</td>
+                                            <td>设备故障</td>
+                                            <td>这是备注这是备注这是备注...</td>
+                                            <td>审核未通过</td>
+                                            <td>故障未检测出</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="page">
+                                    <div id="calendar-page" class="pagination"></div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -310,10 +383,12 @@
     <script src="../../../static/js/s_date.js"></script>
     <script src="../../../static/js/s_datepicker.js"></script>
     <script type="text/javascript">
-        var totalPages = $("#pages").val(); //总页数
-        var currentPage = $("#pageNum").val(); //当前页
+        var totalPages = $("#pages").val(); //历史查询总页数
+        var currentPage = $("#pageNum").val(); //历史查询当前页
+        var calendarTotalPages = $("#calendarPages").val(); //日历模式总页数
+        var calendarCurrentPage = $("#calendarPageNum").val(); //日历模式当前页
 
-        //分页
+        //历史查询分页
         if (totalPages > 0) {
             $('#page').Paging({
                 pagesize: 5,
@@ -323,7 +398,20 @@
                     $("#pageNum").val(pageNum);
                     formSubmit();
                 }
-            })
+            });
+        }
+
+        //日历模式分页
+        if (calendarTotalPages > 0) {
+            $('#calendar-page').Paging({
+                pagesize: 5,
+                pagecount: calendarTotalPages,
+                current: calendarCurrentPage,
+                callback: function(pageNum) {
+                    $('#calendarPageNum').val(pageNum);
+                    formSubmit();
+                }
+            });
         }
 
         function formSubmit() {

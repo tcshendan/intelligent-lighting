@@ -1739,3 +1739,346 @@ div.info-bottom img {
 .usual-form-item .layui-form-radio {
     margin: 6px 25px 0 25px;
 }
+
+/* 综合看板 */
+
+.content-container {
+    position: relative;
+    width: 100%;
+    height: 560px;
+    overflow: hidden;
+}
+
+.board-title {
+    padding: 0 20px;
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    font-size: 16px;
+    color: #333;
+    border-bottom: 1px solid #efefef;
+}
+
+.content-container .left {
+    margin-right: 350px;
+    height: 100%;
+}
+
+.content-container .right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 340px;
+    height: 100%;
+    background-color: #fff;
+}
+
+.content-container .statistics {
+    width: 100%;
+    height: 160px;
+    background-color: #fff;
+}
+
+.content-container .statistics .amount {
+    height: 118px;
+}
+
+.content-container .statistics .lamp, .content-container .statistics .landscape {
+    padding-left: 35px;
+    height: 100%;
+}
+
+.content-container .statistics .lamp {
+    width: calc(50% - 1px);
+    border-right: 1px solid #efefef;
+}
+
+.content-container .statistics .landscape {
+    width: 50%;
+}
+
+.content-container .statistics .amount h6 {
+    margin-top: 18px;
+    font-size: 16px;
+    color: #999;
+}
+
+.content-container .statistics .amount p {
+    margin: 5px 0;
+    font-size: 30px;
+    color: #333;
+}
+
+.content-container .statistics .amount span {
+    display: block;
+    font-family: "Hiragino Sans GB W3", sans-serif;
+    font-size: 14px;
+    color: #999;
+}
+
+.content-container .statistics .amount span em {
+    margin-left: 10px;
+    font-style: normal;
+    color: #333;
+}
+
+.content-container .map {
+    position: relative;
+    margin-top: 10px;
+    width: 100%;
+    height: 390px;
+    background-color: #fff;
+}
+
+.content-container .intro {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+    width: 200px;
+    height: 34px;
+    line-height: 34px;
+    font-size: 0;
+    background-color: #fff;
+    border: 1px solid #efefef;
+    border-radius: 1px;
+}
+
+.content-container .intro-item {
+    position: relative;
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+}
+
+.content-container .intro-item-1::after {
+    content: '';
+    position: absolute;
+    top: 7px;
+    right: -1px;
+    background-color: #e4e4e4;
+    width: 1px;
+    height: 21px;
+}
+
+.content-container .intro-item i {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 9px;
+    width: 10px;
+    height: 10px;
+}
+
+.content-container .intro-item-1 i {
+    background: url('../images/home/lamp.png') no-repeat;
+}
+
+.content-container .intro-item-2 i {
+    background: url('../images/home/landscape.png') no-repeat;
+}
+
+.content-container .intro-item span {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #333;
+}
+
+.content-container .info {
+    border: none;
+}
+
+.content-container .info-list-box {
+    position: relative;
+    padding: 20px 16px 0 16px;
+    width: 100%;
+    height: 259px;
+}
+
+.content-container .border-bottom::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #efefef;
+    width: 100%;
+    height: 1px;
+}
+
+.content-container .info-title span {
+    display: inline-block;
+    line-height: 34px;
+    font-size: 16px;
+    color: #999;
+}
+
+.content-container .info-title em {
+    display: inline-block;
+    margin-right: 26px;
+    font-style: normal;
+    font-size: 30px;
+    color: #333;
+}
+
+.content-container .info-list {
+    padding: 0 16px;
+    height: 198px;
+    overflow: auto;
+}
+
+.content-container .info-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content-container .info-list::-webkit-scrollbar-track {
+    background-color: #fff;
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
+}
+
+.content-container .info-list::-webkit-scrollbar-thumb {
+    background-color: #f4f4f4;
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
+}
+
+.content-container .info-item {
+    font-size: 0;
+    margin: 13px 0;
+}
+
+.content-container .info-item .icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    width: 24px;
+    height: 24px;
+}
+
+.content-container .info-item .icon.icon-lamp-distbox {
+    background: url("../images/icon/lamp/distbox.png") no-repeat center center;
+}
+
+.content-container .info-item .icon.icon-lamp-ctrl {
+    background: url("../images/icon/lamp/ctrl.png") no-repeat center center;
+}
+
+.content-container .info-item .icon.icon-lamp-post {
+    background: url("../images/icon/lamp/post.png") no-repeat center center;
+}
+
+.content-container .info-item .icon.icon-lamp-sctrl {
+    background: url("../images/icon/lamp/sctrl.png") no-repeat center center;
+}
+
+.content-container .info-item .icon.icon-lamp-lantern {
+    background: url("../images/icon/lamp/lantern.png") no-repeat center center;
+}
+
+.content-container .info-item .icon.icon-land-distbox {
+    background: url("../images/icon/landscape/distbox.png") no-repeat center center;
+}
+
+.content-container .info-item .icon.icon-land-ctrl {
+    background: url("../images/icon/landscape/ctrl.png") no-repeat center center;
+}
+
+.content-container .info-item .icon.icon-land-mctrl {
+    background: url("../images/icon/landscape/mctrl.png") no-repeat center center;
+}
+
+.content-container .info-item .text {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #efae25;
+}
+
+.chart-container {
+    margin-top: 10px;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.chart-container .left, .chart-container .right {
+    width: calc(50% - 5px);
+    height: 250px;
+    background-color: #fff;
+}
+
+.chart-container .left {
+    margin-right: 10px;
+}
+
+.chart-group, .elec-saving {
+    width: 100%;
+    height: 208px;
+}
+
+.chart-group .lamp-chart, .chart-group .landscape-chart, .elec-saving .elec, .elec-saving .saving {
+    width: 50%;
+    height: 208px;
+}
+
+.chart-group p {
+    margin-bottom: 12px;
+    line-height: 22px;
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+}
+
+.elec-saving .elec {
+    padding-left: 80px;
+}
+
+.elec-saving .elec h6 {
+    margin-top: 26px;
+    font-size: 16px;
+    color: #999;
+}
+
+.elec-saving .elec p {
+    margin-top: 8px;
+    font-size: 30px;
+    color: #333;
+}
+
+.elec-saving .elec p span {
+    font-size: 16px;
+}
+
+/*历史工单-日历模式*/
+
+.calendar-intro {
+    font-size: 0;
+}
+
+.calendar-intro p {
+    display: inline-block;
+    margin-right: 30px;
+    height: 34px;
+    line-height: 34px;
+    font-size: 0;
+}
+
+.calendar-intro p i {
+    display: inline-block;
+    vertical-align: middle;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.calendar-intro p span {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #999;
+}
+

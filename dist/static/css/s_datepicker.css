@@ -10,11 +10,17 @@
 }
 
 .ui-datepicker-wrapper .ui-datepicker-body th, .ui-datepicker-wrapper .ui-datepicker-body td {
-    padding: 0 10px;
     width: 14%;
-    height: 88px;
-    font-size: 12px;
+    font-size: 16px;
     text-align: center;
+}
+
+.ui-datepicker-wrapper .ui-datepicker-body th {
+    height: 31px;
+}
+
+.ui-datepicker-wrapper .ui-datepicker-body td {
+    height: 94px;
     cursor: pointer;
 }
 
@@ -22,25 +28,77 @@
     position: relative;
     width: 100%;
     height: 100%;
-    border-bottom: 4px solid #e9e9e9;
+    border-right: 1px solid #efefef;
+    border-bottom: 1px solid #efefef;
 }
 
-.ui-datepicker-wrapper .ui-datepicker-body table .date {
+.ui-datepicker-wrapper .ui-datepicker-body th .box {
+    padding-right: 15px;
+    font-weight: normal;
+    color: #696969;
+    text-align: right;
+}
+
+.ui-datepicker-wrapper .ui-datepicker-body td .date {
     position: absolute;
-    top: 18px;
-    right: 18px;
-    font-size: 14px;
+    top: 12px;
+    right: 20px;
 }
 
-.ui-datepicker-wrapper .ui-datepicker-body table th .date {
-    font-size: 18px;
+.ui-datepicker-wrapper .ui-datepicker-body td:hover {
+    background-color: #fef9ee;
 }
 
-.ui-datepicker-wrapper .ui-datepicker-body table .count {
+.ui-datepicker-wrapper .ui-datepicker-body td:hover .date {
+    color: #efae25 !important;
+}
+
+.ui-datepicker-wrapper .ui-datepicker-body .event {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 18px;
-    font-size: 28px;
-    color: #333;
+    bottom: 0;
+    padding: 0 40px 0 8px;
 }
+
+.ui-datepicker-wrapper .ui-datepicker-body .event p {
+    margin-bottom: 8px;
+    font-size: 0;
+    text-align: left;
+    overflow: hidden;
+}
+
+.ui-datepicker-wrapper .ui-datepicker-body .event .event-status {
+    display: inline-block;
+    vertical-align: middle;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 4px;
+}
+
+.ui-datepicker-wrapper .ui-datepicker-body .event .event-status-green {
+    background-color: #0ad72c;
+}
+
+.ui-datepicker-wrapper .ui-datepicker-body .event .event-status-yellow {
+    background-color: #faad14;
+}
+
+.ui-datepicker-wrapper .ui-datepicker-body .event .event-status-red {
+    background-color: #ed3e3e;
+}
+
+.ui-datepicker-wrapper .ui-datepicker-body .event .event-text,
+.ui-datepicker-wrapper .ui-datepicker-body .event .event-count {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 16px;
+    font-size: 12px;
+    color: #696969;
+}
+
+.ui-datepicker-wrapper .ui-datepicker-body .event .event-count {
+    float: right;
+}
+
