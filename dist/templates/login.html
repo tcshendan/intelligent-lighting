@@ -19,7 +19,7 @@
             <div class="inner-body">
                 <div class="inner-title">欢迎登录</div>
                 <div class="inner-content">
-                    <form action="">
+                    <form action="" method="post">
                         <div class="login-group clearfix">
                             <label class="login-form-label">账号</label>
                             <div class="login-input-block">
@@ -29,13 +29,19 @@
                         <div class="login-group clearfix">
                             <label class="login-form-label">密码</label>
                             <div class="login-input-block">
-                                <input type="text" name="password" placeholder="请输入密码" />
+                                <input type="password" name="password" placeholder="请输入密码" />
                             </div>
                         </div>
-                        <div class="login-group clearfix">
-                            <label class="login-form-label">验证码</label>
-                            <div class="login-input-block">
-                                <input type="text" name="verificationCode" placeholder="请输入验证码" />
+                        <div class="clearfix">
+                            <div class="login-group left" style="width: 185px;">
+                                <label class="login-form-label">验证码</label>
+                                <div class="login-input-block">
+                                    <input type="text" name="verifycode" placeholder="请输入验证码" />
+                                </div>
+                            </div>
+                            <div class="verify-code">
+                                <img src="../static/images/login/verifycode.png" alt="验证码" />
+                                <a href="javascript:;">看不清？</a>
                             </div>
                         </div>
                         <div class="login-action">
@@ -43,9 +49,14 @@
                         </div>
                     </form>
                 </div>
-                <div class="inner-bottom"></div>
+                <div class="inner-bottom">
+                    <span>忘记密码</span>
+                    <i></i>
+                </div>
             </div>
-            <div class="login-footer"></div>
+            <div class="login-footer">
+                <p>◎版权所有：浙江睿洋科技有限公司</p>
+            </div>
         </div>
     </div>
 
