@@ -6,10 +6,42 @@
     <title>历史工单</title>
     <link rel="stylesheet" rel="stylesheet" href="../../../static/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css">
+    <link rel="stylesheet" href="../../../static/ztree/css/zTreeStyle/zTreeStyle.css">
     <link rel="stylesheet" href="../../../static/css/paging.css">
     <link rel="stylesheet" href="../../../static/css/s_public.css">
     <link rel="stylesheet" href="../../../static/css/s_datepicker.css">
     <style>
+        /*zTree*/
+
+        .usual-tree-box {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            background-color: #fff;
+            border: 1px solid #ededed;
+            border-top: none;
+            border-radius: 3px;
+        }
+
+        .usual-tree-box .btns {
+            margin: 10px;
+            text-align: right;
+        }
+
+        .usual-tree-box .btns .layui-btn {
+            height: 28px;
+            line-height: 28px;
+            padding: 0 12px;
+            font-size: 12px;
+        }
+
+        .ztree li span.button.chk.checkbox_true_part {
+            background-position: 0 0;
+        }
+
         .layui-tab-content {
             padding: 0;
         }
@@ -108,12 +140,6 @@
                                 </div>
                                 <div class="layui-row">
                                     <div class="layui-inline usual-left">
-                                        <label class="layui-form-label usual-label">选择设备：</label>
-                                        <div class="layui-input-block">
-                                            <input type="text" name="equipment" class="layui-input" placeholder="请选择" />
-                                        </div>
-                                    </div>
-                                    <div class="layui-inline usual-left">
                                         <label class="layui-form-label usual-label">工单类型：</label>
                                         <input type="hidden" name="selectedFaultType" value="0" />
                                         <div class="layui-input-block">
@@ -127,7 +153,7 @@
                                         </div>
                                     </div>
                                     <div class="layui-inline usual-left">
-                                        <label class="layui-form-label usual-label">工单类型：</label>
+                                        <label class="layui-form-label usual-label">工单状态：</label>
                                         <input type="hidden" name="selectedFaultStatus" value="0" />
                                         <div class="layui-input-block">
                                             <select name="fault_status" lay-filter="fault_status">
@@ -135,6 +161,21 @@
                                                 <option value="1">已完成</option>
                                                 <option value="2">未完成</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline usual-left">
+                                        <label class="layui-form-label usual-label">选择设备：</label>
+                                        <div class="selection-treeview">
+                                            <span class="selection j-selection" style="width: 380px;">
+                                                <ul class="selection-rendered clearfix" id="selection_rendered"></ul>
+                                            </span>
+                                            <div class="usual-tree-box" id="treeBox">
+                                                <ul id="treeDemo" class="ztree"></ul>
+                                                <div class="btns">
+                                                    <button type="button" class="layui-btn layui-btn-primary" onclick="javascript:treeBox.reset();">重置</button>
+                                                    <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:treeBox.confirm();">确定</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="layui-inline usual-left">
@@ -378,10 +419,13 @@
     <script src="../../../static/js/jquery.min.js"></script>
     <script src="../../../layuiadmin/layui/layui.js" charset="utf-8"></script>
     <script src="../../../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../static/ztree/js/jquery.ztree.core.js"></script>
+    <script src="../../../static/ztree/js/jquery.ztree.excheck.js"></script>
     <script src="../../../static/js/query.js"></script>
     <script src="../../../static/js/paging.js"></script>
     <script src="../../../static/js/s_date.js"></script>
     <script src="../../../static/js/s_datepicker.js"></script>
+    <script src="../../../static/js/s_tree.js"></script>
     <script type="text/javascript">
         var totalPages = $("#pages").val(); //历史查询总页数
         var currentPage = $("#pageNum").val(); //历史查询当前页
@@ -418,9 +462,16 @@
             $('#form').submit();
         }
 
-        layui.use(['element', 'form'], function() {
+        layui.use(['element', 'laydate', 'form'], function() {
             var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+            var laydate = layui.laydate;
             var form = layui.form;
+
+            //日期范围
+            laydate.render({
+                elem: '#datepicker',
+                range: true
+            });
 
             /**
              * 选择日期下拉框事件监听
@@ -439,6 +490,137 @@
                 datepicker.render(year, month);
             });
         });
+
+        var setting = {
+            check: {
+                enable: true
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+
+        var zNodes = [{
+                id: 1,
+                pId: 0,
+                name: "杭州市",
+                open: true
+            },
+            {
+                id: 11,
+                pId: 1,
+                name: "江干区"
+            },
+            {
+                id: 111,
+                pId: 11,
+                name: "四季青街道"
+            },
+            {
+                id: 1111,
+                pId: 111,
+                name: "AAA配电柜"
+            },
+            {
+                id: 11111,
+                pId: 1111,
+                name: "路灯集中控制器"
+            },
+            {
+                id: 111111,
+                pId: 11111,
+                name: "灯控器"
+            },
+            {
+                id: 1111111,
+                pId: 111111,
+                name: "灯具"
+            },
+            {
+                id: 11112,
+                pId: 1111,
+                name: "景观灯集中控制器"
+            },
+            {
+                id: 111121,
+                pId: 11112,
+                name: "主控器"
+            },
+            {
+                id: 1112,
+                pId: 111,
+                name: "BBB配电柜"
+            },
+            {
+                id: 112,
+                pId: 11,
+                name: "采荷街道"
+            },
+            {
+                id: 12,
+                pId: 1,
+                name: "滨江区"
+            },
+            {
+                id: 121,
+                pId: 12,
+                name: "长河街道"
+            },
+            {
+                id: 122,
+                pId: 12,
+                name: "西兴街道"
+            }
+        ];
+
+        var isOpenFlag = false;
+        $(document).ready(function() {
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+
+            $(".j-selection").click(function(e) {
+                if (!isOpenFlag) {
+                    $("#treeBox").show();
+                    isOpenFlag = true;
+                } else {
+                    isOpenFlag = false;
+                }
+                e.stopPropagation();
+            });
+        });
+
+        var treeBox = {
+            confirm: function() {
+                var treeObj = $.fn.zTree.getZTreeObj('treeDemo');
+                var nodes = treeObj.getCheckedNodes(true);
+                //console.log(nodes);
+
+                var selectedNodes;
+                var htmlStr;
+                if (nodes && nodes.length > 0) {
+                    selectedNodes = [];
+                    htmlStr = '';
+                    for (var i = 0, len = nodes.length; i < len; i++) {
+                        if (nodes[i].getCheckStatus().half != true) {
+                            selectedNodes.push(nodes[i]);
+                            htmlStr += '<li class="selection-item" data-id="' + nodes[i].id + '">' +
+                                '<span class="selection-item-content">' + nodes[i].name + '</span>' +
+                                '</li>';
+                        }
+                    }
+                }
+                //console.log(selectedNodes);
+
+                $('#selection_rendered').html('').append(htmlStr);
+                $('#treeBox').hide();
+            },
+            reset: function() {
+                var treeObj = $.fn.zTree.getZTreeObj('treeDemo');
+                treeObj.checkAllNodes(false);
+                $('#selection_rendered').html('');
+            }
+        }
 
         //日历模式
         datepicker.init();
