@@ -50,8 +50,15 @@
                     </form>
                 </div>
                 <div class="inner-bottom">
-                    <span>忘记密码</span>
-                    <i></i>
+                    <div class="forget j-forget">
+                        <span>忘记密码</span>
+                        <i></i>
+                        <div class="tips j-tips">
+                            <div class="triangle-box"><span class="triangle"></span></div>
+                            <p>普通用户请联系管理员</p>
+                            <p>管理员用户请联系超级管理员</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="login-footer">
@@ -59,6 +66,15 @@
             </div>
         </div>
     </div>
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script>
+        $('.j-forget').mouseenter(function() {
+            $('.j-tips').fadeIn(500);
+        }).mouseleave(function() {
+            $('.j-tips').fadeOut(500);
+        });
+    </script>
 
 </body>
 
