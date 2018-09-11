@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" />
+    <link rel="stylesheet" href="../../static/ztree/css/zTreeStyle/zTreeStyle.css" />
+    <link rel="stylesheet" href="../../static/css/lamp/s_public.css" />
+    <style>
+        body {
+            padding: 0;
+        }
+
+        #container {
+            width: 100%;
+        }
+
+        .main-wrapper {
+            position: relative;
+        }
+
+        /* infoWindow */
+
+        .info {
+            border: solid 1px silver;
+        }
+
+        div.info-top {
+            position: relative;
+            background: none repeat scroll 0 0 #F9F9F9;
+            border-bottom: 1px solid #CCC;
+            border-radius: 5px 5px 0 0;
+        }
+
+        div.info-top div {
+            display: inline-block;
+            color: #333333;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 31px;
+            padding: 0 10px;
+        }
+
+        div.info-top img {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            transition-duration: 0.25s;
+        }
+
+        div.info-top img:hover {
+            box-shadow: 0px 0px 5px #000;
+        }
+
+        div.info-middle {
+            font-size: 12px;
+            padding: 6px;
+            line-height: 20px;
+        }
+
+        div.info-middle p {
+            margin-bottom: 5px;
+        }
+
+        div.info-bottom {
+            height: 0px;
+            width: 100%;
+            clear: both;
+            text-align: center;
+        }
+
+        div.info-bottom img {
+            position: relative;
+            z-index: 104;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <div class="content-container">
+            <div id="container"></div>
+            <div class="intro">
+                <div class="intro-item intro-item-1">
+                    <i></i>
+                    <span>在线-亮</span>
+                </div>
+                <div class="intro-item intro-item-2">
+                    <i></i>
+                    <span>在线-关</span>
+                </div>
+                <div class="intro-item intro-item-3">
+                    <i></i>
+                    <span>故障</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../static/js/jquery.min.js"></script>
+    <script src="../../layuiadmin/layui/layui.js" charset="utf-8"></script>
+    <script src="../../static/js/echarts.js"></script>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=a7670840be2070dec801891aff5eac2c"></script>
+    <!-- UI组件库 1.0 -->
+    <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+    <script src="../../static/data/lamppost.js"></script>
+
+    <script type="text/javascript">
+        setContainerHeight();
+
+        //设置容器Container高度
+        function setContainerHeight() {
+            var h = document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight;
+            document.getElementById('container').style.height = h + 'px';
+        }
+
+        var map = new AMap.Map('container', {
+            resizeEnable: true,
+            zoom: 15 //级别
+        });
+
+        AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
+            //添加一个缩放控件
+            map.addControl(new BasicControl.Zoom({
+                position: 'lb',
+                showZoomNum: true
+            }));
+        });
+
+        var statusMapper = {
+            0: "fault",
+            1: "on",
+            2: "off"
+        };
+
+        addMarker();
+
+        //将创建的点标记添加到已有的地图实例
+        function addMarker() {
+
+            for (var i = 0; i < lamppost.length; i += 1) {
+                var marker;
+                var image = '../../static/images/lamp/home/' + statusMapper[lamppost[i].status] + '.png';
+                var icon = new AMap.Icon({
+                    size: new AMap.Size(24, 30),
+                    image: image,
+                    imageSize: new AMap.Size(24, 30)
+                });
+
+                marker = new AMap.Marker({
+                    map: map,
+                    position: lamppost[i].lnglat.split(','),
+                    offset: new AMap.Pixel(-12, -15),
+                    zIndex: 101,
+                    icon: icon,
+                    title: lamppost[i].name + ' ' + lamppost[i].lnglat.split(',')
+                });
+
+                //自定义传入的参数
+                marker.extData = {
+
+                };
+
+                (function() {
+                    //鼠标点击marker弹出自定义的信息窗体
+                    AMap.event.addListener(marker, 'click', function(e) {
+                        var target = e.target;
+                    });
+                })(i);
+            }
+
+            map.setFitView();
+        }
+
+        //实例化信息窗体
+        function instantInfoWindow(title, equipmentId, status) {
+            var mapping = {
+                'normal': '正常',
+                'down': '故障',
+                'on': '亮',
+                'off': '关'
+            };
+            var content = [];
+            content.push("<p>设备ID：" + equipmentId + "</p>");
+            content.push("<p>状态：" + mapping[status] + "</p>");
+            content.push("<button class='layui-btn layui-btn-normal' data-toggle='modal' data-target='#myModal'>手动控制</button><button class='layui-btn layui-btn-normal'>派发工单</button>");
+            var infoWindow = new AMap.InfoWindow({ //创建信息窗体
+                isCustom: true, //使用自定义窗体
+                content: createInfoWindow(title, content.join("")), //信息窗体的内容可以是任意html内容
+                offset: new AMap.Pixel(16, -45)
+            });
+            return infoWindow;
+        }
+
+        //构建自定义信息窗体
+        function createInfoWindow(title, content) {
+            var info = document.createElement("div");
+            info.className = "info";
+
+            //可以通过下面的方式修改自定义窗体的宽高
+            //info.style.width = "400px";
+            // 定义顶部标题
+            var top = document.createElement("div");
+            var titleD = document.createElement("div");
+            var closeX = document.createElement("img");
+            top.className = "info-top";
+            titleD.innerHTML = title;
+            closeX.src = "http://webapi.amap.com/images/close2.gif";
+            closeX.onclick = closeInfoWindow;
+
+            top.appendChild(titleD);
+            top.appendChild(closeX);
+            info.appendChild(top);
+
+            // 定义中部内容
+            var middle = document.createElement("div");
+            middle.className = "info-middle";
+            middle.style.backgroundColor = 'white';
+            middle.innerHTML = content;
+            info.appendChild(middle);
+
+            // 定义底部内容
+            var bottom = document.createElement("div");
+            bottom.className = "info-bottom";
+            bottom.style.position = 'relative';
+            bottom.style.top = '0px';
+            bottom.style.margin = '0 auto';
+            var sharp = document.createElement("img");
+            sharp.src = "http://webapi.amap.com/images/sharp.png";
+            bottom.appendChild(sharp);
+            info.appendChild(bottom);
+            return info;
+        }
+
+        //关闭信息窗体
+        function closeInfoWindow() {
+            map.clearInfoWindow();
+        }
+    </script>
+</body>
+
+</html>

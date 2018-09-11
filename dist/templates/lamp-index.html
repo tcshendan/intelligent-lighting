@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css">
+    <link rel="stylesheet" href="../static/css/lamp/common.css" />
+    <link rel="stylesheet" href="../static/css/lamp/index.css" />
+    <link rel="stylesheet" href="" />
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="top-header clearfix">
+            <div class="logo usual-left clearfix">
+                <div class="logo-img">
+                    <img src="../static/images/lamp/index/logo.png" alt="智慧综合管理系统">
+                </div>
+                <p>智慧综合管理系统</p>
+            </div>
+            <div class="navigation usual-left j-navigation">
+                <ul>
+                    <li class="item active">
+                        <a href="javascript:;" data-href="/post/home">
+                            <i class="icon icon-home"></i>
+                            <span>首页</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="javascript:;" data-href="/light/screen/index">
+                            <i class="icon icon-lighting"></i>
+                            <span>智慧照明</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="javascript:;">
+                            <i class="icon icon-monitor"></i>
+                            <span>视频监控</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="javascript:;">
+                            <i class="icon icon-adv"></i>
+                            <span>广告发布</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="javascript:;">
+                            <i class="icon icon-wifi"></i>
+                            <span>WIFI覆盖</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="javascript:;">
+                            <i class="icon icon-broadcast"></i>
+                            <span>公共广播</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="javascript:;">
+                            <i class="icon icon-call"></i>
+                            <span>一键呼叫</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="javascript:;">
+                            <i class="icon icon-ep"></i>
+                            <span>智慧环保</span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="javascript:;">
+                            <i class="icon icon-settings"></i>
+                            <span>设置</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="layui-layout-right avatar-name">
+                <img src="../static/images/lamp/index/avatar.png" alt="" class="avatar" />
+                <label class="name">admin</label>
+            </div>
+        </div>
+        <div class="content">
+            <iframe id="myFrame" src="./lamp-home/index.html" class="my-iframe" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+        </div>
+    </div>
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        (function($, w) {
+
+            w.myFrame = $('#myFrame');
+
+            $(document).ready(function() {
+                setIframeHeight();
+
+                /**
+                 * @description: 导航点击后显示高亮效果
+                 */
+                $('.j-navigation .item a').click(function() {
+                    $('.j-navigation .item').removeClass('active');
+                    $(this).parent().addClass('active');
+
+                    setIframeSrc($(this).attr('data-href'));
+                });
+            });
+
+            /**
+             * @description: 根据浏览器高度设置iframe高度
+             */
+            function setIframeHeight() {
+                var h = document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight;
+                w.myFrame.css('height', h - 55);
+            }
+
+            /**
+             * @description: 修改iframe的src
+             * @param url
+             */
+            function setIframeSrc(url) {
+                w.myFrame.attr('src', url);
+            }
+
+        })($, window);
+    </script>
+
+</body>
+
+</html>

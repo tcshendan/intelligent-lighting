@@ -1,0 +1,259 @@
+/* 公共样式 */
+
+a,
+a:hover {
+    color: #333;
+    text-decoration: none;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+.clearfix:after {
+    display: block;
+    clear: both;
+    content: "";
+    visibility: hidden;
+    height: 0;
+}
+
+/* usual */
+
+.usual-content {
+    margin-bottom: 10px;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.usual-content-padding {
+    padding: 20px;
+}
+
+.usual-left {
+    float: left;
+}
+
+.usual-right {
+    float: right;
+}
+
+.usual-label {
+    padding: 7.5px 0;
+    width: 100px;
+    font-size: 14px;
+    color: #999;
+}
+
+/* usual-status */
+
+.usual-status span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    position: relative;
+    top: -2px;
+    margin-right: 5px;
+}
+
+.usual-normal span {
+    background-color: #0ad72c;
+}
+
+.usual-on span {
+    background-color: #efae25;
+}
+
+.usual-off span {
+    background-color: #898989;
+}
+
+.usual-fault span {
+    background-color: #ed3e3e;
+}
+
+/* layui-tab */
+
+.layui-tab {
+    margin: 0;
+}
+
+.layui-tab-title {
+    border-color: #ededed;
+}
+
+.layui-tab-title li {
+    font-size: 16px;
+    color: #626262;
+}
+
+.layui-tab-brief>.layui-tab-title .layui-this {
+    color: #efae25;
+}
+
+.layui-tab-brief>.layui-tab-title .layui-this:after {
+    border: none;
+    border-radius: 0;
+    border-bottom: 2px solid #efae25;
+}
+
+/* layui-btn */
+
+.layui-btn {
+    vertical-align: top;
+    padding: 0 20px;
+    height: 34px;
+    line-height: 34px;
+    border-radius: 3px;
+}
+
+.layui-btn-normal {
+    background-color: #efae25;
+}
+
+.layui-btn-primary {
+    border: 1px solid #e6e6e6;
+}
+
+.layui-btn-primary:hover {
+    border-color: #D2D2D2 !important;
+}
+
+.layui-btn-primary:hover {
+    border-color: #D2D2D2 !important;
+}
+
+/* layui-form */
+
+.layui-input,
+.layui-select {
+    display: inline-block;
+    vertical-align: top;
+    height: 34px;
+    border-radius: 3px;
+}
+
+.layui-input[readonly="readonly"] {
+    cursor: not-allowed;
+    color: #8c8c8c;
+}
+
+.layui-input.select-input {
+    margin-left: 10px;
+    width: 440px;
+    border-color: #efae25;
+}
+
+.layui-input.select-input:hover,
+.layui-input.select-input:focus {
+    border-color: #efae25 !important;
+}
+
+.layui-input-block {
+    min-height: 35px;
+}
+
+.layui-form-select dl dd.layui-this {
+    background-color: #efae25;
+    color: #fff;
+}
+
+/* laydate */
+
+.layui-laydate .layui-this {
+    background-color: #efae25!important;
+    color: #fff!important;
+}
+
+.layui-laydate-content td.laydate-selected {
+    background-color: #fef9ee !important;
+}
+
+/* layui-table */
+
+.layui-table,
+.layui-table-view {
+    position: relative;
+    margin: 0;
+}
+
+.layui-table[lay-skin=line] {
+    border-right-width: 0;
+    border-left-width: 0;
+}
+
+.layui-table td,
+.layui-table th {
+    padding: 14px 5px;
+}
+
+.layui-table th {
+    color: #333;
+}
+
+.layui-table td {
+    color: #8c8c8c;
+}
+
+.layui-table input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+    top: 17px;
+    left: 16px;
+    width: 16px;
+    height: 16px;
+    z-index: 10;
+}
+
+.layui-table .check-label {
+    display: inline-block;
+}
+
+.layui-table .check-label::after {
+    position: absolute;
+    content: "";
+    width: 16px;
+    height: 16px;
+    top: 17px;
+    left: 16px;
+    cursor: pointer;
+    border-radius: 2px;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+}
+
+.layui-table .check-label::before {
+    position: absolute;
+    content: "";
+    width: 10px;
+    height: 5px;
+    top: 21px;
+    left: 19px;
+    border: 2px solid #fff;
+    border-top: none;
+    border-right: none;
+    opacity: 0;
+    transform: rotate(-45deg);
+    transition: all 0.1s ease-in-out;
+    z-index: 1;
+}
+
+.layui-table input[type='checkbox']:checked+.check-label::after {
+    background-color: #edb11d;
+    border-color: #edb11d;
+}
+
+.layui-table input[type='checkbox']:checked+.check-label::before {
+    opacity: 1;
+}
+
+/* layui-laypage */
+
+.layui-laypage a:hover {
+    color: #efae25;
+}
+
+.layui-laypage .layui-laypage-curr .layui-laypage-em {
+    background-color: #efae25;
+}

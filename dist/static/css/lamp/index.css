@@ -1,0 +1,224 @@
+/* 基础框架 */
+
+.wrapper {
+    width: 100%;
+}
+
+.top-header {
+    width: 100%;
+    height: 52px;
+    background-color: #25292a;
+}
+
+.content {
+    width: 100%;
+}
+
+/* logo */
+
+.logo {
+    margin-top: 12px;
+    margin-left: 9px;
+    width: 220px;
+    font-size: 0;
+}
+
+@media screen and (min-width: 1660px) { /*当屏幕尺寸大于1660px时，应用下面的CSS样式*/
+    .logo {
+        margin-left: 40px;
+    }
+}
+
+@media screen and (min-width: 1900px) { /*当屏幕尺寸大于1900px时，应用下面的CSS样式*/
+    .logo {
+        margin-left: 60px;
+    }
+}
+
+.logo .logo-img {
+    float: left;
+    width: 38px;
+    height: 27px;
+}
+
+.logo .logo-img img {
+    width: 100%;
+    height: 100%;
+}
+
+.logo p {
+    float: left;
+    margin-left: 8px;
+    line-height: 27px;
+    font-size: 17px;
+    color: #fff;
+}
+
+/* navigation */
+
+.navigation ul {
+    overflow: hidden;
+}
+
+.navigation .item {
+    position: relative;
+    float: left;
+    width: 120px;
+    height: 52px;
+    background-color: #25292a;
+    text-align: center;
+}
+
+.navigation .item:last-child::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 1px;
+    height: 44px;
+    background: url('../../images/lamp/index/line.png') no-repeat;
+}
+
+.navigation .item a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.navigation .item i.icon {
+    display: block;
+    margin: 4px auto 0;
+    width: 26px;
+    height: 26px;
+    background-image: url('../../images/lamp/index/icon/navigation.png');
+    background-repeat: no-repeat;
+}
+
+.navigation .item i.icon.icon-home {
+    background-position: 0 -234px;
+}
+
+.navigation .item i.icon.icon-lighting {
+    background-position: 0 -286px;
+}
+
+.navigation .item i.icon.icon-monitor {
+    background-position: 0 -338px;
+}
+
+.navigation .item i.icon.icon-adv {
+    background-position: 0 -26px;
+}
+
+.navigation .item i.icon.icon-wifi {
+    background-position: 0 -442px;
+}
+
+.navigation .item i.icon.icon-broadcast {
+    background-position: 0 -78px;
+}
+
+.navigation .item i.icon.icon-call {
+    background-position: 0 -130px;
+}
+
+.navigation .item i.icon.icon-ep {
+    background-position: 0 -182px;
+}
+
+.navigation .item i.icon.icon-settings {
+    background-position: 0 -390px;
+}
+
+.navigation .item span {
+    display: block;
+    line-height: 1;
+    font-size: 14px;
+    color: #7e9095;
+}
+
+/* navigation 鼠标点击、划过高亮效果*/
+
+.navigation .item.active,
+.navigation .item:hover {
+    background-color: #171a1b;
+}
+
+.navigation .item.active i.icon.icon-home,
+.navigation .item:hover i.icon.icon-home {
+    background-position: 0 -208px;
+}
+
+.navigation .item.active i.icon.icon-lighting,
+.navigation .item:hover i.icon.icon-lighting {
+    background-position: 0 -260px;
+}
+
+.navigation .item.active i.icon.icon-monitor,
+.navigation .item:hover i.icon.icon-monitor {
+    background-position: 0 -312px;
+}
+
+.navigation .item.active i.icon.icon-adv,
+.navigation .item:hover i.icon.icon-adv {
+    background-position: 0 0;
+}
+
+.navigation .item.active i.icon.icon-wifi,
+.navigation .item:hover i.icon.icon-wifi{
+    background-position: 0 -416px;
+}
+
+.navigation .item.active i.icon.icon-broadcast,
+.navigation .item:hover i.icon.icon-broadcast {
+    background-position: 0 -52px;
+}
+
+.navigation .item.active i.icon.icon-call,
+.navigation .item:hover i.icon.icon-call {
+    background-position: 0 -104px;
+}
+
+.navigation .item.active i.icon.icon-ep,
+.navigation .item:hover i.icon.icon-ep {
+    background-position: 0 -182px;
+}
+
+.navigation .item.active i.icon.icon-settings,
+.navigation .item:hover i.icon.icon-settings {
+    background-position: 0 -364px;
+}
+
+.navigation .item.active span,
+.navigation .item:hover span {
+    color: #fff;
+}
+
+/* avatar-name */
+
+.avatar-name {
+    width: 163px;
+    height: 52px;
+}
+
+.avatar-name .avatar {
+    margin: 13px 0 13px 37px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+}
+
+.avatar-name .name {
+    margin-left: 5px;
+    font-size: 14px;
+    color: #fff;
+}
+
+/* my-iframe */
+
+.my-iframe {
+    width: 100%;
+}
