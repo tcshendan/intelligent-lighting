@@ -6,7 +6,7 @@
     <title></title>
     <link rel="stylesheet" rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" />
-    <link rel="stylesheet" href="../../static/ztree/css/zTreeStyle/zTreeStyle.css" />
+    <link rel="stylesheet" href="../../static/css/lamp/common.css" />
     <link rel="stylesheet" href="../../static/css/lamp/s_public.css" />
     <style>
         body {
@@ -99,9 +99,242 @@
         </div>
     </div>
 
+    <!-- 新建智慧灯杆 -->
+    <div class="modal fade" id="lampPostModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">新建智慧灯杆</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="add-form">
+                        <div class="usual-panel layui-form">
+                            <h6 class="usual-panel-title">灯杆设置：</h6>
+                            <div class="usual-panel-content usual-lamp-settings clearfix">
+                                <div class="usual-left">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">名称：</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" class="layui-input" name="name" placeholder="请输入灯杆名称" />
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">所属组织：</label>
+                                        <div class="layui-input-block">
+                                            <select name="organization" lay-filter="organization">
+                                                <option value="">请选择</option>
+                                                <option value="1">杭州市/滨江区/长河路</option>
+                                                <option value="2">杭州市/滨江区/西兴路</option>
+                                                <option value="3">杭州市/滨江区/江南大道</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">设备ID：</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" class="layui-input" name="equipId" placeholder="请输入设备ID" />
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">经纬度：</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" class="layui-input layui-input-small" name="longitude" placeholder="请输入经度" style="margin-right: 5px;" />
+                                            <input type="text" class="layui-input layui-input-small" name="latitude" placeholder="请输入纬度" />
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">生产厂商：</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" class="layui-input" name="factoryName" placeholder="请输入生产厂商" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="usual-right">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">资产编号：</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" class="layui-input" name="assetsNum" placeholder="请输入资产编号" />
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">资产归属：</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" class="layui-input" name="assetsCompany" placeholder="请输入资产归属" />
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">备注：</label>
+                                        <div class="layui-input-block">
+                                            <textarea class="layui-textarea" maxlength="200" name="desription" placeholder="请输入备注"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="usual-panel">
+                            <h6 class="usual-panel-title">功能设置：</h6>
+                            <div class="usual-panel-content usual-func-settings clearfix">
+                                <div class="usual-block">
+                                    <div class="usual-checkbox-content">
+                                        <input name="lighting" type="checkbox" value="1" />
+                                        <label>智慧照明</label>
+                                    </div>
+                                    <div class="usual-checkbox-content">
+                                        <input name="monitor" type="checkbox" value="2" />
+                                        <label>视频监控</label>
+                                    </div>
+                                    <div class="usual-checkbox-content">
+                                        <input name="adv" type="checkbox" value="3" />
+                                        <label>广告发布</label>
+                                    </div>
+                                    <div class="usual-checkbox-content">
+                                        <input name="wifi" type="checkbox" value="4" />
+                                        <label>wifi覆盖</label>
+                                    </div>
+                                    <div class="usual-checkbox-content">
+                                        <input name="broadcast" type="checkbox" value="5" />
+                                        <label>公共广播</label>
+                                    </div>
+                                </div>
+                                <div class="usual-block">
+                                    <div class="usual-checkbox-content">
+                                        <input name="call" type="checkbox" value="6" />
+                                        <label>一键呼叫</label>
+                                    </div>
+                                    <div class="usual-checkbox-content">
+                                        <input name="ep" type="checkbox" value="7" />
+                                        <label>智慧环保</label>
+                                    </div>
+                                    <div class="usual-checkbox-content">
+                                        <input name="humanComputer" type="checkbox" value="8" />
+                                        <label>人机互动</label>
+                                    </div>
+                                    <div class="usual-checkbox-content">
+                                        <input name="usbCharging" type="checkbox" value="9" />
+                                        <label>usb充电</label>
+                                    </div>
+                                    <div class="usual-checkbox-content">
+                                        <input name="carCharging" type="checkbox" value="10" />
+                                        <label>汽车充电</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="usual-panel">
+                            <h6 class="usual-panel-title">环保设置：</h6>
+                            <div class="usual-panel-content usual-ep-settings clearfix">
+                                <div class="layui-form-item layui-form">
+                                    <label class="layui-form-label">气象仪协议：</label>
+                                    <div class="layui-input-block">
+                                        <select name="protocol" lay-filter="protocol">
+                                            <option value="">请选择</option>
+                                            <option value="1">气象仪协议AAA</option>
+                                            <option value="2">气象仪协议BBB</option>
+                                            <option value="3">气象仪协议CCC</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form">
+                                    <label class="layui-form-label">设备型号：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" class="layui-input" name="equipModel" placeholder="请输入设备型号" />
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form">
+                                    <label class="layui-form-label">IP地址：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" class="layui-input" name="IPAddress" placeholder="请输入IP地址" />
+                                    </div>
+                                </div>
+                                <div class="usual-checkbox-box">
+                                    <div class="usual-block">
+                                        <div class="usual-checkbox-content">
+                                            <input name="pm2.5" type="checkbox" value="11" />
+                                            <label>PM2.5</label>
+                                        </div>
+                                        <div class="usual-checkbox-content">
+                                            <input name="blowingRate" type="checkbox" value="12" />
+                                            <label>风量</label>
+                                        </div>
+                                        <div class="usual-checkbox-content">
+                                            <input name="windSpeed" type="checkbox" value="13" />
+                                            <label>风速</label>
+                                        </div>
+                                        <div class="usual-checkbox-content">
+                                            <input name="rainFall" type="checkbox" value="14" />
+                                            <label>雨量</label>
+                                        </div>
+                                        <div class="usual-checkbox-content">
+                                            <input name="temperature" type="checkbox" value="15" />
+                                            <label>温度</label>
+                                        </div>
+                                    </div>
+                                    <div class="usual-block">
+                                        <div class="usual-checkbox-content">
+                                            <input name="pressure" type="checkbox" value="16" />
+                                            <label>气压</label>
+                                        </div>
+                                        <div class="usual-checkbox-content">
+                                            <input name="radiation" type="checkbox" value="17" />
+                                            <label>总辐射</label>
+                                        </div>
+                                        <div class="usual-checkbox-content">
+                                            <input name="rays" type="checkbox" value="18" />
+                                            <label>紫外线</label>
+                                        </div>
+                                        <div class="usual-checkbox-content">
+                                            <input name="pm10" type="checkbox" value="19" />
+                                            <label>PM10</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="usual-panel layui-form">
+                            <h6 class="usual-panel-title">wifi设置：</h6>
+                            <div class="usual-panel-content usual-wifi-settings clearfix">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">型号：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" class="layui-input" name="type" placeholder="请输入型号" />
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">IP地址：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" class="layui-input" name="address" placeholder="请输入地址" />
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">账号：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" class="layui-input" name="account" placeholder="请输入账号" />
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">密码：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" class="layui-input" name="password" placeholder="请输入密码" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="layui-btn layui-btn-primary" data-dismiss="modal">取消</button>
+                    <button type="button" class="layui-btn layui-btn-normal" onclick="javascript: lampPost.save();">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="../../static/js/jquery.min.js"></script>
     <script src="../../layuiadmin/layui/layui.js" charset="utf-8"></script>
+    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../static/js/echarts.js"></script>
+    <script src="../../static/js/circular-json.js"></script>
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=a7670840be2070dec801891aff5eac2c"></script>
     <!-- UI组件库 1.0 -->
     <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
@@ -116,9 +349,31 @@
             document.getElementById('container').style.height = h + 'px';
         }
 
+        layui.use(['layer', 'form'], function() {
+            var layer = layui.layer;
+            var form = layui.form;
+
+            window.form = form;
+        });
+
+
         var map = new AMap.Map('container', {
             resizeEnable: true,
             zoom: 15 //级别
+        });
+
+        var contextMenu = new AMap.ContextMenu(); //创建右键菜单
+
+        //右键地图显示新建按钮
+        contextMenu.addItem("新建", function(e) {
+            $('#lampPostModal').modal('show');
+            lampPost.add(contextMenuPositon);
+        }, 1);
+
+        //地图绑定鼠标右击事件——弹出右键菜单
+        map.on('rightclick', function(e) {
+            contextMenu.open(map, e.lnglat);
+            contextMenuPositon = e.lnglat;
         });
 
         AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
@@ -129,115 +384,97 @@
             }));
         });
 
-        var statusMapper = {
-            0: "fault",
-            1: "on",
-            2: "off"
+        var tempMarker;
+
+        var Marker = {
+            statusMapper: {
+                0: "fault",
+                1: "on",
+                2: "off"
+            },
+            /**
+             * @description 初始化灯杆
+             */
+            init: function() {
+                map.clearMap();
+
+                var _this = this;
+
+                for (var i = 0; i < lamppost.length; i += 1) {
+                    var marker;
+                    var image = '../../static/images/lamp/home/' + _this.statusMapper[lamppost[i].status] + '.png';
+                    var icon = new AMap.Icon({
+                        size: new AMap.Size(24, 30),
+                        image: image,
+                        imageSize: new AMap.Size(24, 30)
+                    });
+
+                    marker = new AMap.Marker({
+                        map: map,
+                        position: lamppost[i].lnglat.split(','),
+                        offset: new AMap.Pixel(-12, -15),
+                        zIndex: 101,
+                        icon: icon,
+                        title: lamppost[i].name + ' ' + lamppost[i].lnglat.split(',')
+                    });
+
+                    //自定义传入的参数
+                    marker.extData = {
+
+                    };
+
+                    (function() {
+                        //鼠标点击marker弹出自定义的信息窗体
+                        AMap.event.addListener(marker, 'click', function(e) {
+                            var target = e.target;
+                        });
+
+                        //灯杆右键显示删除按钮
+                        AMap.event.addListener(marker, 'rightclick', _this.showDeleteBtn);
+                    })(i);
+                }
+
+                map.setFitView();
+            },
+            /**
+             * @description 鼠标右键显示灯杆删除按钮
+             */
+            showDeleteBtn: function(e) {
+                tempMarker = e.target;
+
+                var infoWindow = new AMap.InfoWindow({
+                    isCustom: true,
+                    autoMove: true,
+                    closeWhenClickMap: true,
+                    offset: new AMap.Pixel(40, 8)
+                });
+
+                infoWindow.setContent('<div class="btn-map">' +
+                    '<a href="javascript:void(0)" onclick="Marker.delete();">删除</a></div>');
+                infoWindow.open(map, e.target.getPosition());
+            },
+            /**
+             * @description 删除灯杆
+             */
+            delete: function() {
+                if (tempMarker) {
+                    map.remove(tempMarker);
+                    map.clearInfoWindow();
+                }
+            }
         };
 
-        addMarker();
+        Marker.init();
 
-        //将创建的点标记添加到已有的地图实例
-        function addMarker() {
-
-            for (var i = 0; i < lamppost.length; i += 1) {
-                var marker;
-                var image = '../../static/images/lamp/home/' + statusMapper[lamppost[i].status] + '.png';
-                var icon = new AMap.Icon({
-                    size: new AMap.Size(24, 30),
-                    image: image,
-                    imageSize: new AMap.Size(24, 30)
-                });
-
-                marker = new AMap.Marker({
-                    map: map,
-                    position: lamppost[i].lnglat.split(','),
-                    offset: new AMap.Pixel(-12, -15),
-                    zIndex: 101,
-                    icon: icon,
-                    title: lamppost[i].name + ' ' + lamppost[i].lnglat.split(',')
-                });
-
-                //自定义传入的参数
-                marker.extData = {
-
-                };
-
-                (function() {
-                    //鼠标点击marker弹出自定义的信息窗体
-                    AMap.event.addListener(marker, 'click', function(e) {
-                        var target = e.target;
-                    });
-                })(i);
+        var lampPost = {
+            add: function(lnglat) {
+                $('input[name="longitude"]').val(lnglat.lng);
+                $('input[name="latitude"]').val(lnglat.lat);
+            },
+            save: function() {
+                console.log($(".add-form").serialize());
             }
-
-            map.setFitView();
-        }
-
-        //实例化信息窗体
-        function instantInfoWindow(title, equipmentId, status) {
-            var mapping = {
-                'normal': '正常',
-                'down': '故障',
-                'on': '亮',
-                'off': '关'
-            };
-            var content = [];
-            content.push("<p>设备ID：" + equipmentId + "</p>");
-            content.push("<p>状态：" + mapping[status] + "</p>");
-            content.push("<button class='layui-btn layui-btn-normal' data-toggle='modal' data-target='#myModal'>手动控制</button><button class='layui-btn layui-btn-normal'>派发工单</button>");
-            var infoWindow = new AMap.InfoWindow({ //创建信息窗体
-                isCustom: true, //使用自定义窗体
-                content: createInfoWindow(title, content.join("")), //信息窗体的内容可以是任意html内容
-                offset: new AMap.Pixel(16, -45)
-            });
-            return infoWindow;
-        }
-
-        //构建自定义信息窗体
-        function createInfoWindow(title, content) {
-            var info = document.createElement("div");
-            info.className = "info";
-
-            //可以通过下面的方式修改自定义窗体的宽高
-            //info.style.width = "400px";
-            // 定义顶部标题
-            var top = document.createElement("div");
-            var titleD = document.createElement("div");
-            var closeX = document.createElement("img");
-            top.className = "info-top";
-            titleD.innerHTML = title;
-            closeX.src = "http://webapi.amap.com/images/close2.gif";
-            closeX.onclick = closeInfoWindow;
-
-            top.appendChild(titleD);
-            top.appendChild(closeX);
-            info.appendChild(top);
-
-            // 定义中部内容
-            var middle = document.createElement("div");
-            middle.className = "info-middle";
-            middle.style.backgroundColor = 'white';
-            middle.innerHTML = content;
-            info.appendChild(middle);
-
-            // 定义底部内容
-            var bottom = document.createElement("div");
-            bottom.className = "info-bottom";
-            bottom.style.position = 'relative';
-            bottom.style.top = '0px';
-            bottom.style.margin = '0 auto';
-            var sharp = document.createElement("img");
-            sharp.src = "http://webapi.amap.com/images/sharp.png";
-            bottom.appendChild(sharp);
-            info.appendChild(bottom);
-            return info;
-        }
-
-        //关闭信息窗体
-        function closeInfoWindow() {
-            map.clearInfoWindow();
-        }
+        };
     </script>
 </body>
 

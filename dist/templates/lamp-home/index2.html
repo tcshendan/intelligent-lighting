@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" />
+    <link rel="stylesheet" href="../../static/ztree/css/zTreeStyle/zTreeStyle.css" />
+    <link rel="stylesheet" href="../../static/css/lamp/s_public.css" />
+    <style>
+        body {
+            padding: 0;
+        }
+
+        #container {
+            width: 100%;
+        }
+
+        .main-wrapper {
+            position: relative;
+        }
+
+        /* infoWindow */
+
+        .info {
+            border: solid 1px silver;
+        }
+
+        div.info-top {
+            position: relative;
+            background: none repeat scroll 0 0 #F9F9F9;
+            border-bottom: 1px solid #CCC;
+            border-radius: 5px 5px 0 0;
+        }
+
+        div.info-top div {
+            display: inline-block;
+            color: #333333;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 31px;
+            padding: 0 10px;
+        }
+
+        div.info-top img {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            transition-duration: 0.25s;
+        }
+
+        div.info-top img:hover {
+            box-shadow: 0px 0px 5px #000;
+        }
+
+        div.info-middle {
+            font-size: 12px;
+            padding: 6px;
+            line-height: 20px;
+        }
+
+        div.info-middle p {
+            margin-bottom: 5px;
+        }
+
+        div.info-bottom {
+            height: 0px;
+            width: 100%;
+            clear: both;
+            text-align: center;
+        }
+
+        div.info-bottom img {
+            position: relative;
+            z-index: 104;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <div class="content-container">
+            <div id="container"></div>
+            <div class="intro">
+                <div class="intro-item intro-item-1">
+                    <i></i>
+                    <span>在线-亮</span>
+                </div>
+                <div class="intro-item intro-item-2">
+                    <i></i>
+                    <span>在线-关</span>
+                </div>
+                <div class="intro-item intro-item-3">
+                    <i></i>
+                    <span>故障</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../static/js/jquery.min.js"></script>
+    <script src="../../layuiadmin/layui/layui.js" charset="utf-8"></script>
+    <script src="../../static/js/echarts.js"></script>
+    <script src="../../static/js/circular-json.js"></script>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=a7670840be2070dec801891aff5eac2c"></script>
+    <!-- UI组件库 1.0 -->
+    <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+    <script src="../../static/data/lamppost.js"></script>
+
+    <script type="text/javascript">
+        setContainerHeight();
+
+        //设置容器Container高度
+        function setContainerHeight() {
+            var h = document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight;
+            document.getElementById('container').style.height = h + 'px';
+        }
+
+        var map = new AMap.Map('container', {
+            resizeEnable: true,
+            zoom: 15 //级别
+        });
+
+        AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
+            //添加一个缩放控件
+            map.addControl(new BasicControl.Zoom({
+                position: 'lb',
+                showZoomNum: true
+            }));
+        });
+
+        var statusMapper = {
+            0: "fault",
+            1: "on",
+            2: "off"
+        };
+
+        addMarker();
+
+        //将创建的点标记添加到已有的地图实例
+        function addMarker() {
+            map.clearMap();
+
+            for (var i = 0; i < lamppost.length; i += 1) {
+                var marker;
+                var image = '../../static/images/lamp/home/' + statusMapper[lamppost[i].status] + '.png';
+                var icon = new AMap.Icon({
+                    size: new AMap.Size(24, 30),
+                    image: image,
+                    imageSize: new AMap.Size(24, 30)
+                });
+
+                marker = new AMap.Marker({
+                    map: map,
+                    position: lamppost[i].lnglat.split(','),
+                    offset: new AMap.Pixel(-12, -15),
+                    zIndex: 101,
+                    icon: icon,
+                    title: lamppost[i].name + ' ' + lamppost[i].lnglat.split(',')
+                });
+
+                //自定义传入的参数
+                marker.extData = {
+
+                };
+
+                (function() {
+                    //鼠标点击marker弹出自定义的信息窗体
+                    AMap.event.addListener(marker, 'click', function(e) {
+                        var target = e.target;
+                    });
+
+                    //灯杆右键显示删除按钮
+                    AMap.event.addListener(marker, 'rightclick', function(e) {
+                        var target = e.target;
+                        console.log(e.target);
+                        var infoWindow = new AMap.InfoWindow({
+                            isCustom: true,
+                            autoMove: true,
+                            closeWhenClickMap: true,
+                            offset: new AMap.Pixel(40, 8)
+                        });
+                        infoWindow.setContent('<div class="btn-map">' +
+                            '<a href="javascript:void(0)" onclick="deleteMarker(\'' + window.CircularJSON.stringify(marker).replace(/"/g, '&quot;') + '\');">修改</a></div>');
+                        infoWindow.open(map, target.getPosition());
+                    });
+                })(i);
+            }
+
+            map.setFitView();
+        }
+
+        /**
+         * @description: 删除灯杆
+         * @param marker
+         */
+        function deleteMarker(marker) {
+            marker = window.CircularJSON.parse(marker);
+            console.log(marker);
+            map.remove(marker);
+        }
+    </script>
+</body>
+
+</html>

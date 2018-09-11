@@ -3,6 +3,8 @@
     width: 100%;
 }
 
+/* 地图图标颜色说明 */
+
 .content-container .intro {
     position: absolute;
     right: 20px;
@@ -24,8 +26,7 @@
     text-align: center;
 }
 
-.content-container .intro-item-1::after,
-.content-container .intro-item-2::after {
+.content-container .intro-item-1::after, .content-container .intro-item-2::after {
     content: '';
     position: absolute;
     top: 7px;
@@ -60,4 +61,197 @@
     vertical-align: middle;
     font-size: 14px;
     color: #333;
+}
+
+/* 地图右键删除按钮 */
+
+.btn-map {
+    width: 51px;
+    height: 22px;
+    background: url('../../images/lamp/home/btn_bg.png') no-repeat;
+    text-align: center;
+}
+
+.btn-map a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.btn-map a, .btn-map a:hover {
+    color: #333;
+    text-decoration: none;
+}
+
+/* 地图右键新建按钮 */
+
+.amap-menu-outer {
+    background: none;
+    border: none;
+    border-radius: 0;
+}
+
+.amap-menu-outer, .amap-menu-outer:hover {
+    box-shadow: none;
+}
+
+ul.amap-menu-outer li {
+    padding: 0;
+    width: 51px;
+    height: 22px;
+    line-height: 22px;
+    background: url('../../images/lamp/home/btn_bg.png') no-repeat;
+    text-align: center;
+}
+
+/* 新建智慧灯杆Modal usual-panel */
+
+#lampPostModal .modal-dialog {
+    width: 850px;
+}
+
+#lampPostModal .modal-body {
+    padding: 0;
+}
+
+.usual-panel {
+    padding: 14px 28px;
+    border-bottom: 1px solid #efefef;
+}
+
+.usual-panel:last-child {
+    border-bottom: none;
+}
+
+.usual-panel .usual-panel-title {
+    margin-bottom: 15px;
+    line-height: 1;
+    font-size: 16px;
+    color: #efae25;
+}
+
+.usual-panel .usual-panel-content {
+    width: 100%;
+}
+
+.usual-panel .usual-left, .usual-panel .usual-right {
+    width: 50%;
+}
+
+.usual-panel .layui-form-label {
+    padding: 9px 0;
+    width: 90px;
+}
+
+.usual-panel .layui-input-block {
+    margin-left: 100px;
+    width: 254px;
+}
+
+.usual-panel .usual-ep-settings .layui-input-block, .usual-panel .usual-wifi-settings .layui-input-block {
+    width: 380px;
+}
+
+.usual-panel .layui-input-block .layui-input-small {
+    width: 122px;
+}
+
+.usual-panel .layui-textarea {
+    height: 144px;
+    resize: none;
+}
+
+/* 设置对齐间距 */
+
+.usual-func-settings {
+    padding-left: 70px;
+}
+
+.usual-ep-settings, .usual-wifi-settings {
+    padding-left: 40px;
+}
+
+.usual-checkbox-box {
+    padding-left: 30px;
+}
+
+/* usual-block */
+
+.usual-block {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 34px;
+}
+
+/* 复选框 usual-checkbox-content */
+
+.usual-checkbox-content {
+    position: relative;
+    float: left;
+    margin-right: 40px;
+    height: 34px;
+}
+
+.usual-func-settings .usual-checkbox-content {
+    min-width: 81px;
+}
+
+.usual-ep-settings .usual-checkbox-content {
+    min-width: 67px;
+}
+
+.usual-checkbox-content input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    z-index: 10;
+}
+
+.usual-checkbox-content label {
+    display: inline-block;
+    padding: 9px 0 9px 25px;
+    line-height: 20px;
+}
+
+.usual-checkbox-content label::before {
+    position: absolute;
+    content: "";
+    width: 10px;
+    height: 5px;
+    top: 15px;
+    left: 4px;
+    border: 2px solid #fff;
+    border-top: none;
+    border-right: none;
+    opacity: 0;
+    transform: rotate(-45deg);
+    transition: all 0.1s ease-in-out;
+    z-index: 1;
+}
+
+.usual-checkbox-content label::after {
+    position: absolute;
+    content: "";
+    width: 18px;
+    height: 18px;
+    top: 10px;
+    left: 0;
+    cursor: pointer;
+    border-radius: 2px;
+    background-clip: padding-box;
+    background-color: #f4f4f4;
+    border: 1px solid #e4e4e4;
+}
+
+.usual-checkbox-content input[type='checkbox']:checked+label::after {
+    background-color: #edb11d;
+    border-color: #edb11d;
+}
+
+.usual-checkbox-content input[type='checkbox']:checked+label::before {
+    opacity: 1;
 }
