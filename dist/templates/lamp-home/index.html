@@ -96,6 +96,12 @@
                     <span>故障</span>
                 </div>
             </div>
+            <div class="search">
+                <div class="search-box">
+                    <input type="text" class="layui-input search-input" id="searchInput" placeholder="搜索设备" />
+                </div>
+                <div class="search-result" id="searchResult"></div>
+            </div>
         </div>
     </div>
 
@@ -356,7 +362,6 @@
             window.form = form;
         });
 
-
         var map = new AMap.Map('container', {
             resizeEnable: true,
             zoom: 15 //级别
@@ -424,12 +429,13 @@
                     };
 
                     (function() {
-                        //鼠标点击marker弹出自定义的信息窗体
-                        AMap.event.addListener(marker, 'click', function(e) {
-                            var target = e.target;
-                        });
+                        //灯杆Marker划入显示相应模块
+                        AMap.event.addListener(marker, 'mouseover', _this.showModules);
 
-                        //灯杆右键显示删除按钮
+                        // 灯杆Marker划出隐藏相应模块
+                        AMap.event.addListener(marker, 'mouseout', _this.hideModules);
+
+                        //灯杆Marker右键显示删除按钮
                         AMap.event.addListener(marker, 'rightclick', _this.showDeleteBtn);
                     })(i);
                 }
@@ -437,7 +443,55 @@
                 map.setFitView();
             },
             /**
+             * @description 显示相应模块
+             * @param e
+             */
+            showModules: function(e) {
+                var target = e.target;
+
+                var infoWindow = new AMap.InfoWindow({
+                    isCustom: true,
+                    autoMove: true,
+                    closeWhenClickMap: true,
+                    offset: new AMap.Pixel(0, 94)
+                });
+
+                var innerHtml = '<div class="usual-module">' +
+                        '<div class="usual-module-item lighting-active" style="top: 0;left: 40px;">' +
+                            '<a href="javascript:;" data-index="1" data-url="./home/index.html" onclick="Marker.transition(this);" title="智慧照明"></a>' +
+                        '</div>' +
+                        '<div class="usual-module-item monitor-disabled" style="top: 0;left: 105px;">' +
+                            '<a href="javascript:;" data-index="2" title="视频监控"></a>' +
+                        '</div>' +
+                        '<div class="usual-module-item adv-disabled" style="top: 52px;left: 136px;">' +
+                            '<a href="javascript:;" data-index="3" title="广告发布"></a>' +
+                        '</div>' +
+                        '<div class="usual-module-item wifi-disabled" style="top: 107px;left: 126px;">' +
+                            '<a href="javascript:;" data-index="4" title="wif覆盖"></a>' +
+                        '</div>' +
+                        '<div class="usual-module-item broadcast-disabled" style="top: 136px;left: 70px;">' +
+                            '<a href="javascript:;" data-index="5" title="公共广播"></a>' +
+                        '</div>' +
+                        '<div class="usual-module-item call-disabled" style="top: 107px;left: 14px;">' +
+                            '<a href="javascript:;" data-index="6" title="一键呼叫"></a>' +
+                        '</div>' +
+                        '<div class="usual-module-item ep-disabled" style="top: 52px;left: 0;">' +
+                            '<a href="javascript:;" data-index="7" title="智慧环保"></a>' +
+                        '</div>' +
+                    '</div>';
+
+                infoWindow.setContent(innerHtml);
+                infoWindow.open(map, target.getPosition());
+            },
+            /**
+             * @description 隐藏相应模块
+             */
+            hideModules: function() {
+                map.clearInfoWindow();
+            },
+            /**
              * @description 鼠标右键显示灯杆删除按钮
+             * @param e
              */
             showDeleteBtn: function(e) {
                 tempMarker = e.target;
@@ -461,6 +515,25 @@
                     map.remove(tempMarker);
                     map.clearInfoWindow();
                 }
+            },
+            /**
+             * @description 点击灯杆上的模块图标跳转到相应的模块页面
+             * @param self
+             */
+            transition: function(self) {
+                var url = self.dataset.url;
+                window.parent.$('#myFrame').attr('src', url);
+
+                this.setNavItemHightLight(self.dataset.index);
+            },
+            /**
+             * @description 设置当前模块所在的导航高亮效果
+             * @param index 导航所在下标
+             */
+            setNavItemHightLight: function(index) {
+                var $navItem = window.parent.$('.j-navigation').find('.item');
+                $navItem.removeClass('active');
+                $navItem.eq(index).addClass('active');
             }
         };
 

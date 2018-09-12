@@ -42,18 +42,20 @@
     margin-right: 9px;
     width: 10px;
     height: 10px;
+    background-image: url('../../images/lamp/home/intro.png');
+    background-repeat: no-repeat;
 }
 
 .content-container .intro-item-1 i {
-    background: url('../../images/lamp/home/post-on.png') no-repeat;
+    background-position: 0 -20px;
 }
 
 .content-container .intro-item-2 i {
-    background: url('../../images/lamp/home/post-off.png') no-repeat;
+    background-position: 0 -10px;
 }
 
 .content-container .intro-item-3 i {
-    background: url('../../images/lamp/home/post-fault.png') no-repeat;
+    background-position: 0 0;
 }
 
 .content-container .intro-item span {
@@ -61,6 +63,41 @@
     vertical-align: middle;
     font-size: 14px;
     color: #333;
+}
+
+/* 地图搜索设备 search */
+
+.search {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    width: 300px;
+}
+
+.search .search-box {
+    width: 100%;
+    height: 40px;
+    font-size: 0;
+}
+
+.search .search-box .search-input {
+    display: inline-block;
+    width: 300px;
+    height: 40px;
+    font-size: 14px;
+    border-radius: 1px;
+}
+
+.search .search-result {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 300px;
+    border: 1px solid #D2D2D2;
+    border-top: 0;
+    background-color: #fff;
 }
 
 /* 地图右键删除按钮 */
@@ -102,6 +139,95 @@ ul.amap-menu-outer li {
     line-height: 22px;
     background: url('../../images/lamp/home/btn_bg.png') no-repeat;
     text-align: center;
+}
+
+/* 地图点击显示相应模块 usual-module */
+
+.usual-module {
+    position: relative;
+    width: 188px;
+    height: 188px;
+    background-color: transparent;
+    border-radius: 50%;
+}
+
+.usual-module-item {
+    position: absolute;
+    width: 51px;
+    height: 51px;
+    border-radius: 50%;
+    background-image: url('../../images/lamp/home/module.png');
+    background-repeat: no-repeat;
+}
+
+.usual-module-item a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* 模块可点击 active */
+
+.monitor-active {
+    background-position: 0 -510px;
+}
+
+.adv-active {
+    background-position: 0 0;
+}
+
+.wifi-active {
+    background-position: 0 -612px;
+}
+
+.broadcast-active {
+    background-position: 0 -102px;
+}
+
+.call-active {
+    background-position: 0 -204px;
+}
+
+.ep-active {
+    background-position: 0 -306px;
+}
+
+.lighting-active {
+    background-position: 0 -408px;
+}
+
+/* 模块不可点击 disabled */
+
+.monitor-disabled {
+    background-position: 0 -561px;
+}
+
+.adv-disabled {
+    background-position: 0 -51px;
+}
+
+.wifi-disabled {
+    background-position: 0 -663px;
+}
+
+.broadcast-disabled {
+    background-position: 0 -153px;
+}
+
+.call-disabled {
+    background-position: 0 -255px;
+}
+
+.ep-disabled {
+    background-position: 0 -357px;
+}
+
+.lighting-disabled {
+    background-position: 0 -459px;
+}
+
+.monitor-disabled a, .adv-disabled a, .wifi-disabled a, .broadcast-disabled a, .call-disabled a, .ep-disabled a, .lighting-disabled a {
+    cursor: default;
 }
 
 /* 新建智慧灯杆Modal usual-panel */
