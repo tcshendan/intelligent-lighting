@@ -6,6 +6,7 @@
     <title></title>
     <link rel="stylesheet" rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" />
+    <link rel="stylesheet" href="../../static/ztree/css/zTreeStyle/zTreeStyle.css" />
     <link rel="stylesheet" href="../../static/css/lamp/common.css" />
     <link rel="stylesheet" href="../../static/css/lamp/s_public.css" />
     <style>
@@ -79,7 +80,8 @@
 </head>
 
 <body>
-    <div class="main-wrapper">
+    <div class="main-wrapper" id="wrapper">
+        <!-- 地图相关 -->
         <div class="content-container">
             <div id="container"></div>
             <div class="intro">
@@ -103,6 +105,15 @@
                 <div class="search-result" id="searchResult"></div>
             </div>
         </div>
+
+        <!-- 左侧树形结构 -->
+        <div class="tree-box">
+            <div class="tree-box-content">
+                <ul id="treeDemo" class="ztree"></ul>
+            </div>
+        </div>
+        <!-- 向左缩进按钮 -->
+        <div class="arrow arrow-left" onclick="tree.shrink();"></div>
     </div>
 
     <!-- 新建智慧灯杆 -->
@@ -340,7 +351,7 @@
     <script src="../../layuiadmin/layui/layui.js" charset="utf-8"></script>
     <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../static/js/echarts.js"></script>
-    <script src="../../static/js/circular-json.js"></script>
+    <script src="../../static/ztree/js/jquery.ztree.core.js"></script>
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=a7670840be2070dec801891aff5eac2c"></script>
     <!-- UI组件库 1.0 -->
     <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
@@ -457,27 +468,27 @@
                 });
 
                 var innerHtml = '<div class="usual-module">' +
-                        '<div class="usual-module-item lighting-active" style="top: 0;left: 40px;">' +
-                            '<a href="javascript:;" data-index="1" data-url="./home/index.html" onclick="Marker.transition(this);" title="智慧照明"></a>' +
-                        '</div>' +
-                        '<div class="usual-module-item monitor-disabled" style="top: 0;left: 105px;">' +
-                            '<a href="javascript:;" data-index="2" title="视频监控"></a>' +
-                        '</div>' +
-                        '<div class="usual-module-item adv-disabled" style="top: 52px;left: 136px;">' +
-                            '<a href="javascript:;" data-index="3" title="广告发布"></a>' +
-                        '</div>' +
-                        '<div class="usual-module-item wifi-disabled" style="top: 107px;left: 126px;">' +
-                            '<a href="javascript:;" data-index="4" title="wif覆盖"></a>' +
-                        '</div>' +
-                        '<div class="usual-module-item broadcast-disabled" style="top: 136px;left: 70px;">' +
-                            '<a href="javascript:;" data-index="5" title="公共广播"></a>' +
-                        '</div>' +
-                        '<div class="usual-module-item call-disabled" style="top: 107px;left: 14px;">' +
-                            '<a href="javascript:;" data-index="6" title="一键呼叫"></a>' +
-                        '</div>' +
-                        '<div class="usual-module-item ep-disabled" style="top: 52px;left: 0;">' +
-                            '<a href="javascript:;" data-index="7" title="智慧环保"></a>' +
-                        '</div>' +
+                    '<div class="usual-module-item lighting-active" style="top: 0;left: 40px;">' +
+                    '<a href="javascript:;" data-index="1" data-url="./home/index.html" onclick="Marker.transition(this);" title="智慧照明"></a>' +
+                    '</div>' +
+                    '<div class="usual-module-item monitor-disabled" style="top: 0;left: 105px;">' +
+                    '<a href="javascript:;" data-index="2" title="视频监控"></a>' +
+                    '</div>' +
+                    '<div class="usual-module-item adv-disabled" style="top: 52px;left: 136px;">' +
+                    '<a href="javascript:;" data-index="3" title="广告发布"></a>' +
+                    '</div>' +
+                    '<div class="usual-module-item wifi-disabled" style="top: 107px;left: 126px;">' +
+                    '<a href="javascript:;" data-index="4" title="wif覆盖"></a>' +
+                    '</div>' +
+                    '<div class="usual-module-item broadcast-disabled" style="top: 136px;left: 70px;">' +
+                    '<a href="javascript:;" data-index="5" title="公共广播"></a>' +
+                    '</div>' +
+                    '<div class="usual-module-item call-disabled" style="top: 107px;left: 14px;">' +
+                    '<a href="javascript:;" data-index="6" title="一键呼叫"></a>' +
+                    '</div>' +
+                    '<div class="usual-module-item ep-disabled" style="top: 52px;left: 0;">' +
+                    '<a href="javascript:;" data-index="7" title="智慧环保"></a>' +
+                    '</div>' +
                     '</div>';
 
                 infoWindow.setContent(innerHtml);
@@ -517,6 +528,39 @@
                 }
             },
             /**
+             * @description 点击树形设备节点进行定位
+             * @param lng 经度
+             * @param lat 纬度
+             * @param status 灯杆状态
+             */
+            location: function(lng, lat, status) {
+                var _this = this;
+
+                var image = '../../static/images/lamp/home/' + _this.statusMapper[status] + '.png';
+
+                // 创建一个 Marker 实例
+                var marker = new AMap.Marker({
+                    position: [lng, lat],
+                    offset: new AMap.Pixel(-12, -15),
+                    icon: new AMap.Icon({
+                        image: image,
+                        size: new AMap.Size(24, 30),
+                        imageSize: new AMap.Size(24, 30)
+                    })
+                });
+
+                marker.extData = {};
+
+                marker.setAnimation('AMAP_ANIMATION_BOUNCE');
+
+                marker.setMap(map);
+
+                setTimeout(function() {
+                    marker.setAnimation('AMAP_ANIMATION_NONE');
+                }, 3000);
+
+            },
+            /**
              * @description 点击灯杆上的模块图标跳转到相应的模块页面
              * @param self
              */
@@ -548,6 +592,113 @@
                 console.log($(".add-form").serialize());
             }
         };
+        
+        var setting = {
+            view: {
+                showIcon: showIconForTree
+            },
+            callback: {
+                onClick: zTreeOnClick
+            }
+        };
+
+        function showIconForTree(treeId, treeNode) {
+            return !treeNode.isParent;
+        };
+
+        /**
+         * @description 树节点点击事件
+         * @param event
+         * @param treeId
+         * @param treeNode
+         */
+        function zTreeOnClick(event, treeId, treeNode) {
+            if (treeNode.lng && treeNode.lat) {
+                Marker.location(treeNode.lng, treeNode.lat, treeNode.status);
+            }
+        }
+
+        var zNodes = [{
+            name: "杭州市",
+            open: true,
+            children: [{
+                    name: "滨江区",
+                    open: true,
+                    children: [{
+                            name: "长河路",
+                            open: true,
+                            children: [{
+                                name: "路灯配电柜(勿删)",
+                                children: [{
+                                    name: "真实集控器",
+                                    children: [{
+                                        name: "回路1",
+                                        children: [{
+                                            name: "灯杆A",
+                                            lng: 120.194691,
+                                            lat: 30.185255,
+                                            status: 0,
+                                            children: []
+                                        }]
+                                    }]
+                                }]
+                            }]
+                        },
+                        {
+                            name: "江二路",
+                            children: []
+                        },
+                        {
+                            name: "网商路",
+                            children: []
+                        }
+                    ]
+                },
+                {
+                    name: "长河路",
+                    children: []
+                },
+                {
+                    name: "江干区",
+                    children: []
+                },
+                {
+                    name: "上城区",
+                    children: []
+                },
+                {
+                    name: "下城区",
+                    children: []
+                },
+                {
+                    name: "临安区",
+                    children: []
+                }
+            ]
+        }];
+
+        var tree = {
+            /**
+             * @description 初始化左侧树形列表
+             */
+            init: function() {
+                $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            },
+            /**
+             * @description 左侧树形列表缩进
+             */
+            shrink: function() {
+                var $wrapper = $('#wrapper');
+
+                if (!$wrapper.hasClass('side-shrink')) {
+                    $wrapper.addClass('side-shrink');
+                } else {
+                    $wrapper.removeClass('side-shrink');
+                }
+            }
+        };
+
+        tree.init();
     </script>
 </body>
 
