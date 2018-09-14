@@ -611,8 +611,8 @@ ul.amap-menu-outer li {
     background-image: url('../../images/lamp/home/chart-bg.png');
     background-repeat: no-repeat;
     background-position: 0 0;
-    background-color: #000;
-    opacity: 0.9;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#AA000000',endColorstr='#AA000000');
+    background-color: rgba(0, 0, 0, 0.9);
     border: 1px solid #fac71f;
 }
 

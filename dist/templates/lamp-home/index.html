@@ -669,8 +669,16 @@
              */
             delete: function() {
                 if (tempMarker) {
-                    map.remove(tempMarker);
-                    map.clearInfoWindow();
+                    layer.confirm('你确认要删除该灯杆吗？', {
+                        title: '删除'
+                    }, function() {
+                        map.remove(tempMarker);
+                        map.clearInfoWindow();
+                        
+                        layer.close(layer.index);
+                    }, function() {
+
+                    });
                 }
             },
             /**
