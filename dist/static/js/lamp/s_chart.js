@@ -1,9 +1,16 @@
 var chart = {
     /**
+     * @description 获取浏览器屏幕宽度
+     * @return
+     */
+    getWindowWidth: function() {
+        return $(window).width();
+    },
+    /**
      * @description 统计图表宽度自适应，若是大于最大宽度，则出现滚动条
      */
     autoWidth: function() {
-        var wWidth = $(window).width();
+        var wWidth = this.getWindowWidth();
         var leftDistance = 360;
         var rightDistance = 20;
 
@@ -16,10 +23,31 @@ var chart = {
 
     },
     /**
-     * 绘制能耗分析柱形图
+     * @description 根据浏览器屏幕宽度获取柱形宽度
+     * @return barWidth
+
+     */
+    getBarWidth: function() {
+        var wWidth = this.getWindowWidth();
+        var barWidth;
+
+        if (wWidth > 1004 && wWidth < 1420) {
+            barWidth = 10;
+        } else if (wWidth > 1420 && wWidth < 1900) {
+            barWidth = 15;
+        } else if (wWidth > 1900) {
+            barWidth = 20;
+        }
+
+        return barWidth;
+    },
+    /**
+     * @description 绘制能耗分析柱形图
      * @param id 容器id
      */
     drawBarChart: function(id) {
+        var _this = this;
+
         var myChart = echarts.init(document.getElementById(id));
 
         var option = {
@@ -89,7 +117,7 @@ var chart = {
             series: [{
                 name: '能耗',
                 type: 'bar',
-                barWidth: 20,
+                barWidth: _this.getBarWidth(),
                 itemStyle: {
                     normal: {
                         color: new echarts.graphic.LinearGradient(
@@ -118,11 +146,25 @@ var chart = {
             myChart.setOption(option, true);
         }
     },
+    getCenter: function() {
+        var wWidth = this.getWindowWidth();
+        var center;
+
+        if (wWidth > 1004 && wWidth < 1900) {
+            center = ['30%', '50%'];
+        } else if (wWidth > 1900) {
+            center = ['50%', '50%'];
+        }
+
+        return center;
+    },
     /**
-     * 绘制亮灯率图表
+     * @description 绘制亮灯率图表
      * @param id 容器id
      */
     drawPieChart: function(id) {
+        var _this = this;
+
         var myChart = echarts.init(document.getElementById(id));
 
         var option = {
@@ -154,7 +196,7 @@ var chart = {
                 name: '亮灯率',
                 type: 'pie',
                 radius: ['60%', '80%'],
-                center: ['50%', '50%'],
+                center: _this.getCenter(),
                 // hoverAnimation: false,
                 avoidLabelOverlap: false,
                 label: {
