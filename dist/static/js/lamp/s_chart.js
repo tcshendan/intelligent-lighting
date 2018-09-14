@@ -123,15 +123,15 @@ var chart = {
                         color: new echarts.graphic.LinearGradient(
                             0, 0, 0, 1, [{
                                     offset: 0,
-                                    color: '#32e7f0'
+                                    color: '#7ccfff'
                                 },
                                 {
                                     offset: 0.5,
-                                    color: '#92d387'
+                                    color: '#99d27f'
                                 },
                                 {
                                     offset: 1,
-                                    color: '#e8c12e'
+                                    color: '#f9bd1c'
                                 }
                             ]
                         ),
@@ -146,6 +146,10 @@ var chart = {
             myChart.setOption(option, true);
         }
     },
+    /**
+     * @description 根据浏览器屏幕宽度设置环形图中心点
+     * @return center
+     */
     getCenter: function() {
         var wWidth = this.getWindowWidth();
         var center;

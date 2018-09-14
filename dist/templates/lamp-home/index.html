@@ -221,7 +221,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="add-form">
-                        <div class="usual-panel layui-form">
+                        <div class="usual-panel layui-form" lay-filter="lamp-settings-form">
                             <h6 class="usual-panel-title">灯杆设置：</h6>
                             <div class="usual-panel-content usual-lamp-settings clearfix">
                                 <div class="usual-left">
@@ -336,27 +336,29 @@
                         <div class="usual-panel">
                             <h6 class="usual-panel-title">环保设置：</h6>
                             <div class="usual-panel-content usual-ep-settings clearfix">
-                                <div class="layui-form-item layui-form">
-                                    <label class="layui-form-label">气象仪协议：</label>
-                                    <div class="layui-input-block">
-                                        <select name="protocol" lay-filter="protocol">
-                                            <option value="">请选择</option>
-                                            <option value="1">气象仪协议AAA</option>
-                                            <option value="2">气象仪协议BBB</option>
-                                            <option value="3">气象仪协议CCC</option>
-                                        </select>
+                                <div class="layui-form" lay-filter="ep-settings-form">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">气象仪协议：</label>
+                                        <div class="layui-input-block">
+                                            <select name="protocol" lay-filter="protocol">
+                                                <option value="">请选择</option>
+                                                <option value="1">气象仪协议AAA</option>
+                                                <option value="2">气象仪协议BBB</option>
+                                                <option value="3">气象仪协议CCC</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="layui-form-item layui-form">
-                                    <label class="layui-form-label">设备型号：</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" class="layui-input" name="equipModel" placeholder="请输入设备型号" />
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">设备型号：</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" class="layui-input" name="equipModel" placeholder="请输入设备型号" />
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="layui-form-item layui-form">
-                                    <label class="layui-form-label">IP地址：</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" class="layui-input" name="IPAddress" placeholder="请输入IP地址" />
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">IP地址：</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" class="layui-input" name="IPAddress" placeholder="请输入IP地址" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="usual-checkbox-box">
@@ -403,7 +405,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="usual-panel layui-form">
+                        <div class="usual-panel layui-form" lay-filter="wifi-settings-form">
                             <h6 class="usual-panel-title">wifi设置：</h6>
                             <div class="usual-panel-content usual-wifi-settings clearfix">
                                 <div class="layui-form-item">
@@ -436,25 +438,29 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="layui-btn layui-btn-primary" data-dismiss="modal">取消</button>
-                    <button type="button" class="layui-btn layui-btn-normal" onclick="javascript: lampPost.save();">确定</button>
+                    <button type="button" class="layui-btn layui-btn-normal" onclick="javascript: lampPostForm.save();">确定</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Libs -->
     <script src="../../static/js/jquery.min.js"></script>
     <script src="../../layuiadmin/layui/layui.js" charset="utf-8"></script>
     <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../static/js/echarts.js"></script>
     <script src="../../static/ztree/js/jquery.ztree.core.js"></script>
+
+    <!-- AMAP -->
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=a7670840be2070dec801891aff5eac2c"></script>
     <!-- UI组件库 1.0 -->
     <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
 
-    <!-- application -->
-    <script src="../../static/data/lamppost.js"></script>
+    <!-- Applications -->
     <script src="../../static/js/lamp/s_tree.js"></script>
     <script src="../../static/js/lamp/s_chart.js"></script>
+    <script src="../../static/js/lamp/s_form.js"></script>
+    <script src="../../static/js/lamp/s_search.js"></script>
 
     <script type="text/javascript">
         setContainerHeight();
@@ -482,7 +488,7 @@
         //右键地图显示新建按钮
         contextMenu.addItem("新建", function(e) {
             $('#lampPostModal').modal('show');
-            lampPost.add(contextMenuPositon);
+            lampPostForm.add(contextMenuPositon);
         }, 1);
 
         //地图绑定鼠标右击事件——弹出右键菜单
@@ -499,10 +505,47 @@
             }));
         });
 
+        var lamppost = [{
+                "lnglat": "120.194691,30.185255",
+                "name": "灯杆A",
+                "state": 0
+            },
+            {
+                "lnglat": "120.190371,30.189602",
+                "name": "灯杆B",
+                "state": 1
+            },
+            {
+                "lnglat": "120.214151,30.191359",
+                "name": "灯杆C",
+                "state": 2
+            },
+            {
+                "lnglat": "120.173109,30.189337",
+                "name": "灯杆D",
+                "state": 0
+            },
+            {
+                "lnglat": "120.204221,30.200835",
+                "name": "灯杆E",
+                "state": 1
+            },
+            {
+                "lnglat": "120.201928,30.191987",
+                "name": "灯杆F",
+                "state": 1
+            },
+            {
+                "lnglat": "120.198515,30.194196",
+                "name": "灯杆G",
+                "state": 2
+            }
+        ];
+
         var tempMarker;
 
         var Marker = {
-            statusMapper: {
+            stateMapper: {
                 0: "fault",
                 1: "on",
                 2: "off"
@@ -517,7 +560,7 @@
 
                 for (var i = 0; i < lamppost.length; i += 1) {
                     var marker;
-                    var image = '../../static/images/lamp/home/' + _this.statusMapper[lamppost[i].status] + '.png';
+                    var image = '../../static/images/lamp/home/' + _this.stateMapper[lamppost[i].state] + '.png';
                     var icon = new AMap.Icon({
                         size: new AMap.Size(24, 30),
                         image: image,
@@ -539,11 +582,15 @@
                     };
 
                     (function() {
+
+                        // 灯杆Marker点击显示相应模块
+                        AMap.event.addListener(marker, 'click', _this.showModules);
+
                         //灯杆Marker划入显示相应模块
-                        AMap.event.addListener(marker, 'mouseover', _this.showModules);
+                        // AMap.event.addListener(marker, 'mouseover', _this.showModules);
 
                         // 灯杆Marker划出隐藏相应模块
-                        AMap.event.addListener(marker, 'mouseout', _this.hideModules);
+                        // AMap.event.addListener(marker, 'mouseout', _this.hideModules);
 
                         //灯杆Marker右键显示删除按钮
                         AMap.event.addListener(marker, 'rightclick', _this.showDeleteBtn);
@@ -630,12 +677,12 @@
              * @description 点击树形设备节点进行定位
              * @param lng 经度
              * @param lat 纬度
-             * @param status 灯杆状态
+             * @param state 灯杆状态
              */
-            location: function(lng, lat, status) {
+            location: function(lng, lat, state) {
                 var _this = this;
 
-                var image = '../../static/images/lamp/home/' + _this.statusMapper[status] + '.png';
+                var image = '../../static/images/lamp/home/' + _this.stateMapper[state] + '.png';
 
                 // 创建一个 Marker 实例
                 var marker = new AMap.Marker({
@@ -681,16 +728,6 @@
         };
 
         Marker.init();
-
-        var lampPost = {
-            add: function(lnglat) {
-                $('input[name="longitude"]').val(lnglat.lng);
-                $('input[name="latitude"]').val(lnglat.lat);
-            },
-            save: function() {
-                console.log($(".add-form").serialize());
-            }
-        };
     </script>
 </body>
 

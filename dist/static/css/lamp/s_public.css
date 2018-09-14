@@ -107,6 +107,65 @@
     background-color: #fff;
 }
 
+/* 搜索结果 */
+
+.search .search-result .search-result-item {
+    padding: 0 20px;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    font-size: 0;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.search .search-result .search-result-item .equip-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.search .search-result .search-result-item .equip-icon.icon-post {
+    background-image: url("../../images/monitor/search/post.png");
+}
+
+.search .search-result .search-result-item .equip-text {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 16px;
+    color: #8c8c8c;
+}
+
+/* 鼠标划过 搜索结果 */
+
+.search .search-result .search-result-item:hover {
+    background-color: #f4f4f4;
+}
+
+.search .search-result .search-result-item:hover .equip-icon.icon-post {
+    background-image: url("../../images/monitor/search/post-active.png");
+}
+
+.search .search-result .search-result-item:hover .equip-text {
+    color: #efae25;
+}
+
+/* 暂无搜索结果 */
+
+.search-result-notice {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #8c8c8c;
+    text-align: center;
+}
+
 /* 地图右键删除按钮 */
 
 .btn-map {
@@ -539,6 +598,7 @@ ul.amap-menu-outer li {
 .chart-box-content {
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 .chart-box .chart-item {
