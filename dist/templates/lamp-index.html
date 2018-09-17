@@ -21,13 +21,13 @@
             <div class="navigation usual-left j-navigation">
                 <ul>
                     <li class="item active">
-                        <a href="javascript:;" data-href="./lamp-home/index.html">
+                        <a href="javascript:;" data-module="home" data-href="/dist/templates/lamp-home/index.html">
                             <i class="icon icon-home"></i>
                             <span>首页</span>
                         </a>
                     </li>
                     <li class="item">
-                        <a href="javascript:;" data-href="./home/index.html">
+                        <a href="javascript:;" data-module="lighting" data-href="/dist/templates/home/index.html">
                             <i class="icon icon-lighting"></i>
                             <span>智慧照明</span>
                         </a>
@@ -82,13 +82,17 @@
             </div>
         </div>
         <div class="content">
-            <iframe id="myFrame" src="./lamp-home/index.html" class="my-iframe" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+            <iframe id="myFrame" onload="setNavItemHighlight(this);" src="./lamp-home/index.html" class="my-iframe" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
         </div>
     </div>
 
     <script src="../static/js/jquery.min.js"></script>
     <script type="text/javascript">
         (function($, w) {
+
+            w.onpopstate = function (e) {
+                alert(e.state);
+            }
 
             w.myFrame = $('#myFrame');
 
@@ -102,7 +106,10 @@
                     $('.j-navigation .item').removeClass('active');
                     $(this).parent().addClass('active');
 
-                    setIframeSrc($(this).attr('data-href'));
+                    var module = $(this).attr('data-module');
+                    var url = $(this).attr('data-href');
+
+                    setIframeSrc(module, url);
                 });
             });
 
@@ -118,9 +125,30 @@
              * @description: 修改iframe的src
              * @param url
              */
-            function setIframeSrc(url) {
+            function setIframeSrc(module, url) {
+                console.log(history.state);
                 w.myFrame.attr('src', url);
+                history.pushState({module: module}, null, url);
             }
+
+            /**
+             * @description 设置当前模块的导航高亮
+             */
+            function setNavItemHighlight(self) {
+                var $navItem = $('.j-navigation .item');
+                var url = $(self).attr('src');
+
+                if (url === '/dist/templates/lamp-home/index.html') {
+                   $navItem.removeClass('active');
+                   $navItem.eq(0).addClass('active');
+                }
+                else if (url === '/dist/templates/home/index.html') {
+                   $navItem.removeClass('active');
+                   $navItem.eq(1).addClass('active');
+                }
+            }
+
+            w.setNavItemHighlight = setNavItemHighlight;
 
         })($, window);
     </script>

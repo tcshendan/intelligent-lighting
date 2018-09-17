@@ -615,7 +615,7 @@
 
                 var innerHtml = '<div class="usual-module">' +
                     '<div class="usual-module-item lighting-active" style="top: 0;left: 40px;">' +
-                    '<a href="javascript:;" data-index="1" data-url="./home/index.html" onclick="Marker.transition(this);" title="智慧照明"></a>' +
+                    '<a href="javascript:;" data-index="1" data-url="/dist/templates/home/index.html" onclick="Marker.transition(this);" title="智慧照明"></a>' +
                     '</div>' +
                     '<div class="usual-module-item monitor-disabled" style="top: 0;left: 105px;">' +
                     '<a href="javascript:;" data-index="2" title="视频监控"></a>' +
@@ -674,7 +674,7 @@
                     }, function() {
                         map.remove(tempMarker);
                         map.clearInfoWindow();
-                        
+
                         layer.close(layer.index);
                     }, function() {
 
@@ -721,6 +721,7 @@
             transition: function(self) {
                 var url = self.dataset.url;
                 window.parent.$('#myFrame').attr('src', url);
+                window.parent.history.pushState({module: 'lighting'}, null, url);
 
                 this.setNavItemHightLight(self.dataset.index);
             },
