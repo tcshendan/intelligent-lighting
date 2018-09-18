@@ -21,13 +21,13 @@
             <div class="navigation usual-left j-navigation">
                 <ul>
                     <li class="item active">
-                        <a href="javascript:;" data-module="home" data-href="/dist/templates/lamp-home/index.html">
+                        <a href="javascript:;" data-href="/dist/templates/lamp-home/index.html">
                             <i class="icon icon-home"></i>
                             <span>首页</span>
                         </a>
                     </li>
                     <li class="item">
-                        <a href="javascript:;" data-module="lighting" data-href="/dist/templates/home/index.html">
+                        <a href="javascript:;" data-href="/dist/templates/home/index.html">
                             <i class="icon icon-lighting"></i>
                             <span>智慧照明</span>
                         </a>
@@ -81,74 +81,114 @@
                 <label class="name">admin</label>
             </div>
         </div>
-        <div class="content">
-            <iframe id="myFrame" onload="setNavItemHighlight(this);" src="./lamp-home/index.html" class="my-iframe" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
-        </div>
+        <!-- iframe内容 -->
+        <div class="content" id="content"></div>
     </div>
 
     <script src="../static/js/jquery.min.js"></script>
     <script type="text/javascript">
         (function($, w) {
 
-            w.onpopstate = function (e) {
-                alert(e.state);
-            }
-
-            w.myFrame = $('#myFrame');
+            w.$iframeContainer = document.getElementById('content');
+            w.createIframe = createIframe;
+            w.destroyIframe = destroyIframe;
+            w.aaa = aaa;
 
             $(document).ready(function() {
-                setIframeHeight();
+
+                createIframe($iframeContainer, './lamp-home/index.html', null);
 
                 /**
-                 * @description: 导航点击后显示高亮效果
+                 * @description 导航点击后显示高亮效果
                  */
                 $('.j-navigation .item a').click(function() {
                     $('.j-navigation .item').removeClass('active');
                     $(this).parent().addClass('active');
 
-                    var module = $(this).attr('data-module');
                     var url = $(this).attr('data-href');
+                    var $iframe = document.getElementsByTagName('iframe')[0];
 
-                    setIframeSrc(module, url);
+                    destroyIframe($iframe);
+                    createIframe($iframeContainer, url, null);
                 });
             });
 
             /**
-             * @description: 根据浏览器高度设置iframe高度
+             * @description 根据浏览器高度设置iframe高度
+             * @param iframe
              */
-            function setIframeHeight() {
+            function setIframeHeight(iframe) {
                 var h = document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight;
-                w.myFrame.css('height', h - 55);
+                iframe.style.height = h - 55 + 'px';
             }
 
             /**
-             * @description: 修改iframe的src
-             * @param url
+             * @description
+             * @param iframe
              */
-            function setIframeSrc(module, url) {
-                console.log(history.state);
-                w.myFrame.attr('src', url);
-                history.pushState({module: module}, null, url);
+            function setIframeStyle(iframe) {
+                iframe.className = 'my-iframe';
+                iframe.setAttribute('frameborder', 0);
+                iframe.setAttribute('border', 0);
+                iframe.setAttribute('marginwidth', 0);
+                iframe.setAttribute('marginheight', 0);
+                iframe.setAttribute('scrolling', 'yes');
             }
 
             /**
-             * @description 设置当前模块的导航高亮
+             * @description 动态创建iframe
+             * @param dom 创建iframe的容器，即在dom中创建iframe。dom可以是div、span或者其他标签。
+             * @param src iframe中打开的网页路径
+             * @param onload iframe加载完后触发该事件，可以为空。
+             * @return 返回创建的iframe对象
              */
-            function setNavItemHighlight(self) {
-                var $navItem = $('.j-navigation .item');
-                var url = $(self).attr('src');
+            function createIframe(dom, src, onload) {
+                console.log('创建iframe');
+                //在document中创建iframe
+                var iframe = document.createElement("iframe");
 
-                if (url === '/dist/templates/lamp-home/index.html') {
-                   $navItem.removeClass('active');
-                   $navItem.eq(0).addClass('active');
+                //设置iframe的样式
+                setIframeStyle(iframe);
+
+                //设置iframe的高度
+                setIframeHeight(iframe);
+
+                //绑定iframe的onload事件
+                if (onload && Object.prototype.toString.call(onload) === '[object Function]') {
+                    if (iframe.attachEvent) {
+                        iframe.attachEvent('onload', onload);
+                    } else if (iframe.addEventListener) {
+                        iframe.addEventListener('load', onload);
+                    } else {
+                        iframe.onload = onload;
+                    }
                 }
-                else if (url === '/dist/templates/home/index.html') {
-                   $navItem.removeClass('active');
-                   $navItem.eq(1).addClass('active');
-                }
+
+                iframe.src = src;
+                //把iframe加载到dom下面
+                dom.appendChild(iframe);
+                return iframe;
             }
 
-            w.setNavItemHighlight = setNavItemHighlight;
+            /**
+             * 销毁iframe，释放iframe所占用的内存。
+             * @param iframe 需要销毁的iframe对象
+             */
+            function destroyIframe(iframe) {
+                console.log('销毁iframe');
+                //把iframe指向空白页面，这样可以释放大部分内存。
+                iframe.src = 'about:blank';
+                try {
+                    iframe.contentWindow.document.write('');
+                    iframe.contentWindow.document.clear();
+                } catch (e) {}
+                //把iframe从页面移除
+                iframe.parentNode.removeChild(iframe);
+            }
+
+            function aaa() {
+                console.log('aaa');
+            }
 
         })($, window);
     </script>

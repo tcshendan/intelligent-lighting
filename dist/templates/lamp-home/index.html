@@ -21,61 +21,6 @@
         .main-wrapper {
             position: relative;
         }
-
-        /* infoWindow */
-
-        .info {
-            border: solid 1px silver;
-        }
-
-        div.info-top {
-            position: relative;
-            background: none repeat scroll 0 0 #F9F9F9;
-            border-bottom: 1px solid #CCC;
-            border-radius: 5px 5px 0 0;
-        }
-
-        div.info-top div {
-            display: inline-block;
-            color: #333333;
-            font-size: 14px;
-            font-weight: bold;
-            line-height: 31px;
-            padding: 0 10px;
-        }
-
-        div.info-top img {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            transition-duration: 0.25s;
-        }
-
-        div.info-top img:hover {
-            box-shadow: 0px 0px 5px #000;
-        }
-
-        div.info-middle {
-            font-size: 12px;
-            padding: 6px;
-            line-height: 20px;
-        }
-
-        div.info-middle p {
-            margin-bottom: 5px;
-        }
-
-        div.info-bottom {
-            height: 0px;
-            width: 100%;
-            clear: both;
-            text-align: center;
-        }
-
-        div.info-bottom img {
-            position: relative;
-            z-index: 104;
-        }
     </style>
 </head>
 
@@ -615,7 +560,7 @@
 
                 var innerHtml = '<div class="usual-module">' +
                     '<div class="usual-module-item lighting-active" style="top: 0;left: 40px;">' +
-                    '<a href="javascript:;" data-index="1" data-url="/dist/templates/home/index.html" onclick="Marker.transition(this);" title="智慧照明"></a>' +
+                    '<a href="javascript:;" data-index="1" onclick="Marker.transition(this);" title="智慧照明"></a>' +
                     '</div>' +
                     '<div class="usual-module-item monitor-disabled" style="top: 0;left: 105px;">' +
                     '<a href="javascript:;" data-index="2" title="视频监控"></a>' +
@@ -719,20 +664,8 @@
              * @param self
              */
             transition: function(self) {
-                var url = self.dataset.url;
-                window.parent.$('#myFrame').attr('src', url);
-                window.parent.history.pushState({module: 'lighting'}, null, url);
-
-                this.setNavItemHightLight(self.dataset.index);
-            },
-            /**
-             * @description 设置当前模块所在的导航高亮效果
-             * @param index 导航所在下标
-             */
-            setNavItemHightLight: function(index) {
-                var $navItem = window.parent.$('.j-navigation').find('.item');
-                $navItem.removeClass('active');
-                $navItem.eq(index).addClass('active');
+                var index = self.dataset.index;
+                window.parent.$('.j-navigation .item a').eq(index).click();
             }
         };
 
