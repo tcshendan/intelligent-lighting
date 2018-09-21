@@ -246,7 +246,7 @@
                                         <label>广告发布</label>
                                     </div>
                                     <div class="usual-checkbox-content">
-                                        <input name="wifi" type="checkbox" value="4" />
+                                        <input name="wifi" type="checkbox" value="4" onchange="lampPostForm.preview(this.value);" />
                                         <label>wifi覆盖</label>
                                     </div>
                                     <div class="usual-checkbox-content">
@@ -260,7 +260,7 @@
                                         <label>一键呼叫</label>
                                     </div>
                                     <div class="usual-checkbox-content">
-                                        <input name="ep" type="checkbox" value="7" />
+                                        <input name="ep" type="checkbox" value="7" onchange="lampPostForm.preview(this.value);" />
                                         <label>智慧环保</label>
                                     </div>
                                     <div class="usual-checkbox-content">
@@ -278,7 +278,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="usual-panel">
+                        <div class="usual-panel j-usual-ep-settings" style="display: none;">
                             <h6 class="usual-panel-title">环保设置：</h6>
                             <div class="usual-panel-content usual-ep-settings clearfix">
                                 <div class="layui-form" lay-filter="ep-settings-form">
@@ -350,7 +350,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="usual-panel layui-form" lay-filter="wifi-settings-form">
+                        <div class="usual-panel layui-form j-usual-wifi-settings" lay-filter="wifi-settings-form" style="display: none;">
                             <h6 class="usual-panel-title">wifi设置：</h6>
                             <div class="usual-panel-content usual-wifi-settings clearfix">
                                 <div class="layui-form-item">

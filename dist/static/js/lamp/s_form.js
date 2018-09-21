@@ -3,6 +3,8 @@ var lampPostForm = {
      * @description 显示新建智慧灯杆表单
      */
     add: function(lnglat) {
+        $('.j-usual-ep-settings').hide();
+        $('.j-usual-wifi-settings').hide();
         this.formReset(lnglat);
         this.checkboxReset();
     },
@@ -74,5 +76,26 @@ var lampPostForm = {
         for (var i = 0; i < allInputs.length; i++) {
             allInputs[i].checked = false;
         }
+    },
+    /**
+     * @description 根据勾选的功能复选框显示对应的设置面板
+     * @param value
+     */
+    preview: function(value) {
+        switch (value) {
+          case '4':
+              this.toggleSettingsPanel('wifi');
+              break;
+          case '7':
+              this.toggleSettingsPanel('ep');
+              break;
+        }
+    },
+    /**
+     * @description 切换对应的设置面板
+     * @param panel
+     */
+    toggleSettingsPanel: function(panel) {
+        $('.j-usual-' + panel + '-settings').toggle();
     }
 };
