@@ -92,7 +92,6 @@
             w.$iframeContainer = document.getElementById('content');
             w.createIframe = createIframe;
             w.destroyIframe = destroyIframe;
-            w.aaa = aaa;
 
             $(document).ready(function() {
 
@@ -143,7 +142,6 @@
              * @return 返回创建的iframe对象
              */
             function createIframe(dom, src, onload) {
-                console.log('创建iframe');
                 //在document中创建iframe
                 var iframe = document.createElement("iframe");
 
@@ -175,7 +173,6 @@
              * @param iframe 需要销毁的iframe对象
              */
             function destroyIframe(iframe) {
-                console.log('销毁iframe');
                 //把iframe指向空白页面，这样可以释放大部分内存。
                 iframe.src = 'about:blank';
                 try {
@@ -184,10 +181,6 @@
                 } catch (e) {}
                 //把iframe从页面移除
                 iframe.parentNode.removeChild(iframe);
-            }
-
-            function aaa() {
-                console.log('aaa');
             }
 
         })($, window);
