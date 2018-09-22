@@ -1,0 +1,445 @@
+@charset "utf-8";
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+*:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 10px;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+html {
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
+}
+
+body {
+    line-height: 24px;
+    font: 14px Helvetica Neue, Helvetica, PingFang SC, \5FAE\8F6F\96C5\9ED1, Tahoma, Arial, sans-serif;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+/* 公共样式 */
+
+a, a:hover {
+    color: #333;
+    text-decoration: none;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+.clearfix:after {
+    display: block;
+    clear: both;
+    content: "";
+    visibility: hidden;
+    height: 0;
+}
+
+/* 视频监控页面 */
+
+.main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #1e2122;
+}
+
+.main_left {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    width: 230px;
+}
+
+.main_right {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 250px;
+    right: 10px;
+}
+
+/* 硬盘录像机目录 */
+
+.main_left_top {
+    width: 230px;
+    height: 500px;
+    border: 1px solid #2f3233;
+    border-radius: 4px;
+}
+
+.tree-box {
+    margin: 0 auto;
+    width: 210px;
+}
+
+.tree-title {
+    padding-left: 5px;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    border-bottom: 1px solid #2a2d2e;
+    font-size: 16px;
+    color: #9dadb2;
+}
+
+.ztree li {
+    padding: 4px 0;
+}
+
+.ztree li a, .ztree li a.curSelectedNode, .ztree li span.button.switch {
+    height: 23px;
+}
+
+.ztree li span {
+    line-height: 23px;
+}
+
+.ztree li a {
+    padding: 0 3px 0 0;
+}
+
+.ztree li a:hover {
+    text-decoration: none;
+}
+
+.ztree li a, .ztree li span.node_name {
+    font-size: 14px;
+    color: #9dadb2;
+}
+
+.ztree li a.curSelectedNode {
+    opacity: 1;
+    background: none;
+    border: none;
+}
+
+.ztree li span.button {
+    background-image: url('../../../images/lamp/monitor/tree-icon.png');
+    background-repeat: no-repeat;
+}
+
+.ztree li span.button.roots_close {
+    background-position: 0 -161px;
+}
+
+.ztree li span.button.roots_open {
+    background-position: 0 -92px;
+}
+
+.ztree li span.button.center_close {
+    background-position: 0 -138px;
+}
+
+.ztree li span.button.center_open {
+    background-position: 0 -46px;
+}
+
+.ztree li span.button.bottom_close {
+    background-position: 0 -115px;
+}
+
+.ztree li span.button.bottom_open {
+    background-position: 0 -69px;
+}
+
+.ztree li ul.line {
+    background-position: -2px 0;
+}
+
+.ztree li span.button.ico_close, .ztree li span.button.ico_open {
+    margin-right: 4px;
+    width: 20px;
+    height: 20px;
+    background-position: 0 0;
+}
+
+/* 云台 */
+
+.main_left_bottom {
+    margin-top: 10px;
+    width: 230px;
+    height: 186px;
+    border: 1px solid #2f3233;
+    border-radius: 4px;
+}
+
+.control-box {
+    margin: 0 auto;
+    width: 210px;
+}
+
+.control-title {
+    padding-left: 5px;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    border-bottom: 1px solid #2a2d2e;
+    font-size: 16px;
+    color: #9dadb2;
+}
+
+.control-content {
+    padding: 15px 0;
+    width: 100%;
+}
+
+.control-content-circle {
+    float: left;
+    margin-top: 11px;
+    width: 92px;
+    height: 92px;
+    background: url('../../../images/lamp/monitor/control_circle.png') no-repeat;
+}
+
+.leftBtnUnClick {
+    float: left;
+    position: relative;
+    top: 18px;
+    left: 5px;
+    width: 25px;
+    height: 56px;
+    background: url('../../../images/lamp/monitor/left.png') no-repeat;
+    cursor: pointer;
+}
+
+.centerBtnUnClick {
+    float: left;
+    position: relative;
+    top: 28px;
+    left: 4px;
+    width: 35px;
+    height: 36px;
+    background: url('../../../images/lamp/monitor/play.png') no-repeat;
+    cursor: pointer;
+}
+
+.rightBtnUnClick {
+    float: left;
+    position: relative;
+    top: 18px;
+    left: 3px;
+    width: 25px;
+    height: 56px;
+    background: url('../../../images/lamp/monitor/right.png') no-repeat;
+    cursor: pointer;
+}
+
+.topBtnUnClick {
+    position: relative;
+    top: 5px;
+    left: 18.5px;
+    width: 55px;
+    height: 26px;
+    background: url('../../../images/lamp/monitor/top.png') no-repeat;
+    cursor: pointer;
+}
+
+.bottomBtnUnClick {
+    position: relative;
+    top: 35px;
+    left: 18.5px;
+    width: 55px;
+    height: 26px;
+    background: url('../../../images/lamp/monitor/bottom.png') no-repeat;
+    cursor: pointer;
+}
+
+.control-content-btns {
+    float: left;
+    margin-left: 4px;
+    width: 114px;
+    height: 114px;
+}
+
+.control-table tr td {
+    width: 38px;
+    height: 38px;
+}
+
+.control-table .click_btn {
+    margin-top: 3px;
+    margin-left: 3px;
+    width: 32px;
+    height: 32px;
+    background: url('../../../images/lamp/monitor/control_btn_bg.png') no-repeat;
+    cursor: pointer;
+}
+
+.control-table .click_btn .reduce-img {
+    margin-top: 15px;
+    margin-left: 11px;
+    width: 10px;
+    height: 2px;
+}
+
+.control-table .click_btn .plus-img {
+    margin-top: 11px;
+    margin-left: 11px;
+    width: 10px;
+    height: 10px;
+}
+
+.control-table .click_btn .focall-img {
+    margin-top: 8.5px;
+    margin-left: 8.5px;
+    width: 15px;
+    height: 15px;
+}
+
+.control-table .click_btn .focus-img {
+    margin-top: 10.5px;
+    margin-left: 9px;
+    width: 14px;
+    height: 11px;
+}
+
+.control-table .click_btn .aperture-img {
+    margin-top: 8px;
+    margin-left: 8px;
+    width: 16px;
+    height: 16px;
+}
+
+/* 播放区域 */
+
+.main_right_top {
+    width: 100%;
+    height: 600px;
+    background-color: #343434;
+    border: 2px solid #000;
+}
+
+.video-tips {
+    margin-top: 150px;
+    width: 100%;
+    text-align: center;
+}
+
+.video-tips p, .video-tips a {
+    font-size: 16px;
+    color: #f63f51;
+}
+
+.video-tips a {
+    text-decoration: underline;
+}
+
+/* 操作区域 */
+
+.main_right_bottom {
+    margin-top: 10px;
+    width: 100%;
+    height: 40px;
+    background-color: #171a1b;
+    border: 1px solid #2f3233;
+}
+
+.screenChange {
+    float: left;
+    width: 240px;
+    height: 40px;
+}
+
+.pageChange {
+    float: right;
+    width: 320px;
+    height: 40px;
+}
+
+.operate-item {
+    position: relative;
+    float: left;
+    width: 80px;
+    height: 40px;
+}
+
+.operate-item::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    background-color: #27292a;
+    width: 1px;
+    height: 24px;
+}
+
+.screenChange .operate-item::after {
+    right: -1px;
+}
+
+.pageChange .operate-item::after {
+    left: -1px;
+}
+
+.operate-btn {
+    margin-top: 10px;
+    margin-left: 27px;
+    width: 26px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.screen1UnCheck {
+    background: url('../../../images/lamp/monitor/oneScreen.png') no-repeat;
+}
+
+.screen1UnCheck.active {
+    background: url('../../../images/lamp/monitor/oneScreen-active.png') no-repeat;
+}
+
+.screen4UnCheck {
+    background: url('../../../images/lamp/monitor/fourScreen.png') no-repeat;
+}
+
+.screen4UnCheck.active {
+    background: url('../../../images/lamp/monitor/fourScreen-active.png') no-repeat;
+}
+
+.screen9UnCheck {
+    background: url('../../../images/lamp/monitor/nineScreen.png') no-repeat;
+}
+
+.screen9UnCheck.active {
+    background: url('../../../images/lamp/monitor/nineScreen-active.png') no-repeat;
+}
+
+.allOpenUnClick {
+    background: url('../../../images/lamp/monitor/allopen.png') no-repeat;
+}
+
+.allCloseUnClick {
+    background: url('../../../images/lamp/monitor/allclose.png') no-repeat;
+}
+
+.prevBtnUnClick {
+    background: url('../../../images/lamp/monitor/prev.png') no-repeat;
+}
+
+.nextBtnUnClick {
+    background: url('../../../images/lamp/monitor/next.png') no-repeat;
+}
