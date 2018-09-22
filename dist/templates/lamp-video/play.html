@@ -33,17 +33,17 @@
                     <div class="control-title">云台</div>
                     <div class="control-content clearfix">
                         <div class="control-content-circle">
-                            <div class="leftBtnUnClick" onmousedown="changeViewPoint(this);" onmouseup="playStop();"></div>
-                            <div class="centerBtnUnClick" onclick="playStop();"></div>
-                            <div class="rightBtnUnClick" onmousedown="changeViewPoint(this);" onmouseup="playStop();"></div>
-                            <div class="topBtnUnClick" onmousedown="changeViewPoint(this);" onmouseup="playStop();"></div>
-                            <div class="bottomBtnUnClick" onmousedown="changeViewPoint(this);" onmouseup="playStop();"></div>
+                            <div class="leftBtnUnClick" onmousedown="mouseDownPTZControl(3);" onmouseup="mouseUpPTZControl();"></div>
+                            <div class="centerBtnUnClick" onclick="mouseDownPTZControl(9);"></div>
+                            <div class="rightBtnUnClick" onmousedown="mouseDownPTZControl(4);" onmouseup="mouseUpPTZControl();"></div>
+                            <div class="topBtnUnClick" onmousedown="mouseDownPTZControl(1);" onmouseup="mouseUpPTZControl();"></div>
+                            <div class="bottomBtnUnClick" onmousedown="mouseDownPTZControl(2);" onmouseup="mouseUpPTZControl();"></div>
                         </div>
                         <div class="control-content-btns">
                             <table class="control-table" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <div class="click_btn" onmousedown="btnClickDown(this, 'zoomOut');" onmouseup="btnClickUp(this);">
+                                        <div title="变倍-" class="click_btn" onmousedown="PTZZoomout()" onmouseup="PTZZoomStop()">
                                             <img class="reduce-img" src="../../static/images/lamp/monitor/reduce.png" />
                                         </div>
                                     </td>
@@ -53,14 +53,14 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="click_btn" onmousedown="btnClickDown(this, 'zoomIn');" onmouseup="btnClickUp(this);">
+                                        <div title="变倍+" class="click_btn" onmousedown="PTZZoomIn()" onmouseup="PTZZoomStop()">
                                             <img class="plus-img" src="../../static/images/lamp/monitor/plus.png" />
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="click_btn" onmousedown="btnClickDown(this, 'focusOut');" onmouseup="btnClickUp(this);">
+                                        <div title="变焦-" class="click_btn" onmousedown="PTZFoucusOut()" onmouseup="PTZFoucusStop()">
                                             <img class="reduce-img" src="../../static/images/lamp/monitor/reduce.png" />
                                         </div>
                                     </td>
@@ -70,14 +70,14 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="click_btn" onmousedown="btnClickDown(this, 'focusIn');" onmouseup="btnClickUp(this);">
+                                        <div title="变焦+" class="click_btn" onmousedown="PTZFocusIn()" onmouseup="PTZFoucusStop()">
                                             <img class="plus-img" src="../../static/images/lamp/monitor/plus.png" />
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="click_btn" onmousedown="btnClickDown(this, 'irisOut');" onmouseup="btnClickUp(this);">
+                                        <div title="光圈-" class="click_btn" onmousedown="PTZIrisOut()" onmouseup="PTZIrisStop()">
                                             <img class="reduce-img" src="../../static/images/lamp/monitor/reduce.png" />
                                         </div>
                                     </td>
@@ -87,7 +87,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="click_btn" onmousedown="btnClickDown(this, 'irisIn');" onmouseup="btnClickUp(this);">
+                                        <div title="光圈+" class="click_btn" onmousedown="PTZIrisIn()" onmouseup="PTZIrisStop()">
                                             <img class="plus-img" src="../../static/images/lamp/monitor/plus.png" />
                                         </div>
                                     </td>
