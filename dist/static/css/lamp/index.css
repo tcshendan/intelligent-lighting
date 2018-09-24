@@ -14,6 +14,7 @@
     width: 100%;
 }
 
+
 /* logo */
 
 .logo {
@@ -23,13 +24,15 @@
     font-size: 0;
 }
 
-@media screen and (min-width: 1660px) { /*当屏幕尺寸大于1660px时，应用下面的CSS样式*/
+@media screen and (min-width: 1660px) {
+    /*当屏幕尺寸大于1660px时，应用下面的CSS样式*/
     .logo {
         margin-left: 40px;
     }
 }
 
-@media screen and (min-width: 1900px) { /*当屏幕尺寸大于1900px时，应用下面的CSS样式*/
+@media screen and (min-width: 1900px) {
+    /*当屏幕尺寸大于1900px时，应用下面的CSS样式*/
     .logo {
         margin-left: 60px;
     }
@@ -54,10 +57,30 @@
     color: #fff;
 }
 
+
 /* navigation */
 
-.navigation ul {
-    overflow: hidden;
+.navigation {
+    height: 52px;
+    overflow-y: hidden;
+}
+
+.navigation::-webkit-scrollbar {
+    height: 4px;
+}
+
+.navigation::-webkit-scrollbar-track {
+    background-color: #25292a;
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
+}
+
+.navigation::-webkit-scrollbar-thumb {
+    background-color: #25292a;
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
 }
 
 .navigation .item {
@@ -140,62 +163,53 @@
     color: #7e9095;
 }
 
+
 /* navigation 鼠标点击、划过高亮效果*/
 
-.navigation .item.active,
-.navigation .item:hover {
+.navigation .item.active, .navigation .item:hover {
     background-color: #171a1b;
 }
 
-.navigation .item.active i.icon.icon-home,
-.navigation .item:hover i.icon.icon-home {
+.navigation .item.active i.icon.icon-home, .navigation .item:hover i.icon.icon-home {
     background-position: 0 -208px;
 }
 
-.navigation .item.active i.icon.icon-lighting,
-.navigation .item:hover i.icon.icon-lighting {
+.navigation .item.active i.icon.icon-lighting, .navigation .item:hover i.icon.icon-lighting {
     background-position: 0 -260px;
 }
 
-.navigation .item.active i.icon.icon-monitor,
-.navigation .item:hover i.icon.icon-monitor {
+.navigation .item.active i.icon.icon-monitor, .navigation .item:hover i.icon.icon-monitor {
     background-position: 0 -312px;
 }
 
-.navigation .item.active i.icon.icon-adv,
-.navigation .item:hover i.icon.icon-adv {
+.navigation .item.active i.icon.icon-adv, .navigation .item:hover i.icon.icon-adv {
     background-position: 0 0;
 }
 
-.navigation .item.active i.icon.icon-wifi,
-.navigation .item:hover i.icon.icon-wifi{
+.navigation .item.active i.icon.icon-wifi, .navigation .item:hover i.icon.icon-wifi {
     background-position: 0 -416px;
 }
 
-.navigation .item.active i.icon.icon-broadcast,
-.navigation .item:hover i.icon.icon-broadcast {
+.navigation .item.active i.icon.icon-broadcast, .navigation .item:hover i.icon.icon-broadcast {
     background-position: 0 -52px;
 }
 
-.navigation .item.active i.icon.icon-call,
-.navigation .item:hover i.icon.icon-call {
+.navigation .item.active i.icon.icon-call, .navigation .item:hover i.icon.icon-call {
     background-position: 0 -104px;
 }
 
-.navigation .item.active i.icon.icon-ep,
-.navigation .item:hover i.icon.icon-ep {
+.navigation .item.active i.icon.icon-ep, .navigation .item:hover i.icon.icon-ep {
     background-position: 0 -182px;
 }
 
-.navigation .item.active i.icon.icon-settings,
-.navigation .item:hover i.icon.icon-settings {
+.navigation .item.active i.icon.icon-settings, .navigation .item:hover i.icon.icon-settings {
     background-position: 0 -364px;
 }
 
-.navigation .item.active span,
-.navigation .item:hover span {
+.navigation .item.active span, .navigation .item:hover span {
     color: #fff;
 }
+
 
 /* avatar-name */
 
@@ -216,6 +230,7 @@
     font-size: 14px;
     color: #fff;
 }
+
 
 /* my-iframe */
 
