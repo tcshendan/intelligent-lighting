@@ -75,17 +75,20 @@ function showIconForTree(treeId, treeNode) {
  */
 function zTreeOnClick(event, treeId, treeNode) {
     console.log(treeNode);
-    var szIP = treeNode.ip,
-        szPort = treeNode.port,
-        szUsername = treeNode.username,
-        szPassword = treeNode.password,
-        iStreamType = 1,
-        iChannelID = treeNode.iChannelID;
+    if (treeNode.level != 0) {
+        var szIP = treeNode.ip,
+            szPort = treeNode.port,
+            szUsername = treeNode.username,
+            szPassword = treeNode.password,
+            iStreamType = 1,
+            iChannelID = treeNode.iChannelID;
 
-    clickLogin(szIP, szPort, szUsername, szPassword);
-    setTimeout(function() {
-        clickStartRealPlay(szIP, iStreamType, iChannelID);
-    }, 1000);
+        clickLogin(szIP, szPort, szUsername, szPassword);
+        setTimeout(function() {
+            clickStartRealPlay(szIP, iStreamType, iChannelID);
+        }, 1000);
+    }
+
 }
 
 var tree = {

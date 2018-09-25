@@ -18,17 +18,16 @@ $(function() {
     }
 
     // 初始化插件参数及插入插件
-    var videoWindowWidth = 1660;
-    var videoWindowHeight = 813;
-    // var videoWindowWidth = 1107;
-    // var videoWindowHeight = 475;
-    WebVideoCtrl.I_InitPlugin(videoWindowWidth, videoWindowHeight, {
+    var $videoWindow = $('#videoWindow'),
+        $videoWindowWidth = $videoWindow.width(),
+        $videoWindowHeight = $videoWindow.height();
+    WebVideoCtrl.I_InitPlugin($videoWindowWidth, $videoWindowHeight, {
         bWndFull: true, //是否支持单窗口双击全屏，默认支持 true:支持 false:不支持
         iWndowType: 2,
         cbSelWnd: function(xmlDoc) {
             g_iWndIndex = $(xmlDoc).find("SelectWnd").eq(0).text();
             var szInfo = "当前选择的窗口编号：" + g_iWndIndex;
-            showCBInfo(szInfo);
+            alert(szInfo);
         }
     });
     WebVideoCtrl.I_InsertOBJECTPlugin("videoWindow");
