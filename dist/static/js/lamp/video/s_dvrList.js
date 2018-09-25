@@ -2,10 +2,20 @@ var zNodes = [{
         name: "硬盘录像机",
         children: [{
                 name: "摄像头1",
+                ip: '61.184.189.146',
+                port: '82',
+                username: 'admin',
+                password: 'admin123',
+                iChannelID: 1,
                 children: []
             },
             {
                 name: "摄像头2",
+                ip: '61.184.189.146',
+                port: '82',
+                username: 'admin',
+                password: 'admin123',
+                iChannelID: 2,
                 children: []
             }
         ]
@@ -64,8 +74,18 @@ function showIconForTree(treeId, treeNode) {
  * @param treeNode
  */
 function zTreeOnClick(event, treeId, treeNode) {
-    console.log(treeId);
     console.log(treeNode);
+    var szIP = treeNode.ip,
+        szPort = treeNode.port,
+        szUsername = treeNode.username,
+        szPassword = treeNode.password,
+        iStreamType = 1,
+        iChannelID = treeNode.iChannelID;
+
+    clickLogin(szIP, szPort, szUsername, szPassword);
+    setTimeout(function() {
+        clickStartRealPlay(szIP, iStreamType, iChannelID);
+    }, 1000);
 }
 
 var tree = {

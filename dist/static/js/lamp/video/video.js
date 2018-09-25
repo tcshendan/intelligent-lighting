@@ -18,10 +18,10 @@ $(function() {
     }
 
     // 初始化插件参数及插入插件
-    // var videoWindowWidth = 1660;
-    // var videoWindowHeight = 813;
-    var videoWindowWidth = 1107;
-    var videoWindowHeight = 475;
+    var videoWindowWidth = 1660;
+    var videoWindowHeight = 813;
+    // var videoWindowWidth = 1107;
+    // var videoWindowHeight = 475;
     WebVideoCtrl.I_InitPlugin(videoWindowWidth, videoWindowHeight, {
         bWndFull: true, //是否支持单窗口双击全屏，默认支持 true:支持 false:不支持
         iWndowType: 2,
@@ -51,10 +51,10 @@ function changeWndNum(self, iType) {
 
 /**
  * @description 登录
- * @param szIP 113.214.14.18
- * @param szPort 800
+ * @param szIP 61.184.189.146
+ * @param szPort 82
  * @param szUsername admin
- * @param szPassword abc12345
+ * @param szPassword admin123
  */
 function clickLogin(szIP, szPort, szUsername, szPassword) {
     if ("" == szIP || "" == szPort) {
@@ -75,12 +75,67 @@ function clickLogin(szIP, szPort, szUsername, szPassword) {
     }
 }
 
+/**
+ * @description 开始预览
+ * @param szIP 61.184.189.146
+ * @param iStreamType 主码流 1
+ * @param iChannelID 摄像头
+ * @param bZeroChannel bzero false
+ */
+function clickStartRealPlay(szIP, iStreamType, iChannelID) {
+    var oWndInfo = WebVideoCtrl.I_GetWindowStatus(g_iWndIndex),
+        szIP = szIP,
+        iStreamType = parseInt(iStreamType, 10),
+        iChannelID = parseInt(iChannelID, 10),
+        bZeroChannel = false,
+        szInfo = "";
+
+    if ("" == szIP) {
+        return;
+    }
+
+    if (oWndInfo != null) { // 已经在播放了，先停止
+        WebVideoCtrl.I_Stop();
+    }
+
+    var iRet = WebVideoCtrl.I_StartRealPlay(szIP, {
+        iStreamType: iStreamType,
+        iChannelID: iChannelID,
+        bZeroChannel: bZeroChannel
+    });
+
+    if (0 == iRet) {
+        szInfo = "开始预览成功！";
+    } else {
+        szInfo = "开始预览失败！";
+    }
+
+    alert(szIP + " " + szInfo);
+}
+
+// 停止预览
+function clickStopRealPlay() {
+    var oWndInfo = WebVideoCtrl.I_GetWindowStatus(g_iWndIndex),
+        szInfo = "";
+
+    if (oWndInfo != null) {
+        var iRet = WebVideoCtrl.I_Stop();
+        if (0 == iRet) {
+            szInfo = "停止预览成功！";
+        } else {
+            szInfo = "停止预览失败！";
+        }
+        alert(oWndInfo.szIP + " " + szInfo);
+    }
+}
+
 // PTZ控制 9为自动，1,2,3,4,5,6,7,8为方向PTZ
 var g_bPTZAuto = false;
+
 function mouseDownPTZControl(iPTZIndex) {
     var oWndInfo = WebVideoCtrl.I_GetWindowStatus(g_iWndIndex),
-        bZeroChannel = $("#channels option").eq($("#channels").get(0).selectedIndex).attr("bZero") == "true" ? true : false,
-        iPTZSpeed = $("#ptzspeed").val();
+        bZeroChannel = false,
+        iPTZSpeed = 1;
 
     if (bZeroChannel) { // 零通道不支持云台
         return;
@@ -130,10 +185,10 @@ function PTZZoomIn() {
     if (oWndInfo != null) {
         WebVideoCtrl.I_PTZControl(10, false, {
             iWndIndex: g_iWndIndex,
-            success: function (xmlDoc) {
+            success: function(xmlDoc) {
                 alert(oWndInfo.szIP + " 调焦+成功！");
             },
-            error: function () {
+            error: function() {
                 alert(oWndInfo.szIP + "  调焦+失败！");
             }
         });
@@ -146,10 +201,10 @@ function PTZZoomout() {
     if (oWndInfo != null) {
         WebVideoCtrl.I_PTZControl(11, false, {
             iWndIndex: g_iWndIndex,
-            success: function (xmlDoc) {
+            success: function(xmlDoc) {
                 alert(oWndInfo.szIP + " 调焦-成功！");
             },
-            error: function () {
+            error: function() {
                 alert(oWndInfo.szIP + "  调焦-失败！");
             }
         });
@@ -162,10 +217,10 @@ function PTZZoomStop() {
     if (oWndInfo != null) {
         WebVideoCtrl.I_PTZControl(11, true, {
             iWndIndex: g_iWndIndex,
-            success: function (xmlDoc) {
+            success: function(xmlDoc) {
                 alert(oWndInfo.szIP + " 调焦停止成功！");
             },
-            error: function () {
+            error: function() {
                 alert(oWndInfo.szIP + "  调焦停止失败！");
             }
         });
@@ -178,10 +233,10 @@ function PTZFocusIn() {
     if (oWndInfo != null) {
         WebVideoCtrl.I_PTZControl(12, false, {
             iWndIndex: g_iWndIndex,
-            success: function (xmlDoc) {
+            success: function(xmlDoc) {
                 alert(oWndInfo.szIP + " 聚焦+成功！");
             },
-            error: function () {
+            error: function() {
                 alert(oWndInfo.szIP + "  聚焦+失败！");
             }
         });
@@ -194,10 +249,10 @@ function PTZFoucusOut() {
     if (oWndInfo != null) {
         WebVideoCtrl.I_PTZControl(13, false, {
             iWndIndex: g_iWndIndex,
-            success: function (xmlDoc) {
+            success: function(xmlDoc) {
                 alert(oWndInfo.szIP + " 聚焦-成功！");
             },
-            error: function () {
+            error: function() {
                 alert(oWndInfo.szIP + "  聚焦-失败！");
             }
         });
@@ -210,10 +265,10 @@ function PTZFoucusStop() {
     if (oWndInfo != null) {
         WebVideoCtrl.I_PTZControl(12, true, {
             iWndIndex: g_iWndIndex,
-            success: function (xmlDoc) {
+            success: function(xmlDoc) {
                 alert(oWndInfo.szIP + " 聚焦停止成功！");
             },
-            error: function () {
+            error: function() {
                 alert(oWndInfo.szIP + "  聚焦停止失败！");
             }
         });
@@ -226,10 +281,10 @@ function PTZIrisIn() {
     if (oWndInfo != null) {
         WebVideoCtrl.I_PTZControl(14, false, {
             iWndIndex: g_iWndIndex,
-            success: function (xmlDoc) {
+            success: function(xmlDoc) {
                 alert(oWndInfo.szIP + " 光圈+成功！");
             },
-            error: function () {
+            error: function() {
                 alert(oWndInfo.szIP + "  光圈+失败！");
             }
         });
@@ -242,10 +297,10 @@ function PTZIrisOut() {
     if (oWndInfo != null) {
         WebVideoCtrl.I_PTZControl(15, false, {
             iWndIndex: g_iWndIndex,
-            success: function (xmlDoc) {
+            success: function(xmlDoc) {
                 alert(oWndInfo.szIP + " 光圈-成功！");
             },
-            error: function () {
+            error: function() {
                 alert(oWndInfo.szIP + "  光圈-失败！");
             }
         });
@@ -258,10 +313,10 @@ function PTZIrisStop() {
     if (oWndInfo != null) {
         WebVideoCtrl.I_PTZControl(14, true, {
             iWndIndex: g_iWndIndex,
-            success: function (xmlDoc) {
+            success: function(xmlDoc) {
                 alert(oWndInfo.szIP + " 光圈停止成功！");
             },
-            error: function () {
+            error: function() {
                 alert(oWndInfo.szIP + "  光圈停止失败！");
             }
         });
